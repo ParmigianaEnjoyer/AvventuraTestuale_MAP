@@ -19,7 +19,8 @@ import java.util.Properties;
  */
 public class DBManager {
     
-    final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS user (username VARCHAR(35), password VARCHAR(20), PRIMARY KEY (username, password))";
+    final String CREATE_DB = "CREATE DATABASE IF NOT EXISTS adventure_db";
+    final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS adventure_user (username VARCHAR(35), password VARCHAR(20), PRIMARY KEY (username, password))";
     
     /**
      * 
@@ -30,9 +31,7 @@ public class DBManager {
     /**
      * 
      */
-    public void connect_to_db(){
-        
-        
+    /*public void connect_to_db(){
         
         try{
             
@@ -47,9 +46,35 @@ public class DBManager {
             
             System.err.println(ex.getSQLState() + ": " + ex.getMessage());
         }
+    }*/
+    
+    public boolean is_user_existent(String username, String password){
+        boolean answer = false;
         
+        try{
+            System.out.print("provo a connettermi");
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+            Statement stm = conn.createStatement();
+            stm.executeUpdate(CREATE_TABLE);
+            stm.close();
+            System.out.println("database connesso");
+            
+            stm = conn.createStatement();
+            stm.executeUpdate("INSERT INTO adventure_user VALUES ('pippo','1234')");
+            stm.close();
+            
+            PreparedStatement pstm = conn.prepareStatement("SELECT username, password FROM adventure_user WHERE username=='"+username+"' AND password=='"+password+"'");
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()){
+                System.out.println("U: "+rs.getString(0)+"      P: "+rs.getString(1));
+            }
+  
+            
+        } catch(SQLException ex){
+            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
+        }
         
-        
+        return answer;
     }
     
 }

@@ -151,7 +151,6 @@ public class LoginFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         DBManager db = new DBManager();
-        db.connect_to_db();
         String username = "";
         String password = "";
         
@@ -159,9 +158,11 @@ public class LoginFrame extends javax.swing.JFrame {
         password = jPasswordField1.getText();
         
         System.out.println(username + " " + password);
-        
-        new AdventureFrame().setVisible(true);
-        dispose();
+        if (db.is_user_existent(username, password)) {
+            new AdventureFrame().setVisible(true);
+            dispose();            
+        }
+
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
