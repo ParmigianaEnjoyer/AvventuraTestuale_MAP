@@ -12,6 +12,12 @@ public class Inventory {
     private List<AdventureObject> list = new ArrayList<>();     //lista di oggetti di tipo AdventureObject
 
     /**
+     * 
+     */
+    public Inventory() {
+    }
+
+    /**
      *
      * @return
      */
