@@ -52,6 +52,7 @@ public class DBManager {
         boolean answer = false;
         
         try{
+            
             System.out.print("provo a connettermi");
             Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
             Statement stm = conn.createStatement();
@@ -59,16 +60,16 @@ public class DBManager {
             stm.close();
             System.out.println("database connesso");
             
-            stm = conn.createStatement();
+            /*stm = conn.createStatement();
             stm.executeUpdate("INSERT INTO adventure_user VALUES ('pippo','1234')");
-            stm.close();
+            stm.close();*/
             
-            PreparedStatement pstm = conn.prepareStatement("SELECT username, password FROM adventure_user WHERE username=='"+username+"' AND password=='"+password+"'");
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM adventure_user WHERE username='"+username+"' AND password='"+password+"'");
             ResultSet rs = pstm.executeQuery();
             while (rs.next()){
-                System.out.println("U: "+rs.getString(0)+"      P: "+rs.getString(1));
+                System.out.println("U: "+rs.getString("username")+"      P: "+rs.getString("password"));
+                answer = true;
             }
-  
             
         } catch(SQLException ex){
             System.err.println(ex.getSQLState() + ": " + ex.getMessage());
