@@ -10,25 +10,25 @@ import java.util.Set;
  */
 public class AdventureObjectContainer extends AdventureObject {
 
-    private List<AdventureObject> list = new ArrayList<>();         //lista degli oggetti contenuti all'interno dell'oggetto container
-    
-    /**
-     * 
-     * @param id 
-     */
-    public AdventureObjectContainer(int id) {
-        super(id);
-    }
+    private List<AdventureObject> list;       //lista degli oggetti contenuti all'interno dell'oggetto container
 
     /**
      * 
+     * @param list
      * @param id
      * @param name
      * @param description
-     * @param alias 
+     * @param alias
+     * @param openable
+     * @param pickupable
+     * @param usable
+     * @param locked
+     * @param movable
+     * @param observable 
      */
-    public AdventureObjectContainer(int id, String name, String description, Set<String> alias) {
-        super(id, name, description, alias);
+    public AdventureObjectContainer(int id, String name, String description, Set<String> alias, boolean openable, boolean pickupable, boolean usable, boolean locked, boolean movable, boolean observable, List<AdventureObject> list) {
+        super(id, name, description, alias, openable, pickupable, usable, locked, movable, observable);
+        this.list = list;
     }
 
     /**

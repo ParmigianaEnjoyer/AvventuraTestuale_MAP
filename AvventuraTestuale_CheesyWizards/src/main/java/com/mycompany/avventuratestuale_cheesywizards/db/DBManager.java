@@ -27,26 +27,6 @@ public class DBManager {
      */
     public DBManager() {
     }
-
-    /**
-     * 
-     */
-    /*public void connect_to_db(){
-        
-        try{
-            
-            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
-            
-            Statement stm = conn.createStatement();
-            stm.executeUpdate(CREATE_TABLE);
-            stm.close();
-            System.out.println("database connesso");
-            
-        } catch (SQLException ex) {
-            
-            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
-        }
-    }*/
     
     public boolean is_user_existent(String username, String password){
         boolean answer = false;

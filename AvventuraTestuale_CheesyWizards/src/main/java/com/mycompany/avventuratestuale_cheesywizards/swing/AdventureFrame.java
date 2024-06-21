@@ -50,6 +50,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         outTextArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("La mia ragazza è pazza !!!");
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 

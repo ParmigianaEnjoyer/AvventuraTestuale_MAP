@@ -16,38 +16,42 @@ public class AdventureObject {
     
     private Set<String> alias;              //insieme di tutti gli alias dell'oggetto
 
-    private boolean openable = false;       //indica se l'oggetto può essere aperto
+    private boolean openable;       //indica se l'oggetto può essere aperto
 
-    private boolean pickupable = true;      //indica se l'oggetto può essere raccolto
+    private boolean pickupable ;      //indica se l'oggetto può essere raccolto
 
-    private boolean usable = false;         //indica se l'oggetto può essere usato
+    private boolean usable;         //indica se l'oggetto può essere usato
 
-    private boolean locked = false;         //indica se l'oggetto è chiuso a chiave
+    private boolean locked;         //indica se l'oggetto è chiuso a chiave
 
-    private boolean movable = false;        //indica se l'oggetto può essere spostato
+    private boolean movable;        //indica se l'oggetto può essere spostato
     
-    private boolean observable = false;     //indica se l'oggetto può essere osservato
+    private boolean observable;     //indica se l'oggetto può essere osservato
 
     /**
      * 
      * @param id
      * @param name
      * @param description
-     * @param alias 
+     * @param alias
+     * @param openable
+     * @param pickupable
+     * @param usable
+     * @param locked
+     * @param movable
+     * @param observable 
      */
-    public AdventureObject(int id, String name, String description, Set<String> alias) {
+    public AdventureObject(int id, String name, String description, Set<String> alias, boolean openable, boolean pickupable, boolean usable, boolean locked, boolean movable, boolean observable) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.alias = alias;
-    }
-    
-    /**
-     * 
-     * @param id 
-     */
-    public AdventureObject(int id){ 
-        this.id = id;
+        this.openable = openable;
+        this.pickupable = pickupable;
+        this.usable = usable;
+        this.locked = locked;
+        this.movable = movable;
+        this.observable = observable;
     }
 
     /**
