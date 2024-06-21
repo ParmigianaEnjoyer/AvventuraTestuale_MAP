@@ -162,6 +162,7 @@ public class LoginFrame extends javax.swing.JFrame {
         password = jPasswordField1.getText();
         
         System.out.println(username + " " + password);
+        System.out.println(db.is_user_existent(username, password));
         if (db.is_user_existent(username, password)) {
             new AdventureFrame().setVisible(true);
             dispose();            
