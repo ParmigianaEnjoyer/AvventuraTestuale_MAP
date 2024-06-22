@@ -34,6 +34,8 @@ public class GameStatus implements Serializable{
     private Room stanzaCucina;
     private Room stanzaGiardino;
     
+    private Inventory inventario;
+    
     /**
      * Funzione che inizializza tutti gli oggetti dell'avventura al loro stato di default, per la nuova partita
      */
