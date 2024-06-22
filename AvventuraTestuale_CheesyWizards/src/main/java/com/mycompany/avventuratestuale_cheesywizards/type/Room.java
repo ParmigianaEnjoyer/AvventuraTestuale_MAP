@@ -17,28 +17,26 @@ public class Room {
 
     private String look;                //descrizione degli oggetti che si vedono nella stanza
 
-    private Room south = null;          //indica se è collegata a un'altra stanza a SUD
+    private Room south;          //indica se è collegata a un'altra stanza a SUD
 
-    private Room north = null;          //indica se è collegata a un'altra stanza a NORD
+    private Room north;          //indica se è collegata a un'altra stanza a NORD
 
-    private Room east = null;          //indica se è collegata a un'altra stanza a EST
+    private Room east;          //indica se è collegata a un'altra stanza a EST
 
-    private Room west = null;          //indica se è collegata a un'altra stanza a OVEST
+    private Room west;          //indica se è collegata a un'altra stanza a OVEST
 
-    private final List<AdventureObject> objects = new ArrayList<>();        //lista di tutti gli oggetti contenuti all'interno della stanza
+    private List<AdventureObject> objects;        //lista di tutti gli oggetti contenuti all'interno della stanza
 
-    /**
-     * 
-     * @param id
-     * @param name
-     * @param description
-     * @param look 
-     */
-    public Room(int id, String name, String description, String look) {
+    public Room(int id, String name, String description, String look, Room south, Room north, Room east, Room west, List<AdventureObject> objects) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.look = look;
+        this.south = south;
+        this.north = north;
+        this.east = east;
+        this.west = west;
+        this.objects = objects;
     }
 
     /**

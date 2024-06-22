@@ -21,12 +21,18 @@ public class GameStatus implements Serializable{
     private AdventureObject osso;
     private AdventureObject ascia;
     private AdventureObject chiaveOro;
+    private AdventureObject tappetoScacchiera;
     private AdventureObject bancoDaLavoro;
     
     private AdventureObjectContainer comodino;
     private AdventureObjectContainer dispensa;
     private AdventureObjectContainer cucciaConCane;
     private AdventureObjectContainer armadioAttrezzi;
+    
+    private Room stanzaSoggiorno;
+    private Room stanzaBancoDaLavoro;
+    private Room stanzaCucina;
+    private Room stanzaGiardino;
     
     /**
      * Funzione che inizializza tutti gli oggetti dell'avventura al loro stato di default, per la nuova partita
@@ -120,7 +126,7 @@ public class GameStatus implements Serializable{
         AliasTappetoScacchiera.add("telo");
         AliasTappetoScacchiera.add("kilim");
         AliasTappetoScacchiera.add("scacchiera");
-        chiaveOro = new AdventureObject(5, "Tappeto a scacchiera", "È un tappeto di dubbio gusto estetico.\n"
+        tappetoScacchiera = new AdventureObject(5, "Tappeto a scacchiera", "È un tappeto di dubbio gusto estetico.\n"
                 + "È molto grande e sembra super mrbido, però si nota un rialzamento al centro, come se ci "
                 + "fosse qualcosa di nascosto al di sotto."
                 + "", AliasTappetoScacchiera, false, false, true, false, false, true);
@@ -196,7 +202,7 @@ public class GameStatus implements Serializable{
         AliasCuccia.add("casa");
         AliasCuccia.add("cuccetta");
         AliasCuccia.add("tana");
-        List<AdventureObject> oggettiNellaCuccia= new ArrayList<>();
+        List<AdventureObject> oggettiNellaCuccia = new ArrayList<>();
         oggettiNellArmadio.add(0, chiaveOro);
         comodino = new AdventureObjectContainer(10, "Cuccia del cane", "È una cuccia per cani con dentro Cupcake, "
                 + "il cane di quella svitata. Non lo sopporto, è una bestia di satana."
@@ -204,6 +210,35 @@ public class GameStatus implements Serializable{
                 + "come posso prenderla senza che questa bestia mi sbrani."
                 + "", AliasCuccia, false, false, false, true, false, true, oggettiNellaCuccia);
         
+        /**
+         * Stanza soggiorno #00
+         */
+        List<AdventureObject> oggettiNelSoggiorno = new ArrayList<>();
+        oggettiNelSoggiorno.add(comodino);
+        stanzaSoggiorno = new Room(0, "Soggiorno", "", "", null, stanzaBancoDaLavoro, null, null, oggettiNelSoggiorno);
+        
+        /**
+         * Stanza banco da lavoro #01
+         */
+        List<AdventureObject> oggettiSalaBancoDaLavoro = new ArrayList<>();
+        oggettiSalaBancoDaLavoro.add(tappetoScacchiera);
+        oggettiSalaBancoDaLavoro.add(bancoDaLavoro);
+        stanzaBancoDaLavoro = new Room(1, "Stanza lavoro", "", "", stanzaSoggiorno, null, stanzaCucina, null, oggettiSalaBancoDaLavoro);
+        
+        /**
+         * Stanza cucina #02
+         */
+        List<AdventureObject> oggettiCucina = new ArrayList<>();
+        oggettiCucina.add(dispensa);
+        stanzaCucina = new Room(2, "Cucina", "", "", stanzaGiardino, null, null, stanzaBancoDaLavoro, oggettiCucina);
+        
+        /**
+         * Stanza giardino #03
+         */
+        List<AdventureObject> oggettiGiardino = new ArrayList<>();
+        oggettiGiardino.add(cucciaConCane);
+        oggettiGiardino.add(armadioAttrezzi);
+        stanzaGiardino = new Room(3, "Giardino", "", "", null, stanzaCucina, null, null, oggettiGiardino);
     }
 }
  
