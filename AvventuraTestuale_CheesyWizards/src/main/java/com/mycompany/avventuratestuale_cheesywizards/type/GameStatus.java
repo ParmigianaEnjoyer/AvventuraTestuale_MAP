@@ -40,6 +40,7 @@ public class GameStatus implements Serializable{
      * Funzione che inizializza tutti gli oggetti dell'avventura al loro stato di default, per la nuova partita
      */
     public void intialize_game_status(){
+        inventario = new Inventory();
         
         /**
          * Pezzo di chiave blu #1
