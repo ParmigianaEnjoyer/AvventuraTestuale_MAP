@@ -19,8 +19,7 @@ import java.util.Properties;
  */
 public class DBManager {
     
-    final String CREATE_DB = "CREATE DATABASE IF NOT EXISTS adventure_db";
-    final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS adventure_user (username VARCHAR(35), password VARCHAR(20), PRIMARY KEY (username, password))";
+    final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS adventure_user (username VARCHAR(35), password VARCHAR(20), savings BLOB, PRIMARY KEY (username, password))";
     
     /**
      * 
