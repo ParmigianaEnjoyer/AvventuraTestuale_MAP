@@ -1,5 +1,6 @@
 package com.mycompany.avventuratestuale_cheesywizards.type;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  *
  * @author nico0
  */
-public class Room {
+public class Room implements Serializable{
     
     private final int id;               //identificatore univoco della stanza
 

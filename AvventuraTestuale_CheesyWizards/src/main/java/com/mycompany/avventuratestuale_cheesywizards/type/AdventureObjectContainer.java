@@ -1,5 +1,6 @@
 package com.mycompany.avventuratestuale_cheesywizards.type;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -8,7 +9,7 @@ import java.util.Set;
  *
  * @author nico0
  */
-public class AdventureObjectContainer extends AdventureObject {
+public class AdventureObjectContainer extends AdventureObject implements Serializable{
 
     private List<AdventureObject> list;       //lista degli oggetti contenuti all'interno dell'oggetto container
 

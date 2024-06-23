@@ -1,12 +1,13 @@
 package com.mycompany.avventuratestuale_cheesywizards.type;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
  *
  * @author nico0
  */
-public class AdventureObject {
+public class AdventureObject implements Serializable{
     
     private final int id;                   //rappresenta identificatore univoco dell'oggetto
 

@@ -4,6 +4,7 @@
  */
 package com.mycompany.avventuratestuale_cheesywizards.db;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -39,13 +40,10 @@ public class DBManager {
         try{
             
             Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+            
             Statement stm = conn.createStatement();
             stm.executeUpdate(CREATE_TABLE);
             stm.close();
-            
-            /*stm = conn.createStatement();
-            stm.executeUpdate("INSERT INTO adventure_user VALUES ('pippo','1234',NULL)");
-            stm.close();*/
             
             PreparedStatement pstm = conn.prepareStatement("SELECT * FROM adventure_user "
                     + "WHERE username=? AND password=?");
@@ -78,6 +76,7 @@ public class DBManager {
         try{
             
             Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+            
             PreparedStatement pstm = conn.prepareStatement("SELECT * FROM adventure_user "
                     + "WHERE username=? AND password=?");
             pstm.setString(1, username);
@@ -96,5 +95,31 @@ public class DBManager {
         }
         
         return answer;
+    }
+    
+    /**
+     * Funzione che aggiorna il campo 'savings' del database
+     * @param username
+     * @param password
+     * @param saves 
+     */
+    public static void update_savings_on_db(String username, String password, FileInputStream saves){
+        
+        try{
+            
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+            
+            PreparedStatement pstm = conn.prepareStatement("UPDATE adventure_user SET savings=? WHERE username=? AND password=?");
+            pstm.setBlob(1, saves);
+            pstm.setString(2, username);
+            pstm.setString(3, password);
+            
+            pstm.close();
+            conn.close();
+
+        }catch(SQLException ex){
+            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
+        }
+        
     }
 }

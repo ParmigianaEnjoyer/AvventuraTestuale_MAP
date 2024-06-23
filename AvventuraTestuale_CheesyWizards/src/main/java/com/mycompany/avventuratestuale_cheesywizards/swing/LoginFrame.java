@@ -5,6 +5,11 @@
 package com.mycompany.avventuratestuale_cheesywizards.swing;
 
 import com.mycompany.avventuratestuale_cheesywizards.db.DBManager;
+import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /**
  *
@@ -161,11 +166,37 @@ public class LoginFrame extends javax.swing.JFrame {
         username = jTextField1.getText();
         password = jPasswordField1.getText();
         
-        System.out.println(username + " " + password);
-        System.out.println(db.is_user_existent(username, password));
+        System.out.println(db.user_has_savings(username, password));
         if (db.is_user_existent(username, password)) {
-            new AdventureFrame().setVisible(true);
-            dispose();            
+            
+            if (!db.user_has_savings(username, password)){
+                
+                GameStatus saves = new GameStatus();
+                
+                try {
+                    
+                    FileOutputStream outFile = new FileOutputStream("../../../../../resource/files/saves.dat");
+                    ObjectOutputStream outStream = new ObjectOutputStream(outFile);
+                    outStream.writeObject(saves);
+
+                     FileInputStream inFile = new FileInputStream("../../../../../resource/files/saves.dat");   
+                     db.update_savings_on_db(username, password, inFile);
+                     
+                } catch (IOException ex) {
+                    
+                    System.err.println(ex.getMessage());
+                    
+                } finally {
+                    
+                    new AdventureFrame().setVisible(true);
+                    dispose(); 
+                    
+                }
+            } else {
+                new AdventureFrame().setVisible(true);
+                dispose(); 
+            }
+                       
         }
 
         
