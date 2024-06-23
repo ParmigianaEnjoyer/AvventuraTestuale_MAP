@@ -113,10 +113,11 @@ public class DBManager {
             pstm.setBlob(1, saves);
             pstm.setString(2, username);
             pstm.setString(3, password);
-            
+            int rowsAffected = pstm.executeUpdate();
             pstm.close();
             conn.close();
-
+            System.out.println("db aggiornato, righe aggiornate: " + rowsAffected);
+            
         }catch(SQLException ex){
             System.err.println(ex.getSQLState() + ": " + ex.getMessage());
         }

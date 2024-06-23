@@ -174,13 +174,13 @@ public class LoginFrame extends javax.swing.JFrame {
                 GameStatus saves = new GameStatus();
                 
                 try {
-                    
-                    FileOutputStream outFile = new FileOutputStream("../../../../../resource/files/saves.dat");
+                    System.out.println("Creo il file");
+                    FileOutputStream outFile = new FileOutputStream("src/main/resources/files/saves.dat");
                     ObjectOutputStream outStream = new ObjectOutputStream(outFile);
                     outStream.writeObject(saves);
 
-                     FileInputStream inFile = new FileInputStream("../../../../../resource/files/saves.dat");   
-                     db.update_savings_on_db(username, password, inFile);
+                    FileInputStream inFile = new FileInputStream("src/main/resources/files/saves.dat");   
+                    db.update_savings_on_db(username, password, inFile);
                      
                 } catch (IOException ex) {
                     
