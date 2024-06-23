@@ -27,28 +27,37 @@ public class DBManager {
     public DBManager() {
     }
     
+    /**
+     * Restituisce true se l'utente esiste, false altrimenti
+     * @param username
+     * @param password
+     * @return 
+     */
     public boolean is_user_existent(String username, String password){
         boolean answer = false;
         
         try{
             
-            System.out.print("provo a connettermi");
             Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
             Statement stm = conn.createStatement();
             stm.executeUpdate(CREATE_TABLE);
             stm.close();
-            System.out.println("database connesso");
             
             /*stm = conn.createStatement();
-            stm.executeUpdate("INSERT INTO adventure_user VALUES ('pippo','1234')");
+            stm.executeUpdate("INSERT INTO adventure_user VALUES ('pippo','1234',NULL)");
             stm.close();*/
             
-            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM adventure_user WHERE username='"+username+"' AND password='"+password+"'");
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM adventure_user "
+                    + "WHERE username=? AND password=?");
+            pstm.setString(1, username);
+            pstm.setString(2, password);
             ResultSet rs = pstm.executeQuery();
+            
             while (rs.next()){
-                System.out.println("U: "+rs.getString("username")+"      P: "+rs.getString("password"));
                 answer = true;
             }
+            pstm.close();
+            conn.close();
             
         } catch(SQLException ex){
             System.err.println(ex.getSQLState() + ": " + ex.getMessage());
@@ -57,4 +66,35 @@ public class DBManager {
         return answer;
     }
     
+    /**
+     * Restituisce true se l'utente ha dei salvataggi, false altrimenti
+     * @param username
+     * @param password
+     * @return 
+     */
+    public boolean user_has_savings(String username, String password){
+        boolean answer = false;
+        
+        try{
+            
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM adventure_user "
+                    + "WHERE username=? AND password=?");
+            pstm.setString(1, username);
+            pstm.setString(2, password);
+            ResultSet rs = pstm.executeQuery();
+            
+            while (rs.next()){
+                if (rs.getObject("savings") != null)
+                    answer = true;
+            }
+            pstm.close();
+            conn.close();
+
+        }catch(SQLException ex){
+            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
+        }
+        
+        return answer;
+    }
 }
