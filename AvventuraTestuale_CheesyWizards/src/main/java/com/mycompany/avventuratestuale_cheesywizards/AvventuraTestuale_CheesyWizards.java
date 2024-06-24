@@ -4,6 +4,8 @@
 
 package com.mycompany.avventuratestuale_cheesywizards;
 
+import com.mycompany.avventuratestuale_cheesywizards.swing.LoginFrame;
+
 /**
  *
  * @author nico0
@@ -11,6 +13,6 @@ package com.mycompany.avventuratestuale_cheesywizards;
 public class AvventuraTestuale_CheesyWizards {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        new LoginFrame().run_login_frame();
     }
 }

@@ -19,12 +19,22 @@ import java.sql.Statement;
  */
 public class DBManager {
     
-    final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS adventure_user (username VARCHAR(35), password VARCHAR(20), savings BLOB, PRIMARY KEY (username, password))";
+    final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS adventure_user (email VARCHAR(50), username VARCHAR(35), password VARCHAR(20), savings BLOB, PRIMARY KEY (email))";
     
     /**
      * 
      */
     public DBManager() {
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+
+            Statement stm = conn.createStatement();
+            stm.executeUpdate(CREATE_TABLE);
+            stm.close();    
+        } catch(SQLException ex){
+            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
+        }
+        
     }
     
     /**
@@ -33,21 +43,16 @@ public class DBManager {
      * @param password
      * @return 
      */
-    public boolean is_user_existent(String username, String password){
+    public boolean is_user_existent(String username){
         boolean answer = false;
         
         try{
             
             Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
             
-            Statement stm = conn.createStatement();
-            stm.executeUpdate(CREATE_TABLE);
-            stm.close();
-            
             PreparedStatement pstm = conn.prepareStatement("SELECT * FROM adventure_user "
-                    + "WHERE username=? AND password=?");
+                    + "WHERE username=?");
             pstm.setString(1, username);
-            pstm.setString(2, password);
             ResultSet rs = pstm.executeQuery();
             
             while (rs.next()){
@@ -160,12 +165,14 @@ public class DBManager {
      * @param username
      * @param Password 
      */
-    public void add_new_user(String username, String password){
+    public void add_new_user(String email, String username, String password){
         try {
             Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
-            PreparedStatement pstm = conn.prepareStatement("INSERT INTO adventure_user (username, password, savings) VALUES (?, ?, NULL)");
-            pstm.setString(1, username);
-            pstm.setString(2, password);
+            PreparedStatement pstm = conn.prepareStatement("INSERT INTO adventure_user (email, username, password, savings) VALUES (?, ?, ?, NULL)");
+            pstm.setString(1, email);
+            pstm.setString(2, username);
+            pstm.setString(3, password);
+            
             
             int rowsAffected = pstm.executeUpdate();
             if (rowsAffected > 0) {
@@ -177,5 +184,93 @@ public class DBManager {
         } catch(SQLException ex){
             System.err.println(ex.getSQLState() + ": " + ex.getMessage());
         }
+    }
+    
+    /**
+     * Funzione che restituisce true se l'username è già presente nel db, false altrimenti.
+     * @param username_to_check
+     * @return 
+     */
+    public boolean username_already_exists(String username_to_check){
+        boolean answer = false;
+        
+        try{
+            
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+            
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM adventure_user "
+                    + "WHERE username=?");
+            pstm.setString(1, username_to_check);
+            ResultSet rs = pstm.executeQuery();
+            
+            while (rs.next()){
+                if (username_to_check.compareTo(rs.getString("username"))==0)
+                    answer = true;
+            }
+            pstm.close();
+            conn.close();
+
+        }catch(SQLException ex){
+            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
+        }
+        
+        return answer;
+    }
+    
+    /**
+     * Funzione che restituisce true se l'email è già presente nel db, false altrimenti.
+     * @param email_to_check
+     * @return 
+     */
+    public boolean email_already_exists(String email_to_check){
+        boolean answer = false;
+        
+        try{
+            
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+            
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM adventure_user "
+                    + "WHERE email=?");
+            pstm.setString(1, email_to_check);
+            ResultSet rs = pstm.executeQuery();
+            
+            while (rs.next()){
+                if (email_to_check.compareTo(rs.getString("email"))==0)
+                    answer = true;
+            }
+            pstm.close();
+            conn.close();
+
+        }catch(SQLException ex){
+            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
+        }
+        
+        return answer;
+    }
+    
+    public boolean is_password_correct(String username, String password){
+            boolean answer = false;
+        
+        try{
+            
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+            
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM adventure_user "
+                    + "WHERE username=?");
+            pstm.setString(1, username);
+            ResultSet rs = pstm.executeQuery();
+            
+            while (rs.next()){
+                if (password.compareTo(rs.getString("password"))==0)
+                    answer = true;
+            }
+            pstm.close();
+            conn.close();
+
+        }catch(SQLException ex){
+            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
+        }
+        
+        return answer;
     }
 }

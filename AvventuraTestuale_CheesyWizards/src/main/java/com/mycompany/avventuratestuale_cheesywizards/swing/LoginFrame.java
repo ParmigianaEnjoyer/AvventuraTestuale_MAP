@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -97,56 +98,59 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel3.setText("LA MIA RAGAZZA E' PAZZA !!!");
 
         comunication_label.setForeground(new java.awt.Color(255, 255, 255));
-        comunication_label.setText("Inserisci username e password");
+        comunication_label.setText("Inserisci username e password per accedere o registrarti.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(452, 452, 452))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(comunication_label, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(255, 255, 255)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(422, 422, 422)
-                        .addComponent(comunication_label)))
-                .addContainerGap(257, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(255, 255, 255)
+                                .addComponent(jLabel3))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(440, 440, 440)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 251, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addComponent(jLabel3)
-                .addGap(30, 30, 30)
-                .addComponent(comunication_label)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)))
+                            .addComponent(jLabel1))
+                        .addGap(47, 47, 47))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comunication_label, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)))
                 .addComponent(jButton1)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -175,6 +179,7 @@ public class LoginFrame extends javax.swing.JFrame {
         GameStatus saves;
         DBManager db = new DBManager();
         FileManager file = new FileManager();
+        String email = "";
         String username = "";
         String password = "";
         
@@ -182,61 +187,99 @@ public class LoginFrame extends javax.swing.JFrame {
         password = jPasswordField1.getText();
         
         System.out.println(db.user_has_savings(username, password));
-        if (db.is_user_existent(username, password)) {
-            
-            if (!db.user_has_savings(username, password)){
-                
-                //Inizializzo un nuovo salvataggio, con i valori di default iniziali: uno nuova partita
-                saves = new GameStatus();
-                file.update_savings_on_file_and_db(username, password, saves);
-                
-                new AdventureFrame().setVisible(true);
-                dispose(); 
-                    
+        if (jTextField1.getText().compareTo("")!=0 && jPasswordField1.getText().compareTo("")!=0){
+            if (isValidUsername(username) && isValidPassword(password)){
+                if (db.is_user_existent(username)) {
+                    if (db.is_password_correct(username, password)){
+                        if (!db.user_has_savings(username, password)){
+
+                            //Inizializzo un nuovo salvataggio, con i valori di default iniziali: uno nuova partita
+                            saves = new GameStatus();
+                            file.update_savings_on_file_and_db(username, password, saves);
+
+                            new AdventureFrame().run_adventure_frame();
+                            dispose(); 
+
+                        } else {
+
+                            //Prende il salvataggio già presente per l'utente.
+                            saves = file.get_saves_from_file(username, password);
+                            System.out.println("Salvataggio caricato");
+
+                            new AdventureFrame().run_adventure_frame();
+                            dispose(); 
+                        }     
+                    } else {
+                        comunication_label.setForeground(Color.red);
+                        comunication_label.setText("<html><b>Password errata!</b><br/>La password memorizzata per questo username è diversa da quella inserita!!</html>");
+                    }
+                                 
+                } else {
+                    Object[] options = {"Login", "Registrati"};
+                    int answer = JOptionPane.showOptionDialog(null, "Questo utente non esiste, intendi registrarti o riprovare il login?","Questo account non esiste!", 
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            options,
+                            options[0]
+                    );
+
+                    if (answer == 0) {
+                        System.out.println("Hai scelto: Login");
+                        comunication_label.setText("Ritenta il login.");
+                        jTextField1.setText("");
+                        jPasswordField1.setText("");
+                    } else if (answer == 1) {
+                        System.out.println("Hai scelto: Registrati");
+                        email = showEmailInputDialog();
+                        if (email != null){
+                            if (isValidEmail(email)){
+                                if (!db.email_already_exists(email)){
+                                    if (!db.username_already_exists(username)){
+                                       db.add_new_user(email, username, password);
+                                       comunication_label.setForeground(Color.green);
+                                       comunication_label.setText("Nuovo utente registrato, ora effettua il login.");
+                                       jTextField1.setText("");
+                                       jPasswordField1.setText("");    
+                                    } else {
+                                        comunication_label.setForeground(Color.red);
+                                        comunication_label.setText("Username già in uso!!");
+                                    }
+                                } else {
+                                    comunication_label.setForeground(Color.red);
+                                    comunication_label.setText("Email già in uso!!");
+                                }
+                            } else {
+                                comunication_label.setForeground(Color.red);
+                                comunication_label.setText("Bisogna inserire un'email nel formato corretto per potersi registrare!!");
+                            }
+                        } else {
+                            comunication_label.setForeground(Color.red);
+                            comunication_label.setText("Bisogna inserire un'email per potersi registrare!!");
+                        }
+
+                    } else {
+                        System.out.println("Nessuna scelta effettuata.");
+                    }
+                }
             } else {
-                
-                //Prende il salvataggio già presente per l'utente.
-                saves = file.get_saves_from_file(username, password);
-                System.out.println("Salvataggio caricato");
-                new AdventureFrame().setVisible(true);
-                dispose(); 
-            }              
-        } else {
-            Object[] options = {"Login", "Registrati"};
-            int answer = JOptionPane.showOptionDialog(null, "Questo utente non esiste, intendi registrarti o riprovare il login?","Questo account non esiste!", 
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    options,
-                    options[0]
-            );
-            
-            if (answer == 0) {
-                System.out.println("Hai scelto: Login");
-                comunication_label.setText("Ritenta il login.");
-                jTextField1.setText("");
-                jPasswordField1.setText("");
-            } else if (answer == 1) {
-                System.out.println("Hai scelto: Registrati");
-                db.add_new_user(username, password);
-                comunication_label.setForeground(Color.green);
-                comunication_label.setText("Nuovo utente registrato, ora effettua il login.");
-                jTextField1.setText("");
-                jPasswordField1.setText("");
-            } else {
-                System.out.println("Nessuna scelta effettuata.");
+                comunication_label.setForeground(Color.red);
+                comunication_label.setText("<html><b>Formato delle credenziali errato!</b><br/>"
+                        + "USERNAME: Deve iniziare con una lettera, seguito da lettere, numeri, underscore o punti. Lunghezza minima 3 caratteri, massima 20 caratteri.<br/>"
+                        + "PASSWORD: Lunghezza minima 8 caratteri, deve contenere almeno una lettera maiuscola, una minuscola e un numero</html>");
             }
+        } else {
+            comunication_label.setForeground(Color.red);
+            comunication_label.setText("Bisogna compilare entrambi i campi per effettuare un login!!");
         }
         
-
-        
-        
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void run_login_frame() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -268,6 +311,52 @@ public class LoginFrame extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * 
+     * @return 
+     */
+    private static String showEmailInputDialog() {
+        return JOptionPane.showInputDialog(null, "Inserisci la tua email, riceverai un messaggio di conferma di avvenuta registrazione:", "Completa la registrazione!", JOptionPane.PLAIN_MESSAGE);
+    }
+    
+    /**
+     * Funzione che definisce se un'email è scritta nel giusto formato.
+     * @param email
+     * @return 
+     */
+    private static boolean isValidEmail(String email) {
+        // Regex per controllare se l'email è nel formato corretto
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+
+        // Verifica se l'email corrisponde alla regex
+        return email.matches(emailRegex);
+    }
+    
+    /**
+     * Funzione che definisce se un username è scritto nel giusto formato.
+     * @param username
+     * @return 
+     */
+    private static boolean isValidUsername(String username) {
+        // Regex per controllare se lo username è nel formato corretto
+        // Deve iniziare con una lettera, seguito da lettere, numeri, underscore o punti
+        // Lunghezza minima 3 caratteri, massima 20 caratteri
+        String usernameRegex = "^[a-zA-Z][a-zA-Z0-9_.]{2,19}$";
+        return username.matches(usernameRegex);
+    }
+
+    /**
+     * Funzione che definisce se una password è scritta nel giusto formato.
+     * @param password
+     * @return 
+     */
+    private static boolean isValidPassword(String password) {
+        // Regex per controllare se la password è nel formato corretto
+        // Lunghezza minima 8 caratteri, deve contenere almeno una lettera maiuscola, una minuscola e un numero
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$";
+        return password.matches(passwordRegex);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel comunication_label;
     private javax.swing.JButton jButton1;
