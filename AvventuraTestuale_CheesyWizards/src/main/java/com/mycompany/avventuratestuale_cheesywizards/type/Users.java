@@ -6,18 +6,38 @@ package com.mycompany.avventuratestuale_cheesywizards.type;
  */
 public class Users {
     
+    private String email;
+    
     private String username;
     
     private String password;
 
     /**
      * 
+     * @param email
      * @param username
      * @param password 
      */
-    public Users(String username, String password) {
+    public Users(String email, String username, String password) {
+        this.email = email;
         this.username = username;
         this.password = password;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public String getEmail() {
+        return email;
+    }
+    
+    /**
+     * 
+     * @param email 
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**

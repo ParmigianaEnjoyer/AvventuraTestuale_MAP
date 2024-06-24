@@ -208,7 +208,7 @@ public class LoginFrame extends javax.swing.JFrame {
                         comunication_label.setForeground(Color.red);
                         comunication_label.setText("<html><b>Password errata!</b><br/>La password memorizzata per questo username è diversa da quella inserita!!</html>");
                     }
-                                 
+
                 } else {
                     Object[] options = {"Login", "Registrati"};
                     int answer = JOptionPane.showOptionDialog(null, "Questo utente non esiste, intendi registrarti o riprovare il login?","Questo account non esiste!", 
