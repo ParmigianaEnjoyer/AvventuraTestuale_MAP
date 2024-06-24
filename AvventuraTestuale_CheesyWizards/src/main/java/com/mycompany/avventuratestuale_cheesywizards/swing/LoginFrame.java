@@ -7,10 +7,12 @@ package com.mycompany.avventuratestuale_cheesywizards.swing;
 import com.mycompany.avventuratestuale_cheesywizards.db.DBManager;
 import com.mycompany.avventuratestuale_cheesywizards.files.FileManager;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
+import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -44,6 +46,7 @@ public class LoginFrame extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        comunication_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La mia ragazza è una pazza!");
@@ -93,6 +96,9 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 153, 51));
         jLabel3.setText("LA MIA RAGAZZA E' PAZZA !!!");
 
+        comunication_label.setForeground(new java.awt.Color(255, 255, 255));
+        comunication_label.setText("Inserisci username e password");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -114,8 +120,13 @@ public class LoginFrame extends javax.swing.JFrame {
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(452, 452, 452))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(255, 255, 255)
-                .addComponent(jLabel3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(255, 255, 255)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(422, 422, 422)
+                        .addComponent(comunication_label)))
                 .addContainerGap(257, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -123,7 +134,9 @@ public class LoginFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addComponent(jLabel3)
-                .addGap(64, 64, 64)
+                .addGap(30, 30, 30)
+                .addComponent(comunication_label)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -187,9 +200,34 @@ public class LoginFrame extends javax.swing.JFrame {
                 System.out.println("Salvataggio caricato");
                 new AdventureFrame().setVisible(true);
                 dispose(); 
+            }              
+        } else {
+            Object[] options = {"Login", "Registrati"};
+            int answer = JOptionPane.showOptionDialog(null, "Questo utente non esiste, intendi registrarti o riprovare il login?","Questo account non esiste!", 
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]
+            );
+            
+            if (answer == 0) {
+                System.out.println("Hai scelto: Login");
+                comunication_label.setText("Ritenta il login.");
+                jTextField1.setText("");
+                jPasswordField1.setText("");
+            } else if (answer == 1) {
+                System.out.println("Hai scelto: Registrati");
+                db.add_new_user(username, password);
+                comunication_label.setForeground(Color.green);
+                comunication_label.setText("Nuovo utente registrato, ora effettua il login.");
+                jTextField1.setText("");
+                jPasswordField1.setText("");
+            } else {
+                System.out.println("Nessuna scelta effettuata.");
             }
-                       
         }
+        
 
         
         
@@ -231,6 +269,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel comunication_label;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -145,11 +145,37 @@ public class DBManager {
                 //saves = (GameStatus) rs.getObject("savings");
                 blobData = rs.getBytes("savings");
             }
-        
+            
+            pstm.close();
+            conn.close();
         } catch(SQLException ex){
             System.err.println(ex.getSQLState() + ": " + ex.getMessage());
         }
         
         return blobData;
+    }
+    
+    /**
+     * Funzione che aggiunge nel db un nuovo utente.
+     * @param username
+     * @param Password 
+     */
+    public void add_new_user(String username, String password){
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+            PreparedStatement pstm = conn.prepareStatement("INSERT INTO adventure_user (username, password, savings) VALUES (?, ?, NULL)");
+            pstm.setString(1, username);
+            pstm.setString(2, password);
+            
+            int rowsAffected = pstm.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Nuovo utente inserito con successo!");
+            }
+            pstm.close();
+            conn.close();
+            
+        } catch(SQLException ex){
+            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
+        }
     }
 }

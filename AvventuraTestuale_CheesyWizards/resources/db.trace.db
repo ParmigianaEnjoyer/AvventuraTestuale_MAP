@@ -952,3 +952,6 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/nico0/D
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 49 more
+2024-06-24 13:59:24.056450+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ADVENTURE_USERS" not found; SQL statement:
+INSERT INTO adventure_users (username, password, savings) VALUES (?, ?, NULL) [42102-224]
