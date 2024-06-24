@@ -25,7 +25,7 @@ public class FileManager {
      * @param password
      * @param saves 
      */
-    public static void update_savings_on_file_and_db(String username, String password, GameStatus saves){
+    public void update_savings_on_file_and_db(String username, String password, GameStatus saves){
         DBManager db = new DBManager();
         System.out.println("Creo il file");
         try {

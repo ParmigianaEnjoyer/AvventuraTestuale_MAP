@@ -5,18 +5,13 @@
 package com.mycompany.avventuratestuale_cheesywizards.db;
 
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
 /**
  *
@@ -107,7 +102,7 @@ public class DBManager {
      * @param password
      * @param saves 
      */
-    public static void update_savings_on_db(String username, String password, FileInputStream saves){
+    public void update_savings_on_db(String username, String password, FileInputStream saves){
         
         try{
             

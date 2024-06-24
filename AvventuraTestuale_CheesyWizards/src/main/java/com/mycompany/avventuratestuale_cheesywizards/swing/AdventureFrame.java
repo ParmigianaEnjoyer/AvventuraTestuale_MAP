@@ -4,7 +4,6 @@
  */
 package com.mycompany.avventuratestuale_cheesywizards.swing;
 
-import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
