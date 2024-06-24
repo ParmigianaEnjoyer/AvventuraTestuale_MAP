@@ -9,6 +9,7 @@ com\mycompany\avventuratestuale_cheesywizards\type\CommandType.class
 com\mycompany\avventuratestuale_cheesywizards\db\DBManager.class
 com\mycompany\avventuratestuale_cheesywizards\type\Inventory.class
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$3.class
+com\mycompany\avventuratestuale_cheesywizards\files\FileManager.class
 com\mycompany\avventuratestuale_cheesywizards\type\Command.class
 com\mycompany\avventuratestuale_cheesywizards\type\Room.class
 com\mycompany\avventuratestuale_cheesywizards\AvventuraTestuale_CheesyWizards.class

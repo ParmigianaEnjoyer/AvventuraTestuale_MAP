@@ -4,7 +4,11 @@
  */
 package com.mycompany.avventuratestuale_cheesywizards.db;
 
+import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -121,6 +125,36 @@ public class DBManager {
         }catch(SQLException ex){
             System.err.println(ex.getSQLState() + ": " + ex.getMessage());
         }
+    }
+    
+    /**
+     * Funzione che interroga il db in modo da ottenere i salvataggi di un determinato utente in una variabile di tipo byte[].
+     * @param username
+     * @param password
+     * @return 
+     */
+    public byte[] get_saves_from_db(String username, String password){
         
+        byte[] blobData = null;
+        GameStatus saves = new GameStatus();
+        
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM adventure_user "
+                    + "WHERE username=? AND password=?");
+            pstm.setString(1, username);
+            pstm.setString(2, password);
+            ResultSet rs = pstm.executeQuery();
+            
+            if (rs.next()){
+                //saves = (GameStatus) rs.getObject("savings");
+                blobData = rs.getBytes("savings");
+            }
+        
+        } catch(SQLException ex){
+            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
+        }
+        
+        return blobData;
     }
 }

@@ -5,6 +5,7 @@
 package com.mycompany.avventuratestuale_cheesywizards.swing;
 
 import com.mycompany.avventuratestuale_cheesywizards.db.DBManager;
+import com.mycompany.avventuratestuale_cheesywizards.files.FileManager;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -158,8 +159,9 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        GameStatus saves;
         DBManager db = new DBManager();
+        FileManager file = new FileManager();
         String username = "";
         String password = "";
         
@@ -171,28 +173,18 @@ public class LoginFrame extends javax.swing.JFrame {
             
             if (!db.user_has_savings(username, password)){
                 
-                GameStatus saves = new GameStatus();
+                //Inizializzo un nuovo salvataggio, con i valori di default iniziali: uno nuova partita
+                saves = new GameStatus();
+                file.update_savings_on_file_and_db(username, password, saves);
                 
-                try {
-                    System.out.println("Creo il file");
-                    FileOutputStream outFile = new FileOutputStream("src/main/resources/files/saves.dat");
-                    ObjectOutputStream outStream = new ObjectOutputStream(outFile);
-                    outStream.writeObject(saves);
-
-                    FileInputStream inFile = new FileInputStream("src/main/resources/files/saves.dat");   
-                    db.update_savings_on_db(username, password, inFile);
-                     
-                } catch (IOException ex) {
+                new AdventureFrame().setVisible(true);
+                dispose(); 
                     
-                    System.err.println(ex.getMessage());
-                    
-                } finally {
-                    
-                    new AdventureFrame().setVisible(true);
-                    dispose(); 
-                    
-                }
             } else {
+                
+                //Prende il salvataggio già presente per l'utente.
+                saves = file.get_saves_from_file(username, password);
+                System.out.println("Salvataggio caricato");
                 new AdventureFrame().setVisible(true);
                 dispose(); 
             }
