@@ -1,3 +1,4 @@
+com\mycompany\avventuratestuale_cheesywizards\RESTful\EmailSender$1.class
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$1.class
 com\mycompany\avventuratestuale_cheesywizards\type\GameStatus.class
 com\mycompany\avventuratestuale_cheesywizards\type\Users.class
@@ -7,6 +8,7 @@ com\mycompany\avventuratestuale_cheesywizards\type\AdventureObjectContainer.clas
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$4.class
 com\mycompany\avventuratestuale_cheesywizards\type\CommandType.class
 com\mycompany\avventuratestuale_cheesywizards\db\DBManager.class
+com\mycompany\avventuratestuale_cheesywizards\RESTful\EmailSender.class
 com\mycompany\avventuratestuale_cheesywizards\type\Inventory.class
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$3.class
 com\mycompany\avventuratestuale_cheesywizards\files\FileManager.class

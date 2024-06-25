@@ -4,6 +4,7 @@
  */
 package com.mycompany.avventuratestuale_cheesywizards.swing;
 
+import com.mycompany.avventuratestuale_cheesywizards.RESTful.EmailSender;
 import com.mycompany.avventuratestuale_cheesywizards.db.DBManager;
 import com.mycompany.avventuratestuale_cheesywizards.files.FileManager;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
@@ -241,6 +242,8 @@ public class LoginFrame extends javax.swing.JFrame {
                                        db.add_new_user(email, username, password);
                                        comunication_label.setForeground(Color.green);
                                        comunication_label.setText("Nuovo utente registrato, ora effettua il login.");
+                                       EmailSender es = new EmailSender();
+                                       es.sendEmail(email);
                                        jTextField1.setText("");
                                        jPasswordField1.setText("");    
                                     } else {
