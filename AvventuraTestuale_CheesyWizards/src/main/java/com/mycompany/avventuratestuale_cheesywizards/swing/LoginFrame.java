@@ -4,7 +4,7 @@
  */
 package com.mycompany.avventuratestuale_cheesywizards.swing;
 
-import com.mycompany.avventuratestuale_cheesywizards.RESTful.EmailSender;
+import com.mycompany.avventuratestuale_cheesywizards.email.EmailSender;
 import com.mycompany.avventuratestuale_cheesywizards.db.DBManager;
 import com.mycompany.avventuratestuale_cheesywizards.files.FileManager;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
