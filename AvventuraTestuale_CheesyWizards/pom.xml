@@ -12,10 +12,18 @@
         <exec.mainClass>com.mycompany.avventuratestuale_cheesywizards.AvventuraTestuale_CheesyWizards</exec.mainClass>
     </properties>
     <dependencies>
+        <!-- H2 -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>2.2.224</version>
+        </dependency>
+
+        <!-- JavaMail API -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
         </dependency>
     </dependencies>
 </project>
