@@ -5,7 +5,10 @@
 package com.mycompany.avventuratestuale_cheesywizards.db;
 
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -107,14 +110,14 @@ public class DBManager {
      * @param password
      * @param saves 
      */
-    public void update_savings_on_db(String username, String password, FileInputStream saves){
+    public void update_savings_on_db(String username, String password, FileInputStream file_to_save) {
         
         try{
             
             Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
             
             PreparedStatement pstm = conn.prepareStatement("UPDATE adventure_user SET savings=? WHERE username=? AND password=?");
-            pstm.setBlob(1, saves);
+            pstm.setBinaryStream(1, file_to_save);
             pstm.setString(2, username);
             pstm.setString(3, password);
             int rowsAffected = pstm.executeUpdate();
@@ -133,9 +136,9 @@ public class DBManager {
      * @param password
      * @return 
      */
-    public byte[] get_saves_from_db(String username, String password){
+    public InputStream get_saves_from_db(String username, String password){
         
-        byte[] blobData = null;
+        InputStream input = null;
         GameStatus saves = new GameStatus();
         
         try{
@@ -148,7 +151,7 @@ public class DBManager {
             
             if (rs.next()){
                 //saves = (GameStatus) rs.getObject("savings");
-                blobData = rs.getBytes("savings");
+                input = rs.getBinaryStream("savings");
             }
             
             pstm.close();
@@ -157,7 +160,7 @@ public class DBManager {
             System.err.println(ex.getSQLState() + ": " + ex.getMessage());
         }
         
-        return blobData;
+        return input;
     }
     
     /**

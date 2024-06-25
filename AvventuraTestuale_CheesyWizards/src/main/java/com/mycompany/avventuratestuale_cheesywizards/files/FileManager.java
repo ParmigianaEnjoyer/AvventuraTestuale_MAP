@@ -7,9 +7,12 @@ package com.mycompany.avventuratestuale_cheesywizards.files;
 import com.mycompany.avventuratestuale_cheesywizards.db.DBManager;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -27,7 +30,6 @@ public class FileManager {
      */
     public void update_savings_on_file_and_db(String username, String password, GameStatus saves){
         DBManager db = new DBManager();
-        System.out.println("Creo il file");
         try {
             System.out.println("Creo il file");
             FileOutputStream outFile = new FileOutputStream("src/main/resources/files/saves.dat");
@@ -50,14 +52,29 @@ public class FileManager {
     public GameStatus get_saves_from_file(String username, String password){
         DBManager db = new DBManager();
         GameStatus saves = null;
-        
-        byte[] blobData = db.get_saves_from_db(username, password);
-        
-        // Deserializzazione del BLOB in un oggetto GameStatus
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(blobData);
-             ObjectInputStream ois = new ObjectInputStream(bais)) {
+        try {
+            InputStream input = db.get_saves_from_db(username, password);
+            File file = new File("src/main/resources/files/saves.dat");
+            FileOutputStream fos = new FileOutputStream(file);
 
-            saves = (GameStatus) ois.readObject();
+            byte[] buffer = new byte[1024];
+            while (input.read(buffer) > 0) {
+                fos.write(buffer);
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        
+        //deserializzazione
+        try (FileInputStream fileIn = new FileInputStream("src/main/resources/files/saves.dat");
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+
+            // Deserializzazione dell'oggetto GameStatus
+            saves = (GameStatus) objectIn.readObject();
+
+            // Stampa dell'oggetto deserializzato
+            System.out.println("Oggetto GameStatus deserializzato: " + saves);
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

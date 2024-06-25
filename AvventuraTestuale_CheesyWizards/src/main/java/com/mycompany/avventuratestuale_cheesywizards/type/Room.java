@@ -27,8 +27,23 @@ public class Room implements Serializable{
     private Room west;          //indica se è collegata a un'altra stanza a OVEST
 
     private List<AdventureObject> objects;        //lista di tutti gli oggetti contenuti all'interno della stanza
+    
+    private List<AdventureObjectContainer> containers;        //lista di tutti gli oggetti contenitori presenti all'interno della stanza
 
-    public Room(int id, String name, String description, String look, Room south, Room north, Room east, Room west, List<AdventureObject> objects) {
+    /**
+     * 
+     * @param id
+     * @param name
+     * @param description
+     * @param look
+     * @param south
+     * @param north
+     * @param east
+     * @param west
+     * @param objects
+     * @param containers 
+     */
+    public Room(int id, String name, String description, String look, Room south, Room north, Room east, Room west, List<AdventureObject> objects, List<AdventureObjectContainer> containers) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -38,7 +53,9 @@ public class Room implements Serializable{
         this.east = east;
         this.west = west;
         this.objects = objects;
+        this.containers = containers;
     }
+
 
     /**
      * 
@@ -158,6 +175,38 @@ public class Room implements Serializable{
      */
     public void setWest(Room west) {
         this.west = west;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public List<AdventureObject> getObjects() {
+        return objects;
+    }
+
+    /**
+     * 
+     * @param objects 
+     */
+    public void setObjects(List<AdventureObject> objects) {
+        this.objects = objects;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public List<AdventureObjectContainer> getContainers() {
+        return containers;
+    }
+
+    /**
+     * 
+     * @param containers 
+     */
+    public void setContainers(List<AdventureObjectContainer> containers) {
+        this.containers = containers;
     }
     
     /**

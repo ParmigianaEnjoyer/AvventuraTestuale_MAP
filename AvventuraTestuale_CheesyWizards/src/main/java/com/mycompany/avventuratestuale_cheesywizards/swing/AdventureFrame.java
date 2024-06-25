@@ -4,6 +4,7 @@
  */
 package com.mycompany.avventuratestuale_cheesywizards.swing;
 
+import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
 import javax.swing.ImageIcon;
 
 /**
@@ -110,7 +111,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public void run_adventure_frame() {
+    public void run_adventure_frame(GameStatus saves) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -138,6 +139,9 @@ public class AdventureFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AdventureFrame().setVisible(true);
+                System.out.println(saves.getAscia().getDescription());
+                System.out.println(saves.getAscia().getAlias().toString());
+                System.out.println(saves.getComodino().getList().get(0).getName());
             }
         });
     }

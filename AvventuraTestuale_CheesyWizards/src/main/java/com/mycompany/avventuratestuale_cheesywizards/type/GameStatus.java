@@ -40,14 +40,13 @@ public class GameStatus implements Serializable{
      * Costruttore di GameStatus
      */
     public GameStatus() {
-        initialize_game_status();
     }
     
     
     /**
      * Funzione che inizializza tutti gli oggetti dell'avventura al loro stato di default, per la nuova partita
      */
-    private void initialize_game_status(){
+    public void initialize_game_status(){
         inventario = new Inventory();
         
         /**
@@ -150,7 +149,7 @@ public class GameStatus implements Serializable{
         AliasComodino.add("mobiletto");
         AliasComodino.add("cassettiera");
         List<AdventureObject> oggettiNelComodino = new ArrayList<>();
-        oggettiNelComodino.add(0, pezzoChiave1);
+        oggettiNelComodino.add(pezzoChiave1);
         comodino = new AdventureObjectContainer(6, "Comodino stanza orologio", "È un grazioso comodino di un legno molto antico."
                 + "\nSembra che uno dei tiretti non sia stato chiuso correttamente, forse per la fretta di dover nascondere qualcosa?"
                 + "", AliasComodino, true, false, false, false, false, true, oggettiNelComodino);
@@ -178,8 +177,8 @@ public class GameStatus implements Serializable{
         AliasDispensa.add("armadietto");
         AliasDispensa.add("stipetto");
         List<AdventureObject> oggettiNellaDispensa = new ArrayList<>();
-        oggettiNelComodino.add(0, osso);
-        comodino = new AdventureObjectContainer(8, "Dispensa della cucina", "È una graziosa dispensa fatta di un legno molto antico."
+        oggettiNelComodino.add(osso);
+        dispensa = new AdventureObjectContainer(8, "Dispensa della cucina", "È una graziosa dispensa fatta di un legno molto antico."
                 + "\nSembra chiusa dall'interno da una serrattuura in legno, che possa usare qualche oggetto per forzarla?"
                 + "", AliasDispensa, true, false, false, true, false, true, oggettiNellaDispensa);
         
@@ -196,8 +195,8 @@ public class GameStatus implements Serializable{
         AliasArmadio.add("deposito");
         AliasArmadio.add("cassone");
         List<AdventureObject> oggettiNellArmadio= new ArrayList<>();
-        oggettiNellArmadio.add(0, ascia);
-        comodino = new AdventureObjectContainer(9, "Armadio degli attrezzi", "È un armadio molto vecchio e consumato, non è chiuso a chiave."
+        oggettiNellArmadio.add(ascia);
+        armadioAttrezzi = new AdventureObjectContainer(9, "Armadio degli attrezzi", "È un armadio molto vecchio e consumato, non è chiuso a chiave."
                 + "\nSicuramente viene utilizzato come ripostiglio per gli attrezzi."
                 + "", AliasArmadio, true, false, false, true, false, true, oggettiNellArmadio);
         
@@ -214,8 +213,8 @@ public class GameStatus implements Serializable{
         AliasCuccia.add("cuccetta");
         AliasCuccia.add("tana");
         List<AdventureObject> oggettiNellaCuccia = new ArrayList<>();
-        oggettiNellArmadio.add(0, chiaveOro);
-        comodino = new AdventureObjectContainer(10, "Cuccia del cane", "È una cuccia per cani con dentro Cupcake, "
+        oggettiNellArmadio.add(chiaveOro);
+        cucciaConCane = new AdventureObjectContainer(10, "Cuccia del cane", "È una cuccia per cani con dentro Cupcake, "
                 + "il cane di quella svitata. Non lo sopporto, è una bestia di satana."
                 + "\nOvviamente... accanto a lui c'è una chiave d'oro che sembra proprio essere la chiave della porta di casa, "
                 + "come posso prenderla senza che questa bestia mi sbrani."
@@ -225,8 +224,9 @@ public class GameStatus implements Serializable{
          * Stanza soggiorno #00
          */
         List<AdventureObject> oggettiNelSoggiorno = new ArrayList<>();
-        oggettiNelSoggiorno.add(comodino);
-        stanzaSoggiorno = new Room(0, "Soggiorno", "", "", null, stanzaBancoDaLavoro, null, null, oggettiNelSoggiorno);
+        List<AdventureObjectContainer> contenitoriNelSoggiorno = new ArrayList<>();
+        contenitoriNelSoggiorno.add(comodino);
+        stanzaSoggiorno = new Room(0, "Soggiorno", "", "", null, stanzaBancoDaLavoro, null, null, oggettiNelSoggiorno, contenitoriNelSoggiorno);
         
         /**
          * Stanza banco da lavoro #01
@@ -234,22 +234,283 @@ public class GameStatus implements Serializable{
         List<AdventureObject> oggettiSalaBancoDaLavoro = new ArrayList<>();
         oggettiSalaBancoDaLavoro.add(tappetoScacchiera);
         oggettiSalaBancoDaLavoro.add(bancoDaLavoro);
-        stanzaBancoDaLavoro = new Room(1, "Stanza lavoro", "", "", stanzaSoggiorno, null, stanzaCucina, null, oggettiSalaBancoDaLavoro);
+        List<AdventureObjectContainer> contenitoriSalaBancoDaLavoro = new ArrayList<>();
+        stanzaBancoDaLavoro = new Room(1, "Stanza lavoro", "", "", stanzaSoggiorno, null, stanzaCucina, null, oggettiSalaBancoDaLavoro, contenitoriSalaBancoDaLavoro);
         
         /**
          * Stanza cucina #02
          */
         List<AdventureObject> oggettiCucina = new ArrayList<>();
-        oggettiCucina.add(dispensa);
-        stanzaCucina = new Room(2, "Cucina", "", "", stanzaGiardino, null, null, stanzaBancoDaLavoro, oggettiCucina);
+        List<AdventureObjectContainer> contenitoriCucina = new ArrayList<>();
+        contenitoriCucina.add(dispensa);
+        stanzaCucina = new Room(2, "Cucina", "", "", stanzaGiardino, null, null, stanzaBancoDaLavoro, oggettiCucina, contenitoriCucina);
         
         /**
          * Stanza giardino #03
          */
         List<AdventureObject> oggettiGiardino = new ArrayList<>();
-        oggettiGiardino.add(cucciaConCane);
-        oggettiGiardino.add(armadioAttrezzi);
-        stanzaGiardino = new Room(3, "Giardino", "", "", null, stanzaCucina, null, null, oggettiGiardino);
+        List<AdventureObjectContainer> contenitoriGiardino = new ArrayList<>();
+        contenitoriGiardino.add(cucciaConCane);
+        contenitoriGiardino.add(dispensa);
+        stanzaGiardino = new Room(3, "Giardino", "", "", null, stanzaCucina, null, null, oggettiGiardino, contenitoriGiardino);
     }
+
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObject getPezzoChiave1() {
+        return pezzoChiave1;
+    }
+
+    /**
+     * 
+     * @param pezzoChiave1 
+     */
+    public void setPezzoChiave1(AdventureObject pezzoChiave1) {
+        this.pezzoChiave1 = pezzoChiave1;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObject getPezzoChiave2() {
+        return pezzoChiave2;
+    }
+
+    /**
+     * 
+     * @param pezzoChiave2 
+     */
+    public void setPezzoChiave2(AdventureObject pezzoChiave2) {
+        this.pezzoChiave2 = pezzoChiave2;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObject getOsso() {
+        return osso;
+    }
+
+    /**
+     * 
+     * @param osso 
+     */
+    public void setOsso(AdventureObject osso) {
+        this.osso = osso;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObject getAscia() {
+        return ascia;
+    }
+
+    /**
+     * 
+     * @param ascia 
+     */
+    public void setAscia(AdventureObject ascia) {
+        this.ascia = ascia;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObject getChiaveOro() {
+        return chiaveOro;
+    }
+
+    /**
+     * 
+     * @param chiaveOro 
+     */
+    public void setChiaveOro(AdventureObject chiaveOro) {
+        this.chiaveOro = chiaveOro;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObject getTappetoScacchiera() {
+        return tappetoScacchiera;
+    }
+
+    /**
+     * 
+     * @param tappetoScacchiera 
+     */
+    public void setTappetoScacchiera(AdventureObject tappetoScacchiera) {
+        this.tappetoScacchiera = tappetoScacchiera;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObject getBancoDaLavoro() {
+        return bancoDaLavoro;
+    }
+
+    /**
+     * 
+     * @param bancoDaLavoro 
+     */
+    public void setBancoDaLavoro(AdventureObject bancoDaLavoro) {
+        this.bancoDaLavoro = bancoDaLavoro;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObjectContainer getComodino() {
+        return comodino;
+    }
+
+    /**
+     * 
+     * @param comodino 
+     */
+    public void setComodino(AdventureObjectContainer comodino) {
+        this.comodino = comodino;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObjectContainer getDispensa() {
+        return dispensa;
+    }
+
+    /**
+     * 
+     * @param dispensa 
+     */
+    public void setDispensa(AdventureObjectContainer dispensa) {
+        this.dispensa = dispensa;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObjectContainer getCucciaConCane() {
+        return cucciaConCane;
+    }
+
+    /**
+     * 
+     * @param cucciaConCane 
+     */
+    public void setCucciaConCane(AdventureObjectContainer cucciaConCane) {
+        this.cucciaConCane = cucciaConCane;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObjectContainer getArmadioAttrezzi() {
+        return armadioAttrezzi;
+    }
+
+    /**
+     * 
+     * @param armadioAttrezzi 
+     */
+    public void setArmadioAttrezzi(AdventureObjectContainer armadioAttrezzi) {
+        this.armadioAttrezzi = armadioAttrezzi;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public Room getStanzaSoggiorno() {
+        return stanzaSoggiorno;
+    }
+
+    /**
+     * 
+     * @param stanzaSoggiorno 
+     */
+    public void setStanzaSoggiorno(Room stanzaSoggiorno) {
+        this.stanzaSoggiorno = stanzaSoggiorno;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public Room getStanzaBancoDaLavoro() {
+        return stanzaBancoDaLavoro;
+    }
+
+    /**
+     * 
+     * @param stanzaBancoDaLavoro 
+     */
+    public void setStanzaBancoDaLavoro(Room stanzaBancoDaLavoro) {
+        this.stanzaBancoDaLavoro = stanzaBancoDaLavoro;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public Room getStanzaCucina() {
+        return stanzaCucina;
+    }
+
+    /**
+     * 
+     * @param stanzaCucina 
+     */
+    public void setStanzaCucina(Room stanzaCucina) {
+        this.stanzaCucina = stanzaCucina;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public Room getStanzaGiardino() {
+        return stanzaGiardino;
+    }
+
+    /**
+     * 
+     * @param stanzaGiardino 
+     */
+    public void setStanzaGiardino(Room stanzaGiardino) {
+        this.stanzaGiardino = stanzaGiardino;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public Inventory getInventario() {
+        return inventario;
+    }
+
+    /**
+     * 
+     * @param inventario 
+     */
+    public void setInventario(Inventory inventario) {
+        this.inventario = inventario;
+    }
+    
+    
 }
  

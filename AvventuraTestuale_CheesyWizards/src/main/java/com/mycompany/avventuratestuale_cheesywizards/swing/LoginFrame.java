@@ -171,7 +171,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        GameStatus saves;
+        GameStatus saves = new GameStatus();
         DBManager db = new DBManager();
         FileManager file = new FileManager();
         String email = "";
@@ -189,10 +189,10 @@ public class LoginFrame extends javax.swing.JFrame {
                         if (!db.user_has_savings(username, password)){
 
                             //Inizializzo un nuovo salvataggio, con i valori di default iniziali: uno nuova partita
-                            saves = new GameStatus();
+                            saves.initialize_game_status();
                             file.update_savings_on_file_and_db(username, password, saves);
 
-                            new AdventureFrame().run_adventure_frame();
+                            new AdventureFrame().run_adventure_frame(saves);
                             dispose(); 
 
                         } else {
@@ -201,7 +201,7 @@ public class LoginFrame extends javax.swing.JFrame {
                             saves = file.get_saves_from_file(username, password);
                             System.out.println("Salvataggio caricato");
 
-                            new AdventureFrame().run_adventure_frame();
+                            new AdventureFrame().run_adventure_frame(saves);
                             dispose(); 
                         }     
                     } else {
