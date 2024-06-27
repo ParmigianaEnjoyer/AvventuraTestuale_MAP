@@ -4,6 +4,7 @@
  */
 package com.mycompany.avventuratestuale_cheesywizards.chat;
 
+import com.mycompany.avventuratestuale_cheesywizards.type.Users;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,6 +20,7 @@ public class ServerFrame extends javax.swing.JFrame {
 
     private PrintWriter out;
     private static final int PORT = 12345; // Porta del server
+    private Users user = null;
     
     /**
      * Creates new form chatFrame
@@ -190,12 +192,13 @@ public class ServerFrame extends javax.swing.JFrame {
     /**
      * 
      */
-    public void runServerFrame() {
+    public void runServerFrame(Users user_info) {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ServerFrame().setVisible(true);
+                user = user_info;
             }
         });
         
