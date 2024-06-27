@@ -5,6 +5,7 @@
 package com.mycompany.avventuratestuale_cheesywizards.chat;
 
 import com.mycompany.avventuratestuale_cheesywizards.type.Users;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -49,6 +50,7 @@ public class ClientFrame extends javax.swing.JFrame {
         send_button = new javax.swing.JButton();
         rispondi_button1 = new javax.swing.JButton();
         closeConn_button = new javax.swing.JButton();
+        label_messaggio = new javax.swing.JLabel();
 
         rispondi_button.setBackground(new java.awt.Color(0, 102, 153));
         rispondi_button.setText("RISPONDI");
@@ -62,6 +64,7 @@ public class ClientFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
+        messageArea.setEditable(false);
         messageArea.setBackground(new java.awt.Color(0, 0, 0));
         messageArea.setColumns(20);
         messageArea.setForeground(new java.awt.Color(255, 255, 255));
@@ -97,6 +100,8 @@ public class ClientFrame extends javax.swing.JFrame {
             }
         });
 
+        label_messaggio.setText("Spingi su pulsante \"RISPONDI\" per rispondere ad una chiamata.");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -106,30 +111,36 @@ public class ClientFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(rispondi_button1)
-                        .addGap(117, 117, 117)
+                        .addGap(9, 9, 9)
+                        .addComponent(label_messaggio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(closeConn_button))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(send_button)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rispondi_button1)
+                .addGap(200, 200, 200))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rispondi_button1)
-                    .addComponent(closeConn_button))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(closeConn_button)
+                    .addComponent(label_messaggio))
                 .addGap(18, 18, 18)
+                .addComponent(rispondi_button1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3)
-                    .addComponent(send_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(send_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -140,7 +151,7 @@ public class ClientFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -170,13 +181,16 @@ public class ClientFrame extends javax.swing.JFrame {
      * @param evt 
      */
     private void rispondi_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rispondi_button1ActionPerformed
-        String user_I_am = user.getEmail();
+
+        String user_I_am = user.getUsername();
         
         new Thread(() -> {
             try {
                 System.out.println("Tentativo di connessione al server " + SERVER_ADDRESS + " sulla porta " + SERVER_PORT + "...");
                 socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
-                System.out.println("Connesso al server!");
+                System.out.println("Chiamata avviata!");
+                label_messaggio.setForeground(Color.green);
+                label_messaggio.setText("Chiamata avviata!! Parla col tuo amico.");
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
@@ -190,6 +204,8 @@ public class ClientFrame extends javax.swing.JFrame {
                     messageArea.append(serverResponse + "\n");
                     if (serverResponse.equals("Nome utente non autorizzato.")) {
                         System.out.println("Connessione chiusa dal server.");
+                        label_messaggio.setForeground(Color.red);
+                        label_messaggio.setText("Nessuno ti sta chiamando. Che tristezza...");
                         socket.close();
                         return;
                     }
@@ -213,10 +229,12 @@ public class ClientFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_rispondi_button1ActionPerformed
 
     private void send_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_buttonActionPerformed
-        if (out != null) {
-            out.println("[" + user.getUsername() + "]: " + inputArea.getText());
-            messageArea.append("[" + user.getUsername() + "]: " + inputArea.getText() + "\n");
-            inputArea.setText("");
+        if (!inputArea.getText().isBlank() && !inputArea.getText().isEmpty()){
+            if (out != null) {
+                out.println("[" + user.getUsername() + "]: " + inputArea.getText());
+                messageArea.append("[" + user.getUsername() + "]: " + inputArea.getText() + "\n");
+                inputArea.setText("");
+            }
         }
     }//GEN-LAST:event_send_buttonActionPerformed
 
@@ -244,6 +262,7 @@ public class ClientFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel label_messaggio;
     private javax.swing.JTextArea messageArea;
     private javax.swing.JButton rispondi_button;
     private javax.swing.JButton rispondi_button1;

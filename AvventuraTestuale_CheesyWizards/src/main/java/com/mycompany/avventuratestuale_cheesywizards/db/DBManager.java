@@ -252,6 +252,12 @@ public class DBManager {
         return answer;
     }
     
+    /**
+     * 
+     * @param username
+     * @param password
+     * @return 
+     */
     public boolean is_password_correct(String username, String password){
             boolean answer = false;
         
