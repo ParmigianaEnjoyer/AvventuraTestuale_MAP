@@ -1,4 +1,5 @@
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$1.class
+com\mycompany\avventuratestuale_cheesywizards\chat\ClientFrame$5.class
 com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$2.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ServerFrame$1.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ClientFrame$3.class
@@ -12,6 +13,7 @@ com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$3.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ClientFrame$2.class
 com\mycompany\avventuratestuale_cheesywizards\AvventuraTestuale_CheesyWizards.class
 com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$1.class
+com\mycompany\avventuratestuale_cheesywizards\chat\ServerFrame$4.class
 com\mycompany\avventuratestuale_cheesywizards\chat\PhoneFrame$2.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ServerFrame.class
 com\mycompany\avventuratestuale_cheesywizards\email\EmailSender.class

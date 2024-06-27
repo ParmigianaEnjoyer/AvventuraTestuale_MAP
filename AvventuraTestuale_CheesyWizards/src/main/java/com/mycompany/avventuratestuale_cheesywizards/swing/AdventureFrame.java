@@ -55,7 +55,6 @@ public class AdventureFrame extends javax.swing.JFrame {
         phone_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("La mia ragazza è pazza !!!");
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -140,6 +139,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AdventureFrame(user).setVisible(true);
+                new AdventureFrame(user).setTitle("La mia ragazza è pazza!! - " + user.getUsername());
                 System.out.println(saves.getAscia().getDescription());
                 System.out.println(saves.getAscia().getAlias().toString());
                 System.out.println(saves.getComodino().getList().get(0).getName());

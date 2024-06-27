@@ -21,6 +21,7 @@ public class ClientFrame extends javax.swing.JFrame {
     private PrintWriter out;
     private static final String SERVER_ADDRESS = "127.0.0.1"; // Indirizzo del server
     private static final int SERVER_PORT = 12345;
+    private Socket socket;
     
     /**
      * Creates new form ClientFrame
@@ -47,6 +48,7 @@ public class ClientFrame extends javax.swing.JFrame {
         inputArea = new javax.swing.JTextArea();
         send_button = new javax.swing.JButton();
         rispondi_button1 = new javax.swing.JButton();
+        closeConn_button = new javax.swing.JButton();
 
         rispondi_button.setBackground(new java.awt.Color(0, 102, 153));
         rispondi_button.setText("RISPONDI");
@@ -56,19 +58,19 @@ public class ClientFrame extends javax.swing.JFrame {
             }
         });
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
-        messageArea.setBackground(new java.awt.Color(102, 102, 102));
+        messageArea.setBackground(new java.awt.Color(0, 0, 0));
         messageArea.setColumns(20);
-        messageArea.setForeground(new java.awt.Color(0, 0, 0));
+        messageArea.setForeground(new java.awt.Color(255, 255, 255));
         messageArea.setRows(5);
         jScrollPane1.setViewportView(messageArea);
 
-        inputArea.setBackground(new java.awt.Color(0, 0, 0));
+        inputArea.setBackground(new java.awt.Color(102, 102, 102));
         inputArea.setColumns(20);
-        inputArea.setForeground(new java.awt.Color(255, 255, 255));
+        inputArea.setForeground(new java.awt.Color(0, 0, 0));
         inputArea.setRows(5);
         jScrollPane3.setViewportView(inputArea);
 
@@ -87,6 +89,14 @@ public class ClientFrame extends javax.swing.JFrame {
             }
         });
 
+        closeConn_button.setBackground(new java.awt.Color(204, 0, 0));
+        closeConn_button.setText("CHIUDI");
+        closeConn_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeConn_buttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -97,25 +107,28 @@ public class ClientFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(send_button))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(rispondi_button1)
+                        .addGap(117, 117, 117)
+                        .addComponent(closeConn_button))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(send_button)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(212, Short.MAX_VALUE)
-                .addComponent(rispondi_button1)
-                .addGap(202, 202, 202))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(rispondi_button1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rispondi_button1)
+                    .addComponent(closeConn_button))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(send_button)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3)
+                    .addComponent(send_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -123,7 +136,7 @@ public class ClientFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,13 +150,32 @@ public class ClientFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_rispondi_buttonActionPerformed
 
+    /**
+     * Funzione per chiudere la connessione
+     */
+    private void closeConnection() {
+        try {
+            if (socket != null && !socket.isClosed()) {
+                socket.close();
+            }
+            dispose();
+            System.out.println("Connessione chiusa e applicazione terminata.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void rispondi_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rispondi_button1ActionPerformed
-        String user_I_am = "nico02r@gmail.com";
+        String user_I_am = user.getEmail();
         
         new Thread(() -> {
             try {
                 System.out.println("Tentativo di connessione al server " + SERVER_ADDRESS + " sulla porta " + SERVER_PORT + "...");
-                Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+                socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
                 System.out.println("Connesso al server!");
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -154,8 +186,8 @@ public class ClientFrame extends javax.swing.JFrame {
 
                 String serverResponse;
                 if ((serverResponse = in.readLine()) != null) {
-                    System.out.println("Server: " + serverResponse);
-                    messageArea.append("Server: " + serverResponse + "\n");
+                    System.out.println(serverResponse);
+                    messageArea.append(serverResponse + "\n");
                     if (serverResponse.equals("Nome utente non autorizzato.")) {
                         System.out.println("Connessione chiusa dal server.");
                         socket.close();
@@ -188,6 +220,10 @@ public class ClientFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_send_buttonActionPerformed
 
+    private void closeConn_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeConn_buttonActionPerformed
+        closeConnection();
+    }//GEN-LAST:event_closeConn_buttonActionPerformed
+
     /**
      * 
      */
@@ -203,6 +239,7 @@ public class ClientFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton closeConn_button;
     private javax.swing.JTextArea inputArea;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
