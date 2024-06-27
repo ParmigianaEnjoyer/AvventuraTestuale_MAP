@@ -75,6 +75,7 @@ public class ServerFrame extends javax.swing.JFrame {
         inputArea.setColumns(20);
         inputArea.setForeground(new java.awt.Color(0, 0, 0));
         inputArea.setRows(5);
+        inputArea.setText("...");
         jScrollPane3.setViewportView(inputArea);
 
         send_button.setText("INVIA");
@@ -100,6 +101,7 @@ public class ServerFrame extends javax.swing.JFrame {
             }
         });
 
+        label_messaggio.setForeground(new java.awt.Color(255, 255, 255));
         label_messaggio.setText("Inserisci l'username dell'utente che vuoi chiamare.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -213,6 +215,9 @@ public class ServerFrame extends javax.swing.JFrame {
                                 if (user_I_want.equals(clientName)) {
                                     label_messaggio.setForeground(Color.green);
                                     label_messaggio.setText("Utente connesso alla chiamata! Parla col tuo amico.\n");
+                                    
+                                    inputArea.setEnabled(true);
+                                    send_button.setEnabled(true);
 
                                     Thread readerThread = new Thread(() -> {
                                         try {
@@ -237,7 +242,7 @@ public class ServerFrame extends javax.swing.JFrame {
                     }).start();    
                 } else {
                     label_messaggio.setForeground(Color.red);
-                    label_messaggio.setText("Chiamare se stessi è troppo triste, non posso lasciartelo fare...");    
+                    label_messaggio.setText("Chiamare se stessi è troppo triste,\nnon posso lasciartelo fare...");    
                 }
             } else {
                 label_messaggio.setForeground(Color.red);
@@ -249,6 +254,10 @@ public class ServerFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_chiama_buttonActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void send_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_buttonActionPerformed
         if (!inputArea.getText().isBlank() && !inputArea.getText().isEmpty()){
             if (out != null) {
@@ -259,6 +268,10 @@ public class ServerFrame extends javax.swing.JFrame {
         }        
     }//GEN-LAST:event_send_buttonActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void closeConn_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeConn_buttonActionPerformed
         closeConnection();
     }//GEN-LAST:event_closeConn_buttonActionPerformed
@@ -273,6 +286,8 @@ public class ServerFrame extends javax.swing.JFrame {
             public void run() {
                 new ServerFrame(user).setVisible(true);
                 System.out.println(user.getUsername());
+                inputArea.setEnabled(false);
+                send_button.setEnabled(false);
             }
         });
         

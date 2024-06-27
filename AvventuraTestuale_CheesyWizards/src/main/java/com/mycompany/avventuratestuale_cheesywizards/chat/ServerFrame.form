@@ -158,6 +158,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="rows" type="int" value="5"/>
+                <Property name="text" type="java.lang.String" value="..."/>
               </Properties>
             </Component>
           </SubComponents>
@@ -196,6 +197,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="label_messaggio">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Inserisci l&apos;username dell&apos;utente che vuoi chiamare."/>
           </Properties>
         </Component>
