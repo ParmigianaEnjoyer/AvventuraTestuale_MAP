@@ -13,12 +13,13 @@ import com.mycompany.avventuratestuale_cheesywizards.type.Users;
  */
 public class PhoneFrame extends javax.swing.JFrame {
     
-    private static Users user = null;
+    private Users user;
     
     /**
      * Creates new form PhoneFrame
      */
-    public PhoneFrame() {
+    public PhoneFrame(Users user_info) {
+        this.user = user_info;
         initComponents();
     }
 
@@ -36,6 +37,7 @@ public class PhoneFrame extends javax.swing.JFrame {
         chiama_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Telefono");
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -91,25 +93,24 @@ public class PhoneFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rispondi_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rispondi_buttonActionPerformed
-        new ClientFrame().runClientFrame(user);
+        new ClientFrame(user).runClientFrame();
         dispose();
     }//GEN-LAST:event_rispondi_buttonActionPerformed
 
     private void chiama_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chiama_buttonActionPerformed
-        new ServerFrame().runServerFrame(user);
+        new ServerFrame(user).runServerFrame();
         dispose();
     }//GEN-LAST:event_chiama_buttonActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void runPhoneFrame(Users user_info) {
+    public void runPhoneFrame() {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PhoneFrame().setVisible(true);
-                user = user_info;
+                new PhoneFrame(user).setVisible(true);
             }
         });
     }

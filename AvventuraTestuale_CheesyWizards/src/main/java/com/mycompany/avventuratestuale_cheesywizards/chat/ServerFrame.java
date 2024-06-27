@@ -25,7 +25,8 @@ public class ServerFrame extends javax.swing.JFrame {
     /**
      * Creates new form chatFrame
      */
-    public ServerFrame() {
+    public ServerFrame(Users user_info) {
+        this.user = user_info;
         initComponents();
     }
 
@@ -160,7 +161,7 @@ public class ServerFrame extends javax.swing.JFrame {
                                 try {
                                     String inputLine;
                                     while ((inputLine = in.readLine()) != null) {
-                                        messageArea.append("Client: " + inputLine + "\n");
+                                        messageArea.append(inputLine + "\n");
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -183,8 +184,8 @@ public class ServerFrame extends javax.swing.JFrame {
 
     private void send_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_buttonActionPerformed
         if (out != null) {
-            out.println(inputArea.getText());
-            messageArea.append("Server: " + inputArea.getText() + "\n");
+            out.println("[" + user.getUsername() + "]: " + inputArea.getText());
+            messageArea.append("[" + user.getUsername() + "]: " + inputArea.getText() + "\n");
             inputArea.setText("");
         }
     }//GEN-LAST:event_send_buttonActionPerformed
@@ -192,13 +193,13 @@ public class ServerFrame extends javax.swing.JFrame {
     /**
      * 
      */
-    public void runServerFrame(Users user_info) {
+    public void runServerFrame() {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ServerFrame().setVisible(true);
-                user = user_info;
+                new ServerFrame(user).setVisible(true);
+                System.out.println(user.getUsername());
             }
         });
         

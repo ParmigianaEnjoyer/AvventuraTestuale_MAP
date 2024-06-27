@@ -4,7 +4,9 @@
  */
 package com.mycompany.avventuratestuale_cheesywizards.swing;
 
+import com.mycompany.avventuratestuale_cheesywizards.chat.PhoneFrame;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
+import com.mycompany.avventuratestuale_cheesywizards.type.Users;
 import javax.swing.ImageIcon;
 
 /**
@@ -13,10 +15,12 @@ import javax.swing.ImageIcon;
  */
 public class AdventureFrame extends javax.swing.JFrame {
 
+    private Users user = null;
     /**
      * Creates new form AdventureFrame
      */
-    public AdventureFrame() {
+    public AdventureFrame(Users user_info) {
+        this.user = user_info;
         initComponents();
         
         try {
@@ -48,7 +52,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         inTextArea = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         outTextArea = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        phone_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La mia ragazza è pazza !!!");
@@ -70,12 +74,12 @@ public class AdventureFrame extends javax.swing.JFrame {
         outTextArea.setRows(5);
         jScrollPane3.setViewportView(outTextArea);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/phone_icon.png"))); // NOI18N
-        jButton1.setMaximumSize(new java.awt.Dimension(48, 48));
-        jButton1.setMinimumSize(new java.awt.Dimension(48, 48));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        phone_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/phone_icon.png"))); // NOI18N
+        phone_button.setMaximumSize(new java.awt.Dimension(48, 48));
+        phone_button.setMinimumSize(new java.awt.Dimension(48, 48));
+        phone_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                phone_buttonActionPerformed(evt);
             }
         });
 
@@ -90,7 +94,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(phone_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -102,7 +106,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                         .addComponent(jScrollPane3))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(phone_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -122,44 +126,24 @@ public class AdventureFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void phone_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phone_buttonActionPerformed
+        System.out.println("AdventureFrame " + user.getUsername());
+        new PhoneFrame(user).runPhoneFrame();
+    }//GEN-LAST:event_phone_buttonActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public void run_adventure_frame(GameStatus saves) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdventureFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdventureFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdventureFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdventureFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdventureFrame().setVisible(true);
+                new AdventureFrame(user).setVisible(true);
                 System.out.println(saves.getAscia().getDescription());
                 System.out.println(saves.getAscia().getAlias().toString());
                 System.out.println(saves.getComodino().getList().get(0).getName());
+                System.out.println("AdventureFrame " + user.getUsername());
             }
         });
     }
@@ -167,10 +151,10 @@ public class AdventureFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel image_lbl;
     private javax.swing.JTextArea inTextArea;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea outTextArea;
+    private javax.swing.JButton phone_button;
     // End of variables declaration//GEN-END:variables
 }

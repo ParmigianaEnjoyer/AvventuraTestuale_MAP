@@ -33,7 +33,8 @@ public class DBManager {
 
             Statement stm = conn.createStatement();
             stm.executeUpdate(CREATE_TABLE);
-            stm.close();    
+            stm.close();
+            conn.close();
         } catch(SQLException ex){
             System.err.println(ex.getSQLState() + ": " + ex.getMessage());
         }

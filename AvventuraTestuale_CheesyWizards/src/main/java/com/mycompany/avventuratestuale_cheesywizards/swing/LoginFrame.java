@@ -8,6 +8,7 @@ import com.mycompany.avventuratestuale_cheesywizards.email.EmailSender;
 import com.mycompany.avventuratestuale_cheesywizards.db.DBManager;
 import com.mycompany.avventuratestuale_cheesywizards.files.FileManager;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
+import com.mycompany.avventuratestuale_cheesywizards.type.Users;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
@@ -185,6 +186,7 @@ public class LoginFrame extends javax.swing.JFrame {
         String email = "";
         String username = "";
         String password = "";
+        Users user = null;
         
         username = jTextField1.getText();
         password = jPasswordField1.getText();
@@ -199,8 +201,9 @@ public class LoginFrame extends javax.swing.JFrame {
                             //Inizializzo un nuovo salvataggio, con i valori di default iniziali: uno nuova partita
                             saves.initialize_game_status();
                             file.update_savings_on_file_and_db(username, password, saves);
-
-                            new AdventureFrame().run_adventure_frame(saves);
+                            
+                            user = new Users(email, username, password);
+                            new AdventureFrame(user).run_adventure_frame(saves);
                             dispose(); 
 
                         } else {
@@ -208,8 +211,9 @@ public class LoginFrame extends javax.swing.JFrame {
                             //Prende il salvataggio già presente per l'utente.
                             saves = file.get_saves_from_file(username, password);
                             System.out.println("Salvataggio caricato");
-
-                            new AdventureFrame().run_adventure_frame(saves);
+                            
+                            user = new Users(email, username, password);
+                            new AdventureFrame(user).run_adventure_frame(saves);
                             dispose(); 
                         }     
                     } else {

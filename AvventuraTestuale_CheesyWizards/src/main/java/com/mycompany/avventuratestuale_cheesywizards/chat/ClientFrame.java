@@ -17,7 +17,7 @@ import java.net.Socket;
  */
 public class ClientFrame extends javax.swing.JFrame {
     
-    private Users user = null;
+    private Users user;
     private PrintWriter out;
     private static final String SERVER_ADDRESS = "127.0.0.1"; // Indirizzo del server
     private static final int SERVER_PORT = 12345;
@@ -25,7 +25,8 @@ public class ClientFrame extends javax.swing.JFrame {
     /**
      * Creates new form ClientFrame
      */
-    public ClientFrame() {
+    public ClientFrame(Users user_info) {
+        this.user = user_info;
         initComponents();
     }
 
@@ -166,7 +167,7 @@ public class ClientFrame extends javax.swing.JFrame {
                     try {
                         String serverMessage;
                         while ((serverMessage = in.readLine()) != null) {
-                            messageArea.append("Server: " + serverMessage + "\n");
+                            messageArea.append(serverMessage + "\n");
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -181,8 +182,8 @@ public class ClientFrame extends javax.swing.JFrame {
 
     private void send_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_buttonActionPerformed
         if (out != null) {
-            out.println(inputArea.getText());
-            messageArea.append("Client: " + inputArea.getText() + "\n");
+            out.println("[" + user.getUsername() + "]: " + inputArea.getText());
+            messageArea.append("[" + user.getUsername() + "]: " + inputArea.getText() + "\n");
             inputArea.setText("");
         }
     }//GEN-LAST:event_send_buttonActionPerformed
@@ -190,13 +191,13 @@ public class ClientFrame extends javax.swing.JFrame {
     /**
      * 
      */
-    public void runClientFrame(Users user_info) {
+    public void runClientFrame() {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClientFrame().setVisible(true);
-                user = user_info;
+                new ClientFrame(user).setVisible(true);
+                System.out.println(user.getUsername());
             }
         });
     }
