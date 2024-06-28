@@ -30,6 +30,7 @@ public class ClientFrame extends javax.swing.JFrame {
     public ClientFrame(Users user_info) {
         this.user = user_info;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

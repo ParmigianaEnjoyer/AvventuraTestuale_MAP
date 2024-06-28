@@ -4,6 +4,7 @@
  */
 package com.mycompany.avventuratestuale_cheesywizards.type;
 
+import com.mycompany.avventuratestuale_cheesywizards.timer.Timer;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,6 +16,8 @@ import java.util.Set;
  * @author nico0
  */
 public class GameStatus implements Serializable{
+    
+    private Timer timer_partita;
     
     private AdventureObject pezzoChiave1;
     private AdventureObject pezzoChiave2;
@@ -48,6 +51,7 @@ public class GameStatus implements Serializable{
      */
     public void initialize_game_status(){
         inventario = new Inventory();
+        timer_partita = new Timer();
         
         /**
          * Pezzo di chiave blu #1
@@ -510,7 +514,20 @@ public class GameStatus implements Serializable{
     public void setInventario(Inventory inventario) {
         this.inventario = inventario;
     }
-    
-    
+
+    /**
+     * 
+     * @return 
+     */
+    public Timer getTimer_partita() {
+        return timer_partita;
+    }
+
+    /**
+     * 
+     * @param timer_partita 
+     */
+    public void setTimer_partita(Timer timer_partita) {
+        this.timer_partita = timer_partita;
+    }
 }
- 
