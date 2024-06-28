@@ -284,14 +284,19 @@ public class DBManager {
         return answer;
     }
     
-    public void destroy_savings(String email){
+    /**
+     * Metodo che elimina i salvataggi di un utente il cui username è passata per parametro.
+     * @param email 
+     */
+    public void destroy_savings(String username){
         
         try{
             Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
             
-            PreparedStatement pstm = conn.prepareStatement("UPDATE adventure_user SET savings=null WHERE email=?");
-            pstm.setString(1, email);
+            PreparedStatement pstm = conn.prepareStatement("UPDATE adventure_user SET savings=null WHERE username=?");
+            pstm.setString(1, username);
             int rowsAffected = pstm.executeUpdate();
+            System.out.println("DB: "+username);
             pstm.close();
             conn.close();
         }catch(SQLException ex){

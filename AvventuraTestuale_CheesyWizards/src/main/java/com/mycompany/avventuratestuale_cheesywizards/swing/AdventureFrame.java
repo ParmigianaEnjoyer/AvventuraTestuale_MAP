@@ -10,6 +10,7 @@ import com.mycompany.avventuratestuale_cheesywizards.files.FileManager;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
 import com.mycompany.avventuratestuale_cheesywizards.type.Users;
 import com.mycompany.avventuratestuale_cheesywizards.timer.*;
+import java.awt.Color;
 import javax.swing.ImageIcon;
 
 /**
@@ -22,6 +23,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     private Users user = null;
     private TimerManager timerManager = null;
     private Thread timerThread;
+    private boolean is_game_lost = false;
     
     /**
      * Creates new form AdventureFrame
@@ -196,25 +198,43 @@ public class AdventureFrame extends javax.swing.JFrame {
      * @param evt 
      */
     private void exit_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_buttonActionPerformed
-        new LoginFrame().setVisible(true);
         
-        //Viene effettuato un salvataggio e aperta la pagina di login
-        FileManager fm = new FileManager();
-        fm.update_savings_on_file_and_db(user.getUsername(), user.getPassword(), game_status);
-        System.out.println("Salvataggio effettuato.");
-        dispose();
+        if (!is_game_lost){
+            //Viene effettuato un salvataggio e aperta la pagina di login
+            FileManager fm = new FileManager();
+            fm.update_savings_on_file_and_db(user.getUsername(), user.getPassword(), game_status);
+            System.out.println("Salvataggio effettuato.");
+            dispose();
+        } else {
+            destroySavings();
+        }
+        new LoginFrame().setVisible(true);
     }//GEN-LAST:event_exit_buttonActionPerformed
     
+    /**
+     * Metodo che riporta alla schermata di login e distrugge i salvataggi per l'utente connesso.
+     */
     private void destroySavings(){
         //Viene effettuato un salvataggio e aperta la pagina di login
         FileManager fm = new FileManager();
         fm.update_savings_on_file_and_db(user.getUsername(), user.getPassword(), game_status);
-        System.out.println("Salvataggio effettuato.");
         
         DBManager db = new DBManager();
-        db.destroy_savings(user.getEmail());
-        System.out.println("Salvataggio per "+user.getEmail()+" eliminato.");
+        db.destroy_savings(user.getUsername());
+        System.out.println("Salvataggio per "+user.getUsername()+" eliminato.");
         dispose();
+    }
+    
+    public void game_lost(){
+        timer_label.setForeground(Color.red);
+        ImageIcon icon = new ImageIcon(getClass().getResource("/immagini/game_lost_image.png"));
+        image_lbl.setIcon(icon);
+        
+        String lost_sentence = "HAI PERSO!\nSono passati 20 minuti e non sei riuscito a fuggire in tempo.\n"
+                + "La tua ragazza è tornata in casa con un'ascia in mano e ti ha ammazzato.\n\nSei morto.";
+        is_game_lost = true;
+        phone_button.setEnabled(false);
+        inTextArea.setEditable(false);
     }
     
     /**

@@ -53,8 +53,8 @@ public class TimerManager implements Runnable{
             }
         }
         if (timer.getCurrent_value() <= 0) {
-            adventureFrame.updateOutTextArea("hai perso");
-            System.out.println("hai perso.");
+            adventureFrame.game_lost();
+            System.out.println("TEMPO SCADUTO!.");
         }
         running = false;
     }
