@@ -41,7 +41,12 @@ public class TimerManager implements Runnable{
             try {
                 Thread.sleep(1000); // Pausa di 1 secondo
                 timer.setCurrent_value(timer.getCurrent_value() - 1); // Decremento di currentValue
-                System.out.println("Timer: " + timer.getCurrent_value());
+                
+                int minutes = timer.getCurrent_value() / 60;
+                int seconds = timer.getCurrent_value() % 60;
+                String timeString = String.format("%02d:%02d", minutes, seconds);
+                
+                adventureFrame.setTimerLabel(timeString);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.out.println("Il thread del timer è stato interrotto.");
