@@ -24,6 +24,7 @@ com\mycompany\avventuratestuale_cheesywizards\chat\PhoneFrame$1.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ServerFrame$2.class
 com\mycompany\avventuratestuale_cheesywizards\type\GameStatus.class
 com\mycompany\avventuratestuale_cheesywizards\type\AdventureObject.class
+com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$3.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ServerFrame$3.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ClientFrame.class
 com\mycompany\avventuratestuale_cheesywizards\type\CommandType.class

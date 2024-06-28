@@ -203,7 +203,7 @@ public class LoginFrame extends javax.swing.JFrame {
                             file.update_savings_on_file_and_db(username, password, saves);
                             
                             user = new Users(email, username, password);
-                            new AdventureFrame(user).run_adventure_frame(saves);
+                            new AdventureFrame(user, saves).run_adventure_frame();
                             dispose(); 
 
                         } else {
@@ -213,7 +213,7 @@ public class LoginFrame extends javax.swing.JFrame {
                             System.out.println("Salvataggio caricato");
                             
                             user = new Users(email, username, password);
-                            new AdventureFrame(user).run_adventure_frame(saves);
+                            new AdventureFrame(user, saves).run_adventure_frame();
                             dispose(); 
                         }     
                     } else {
