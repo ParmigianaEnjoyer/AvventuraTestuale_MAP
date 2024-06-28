@@ -7,6 +7,7 @@ package com.mycompany.avventuratestuale_cheesywizards.swing;
 import com.mycompany.avventuratestuale_cheesywizards.chat.PhoneFrame;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
 import com.mycompany.avventuratestuale_cheesywizards.type.Users;
+import com.mycompany.avventuratestuale_cheesywizards.timer.*;
 import javax.swing.ImageIcon;
 
 /**
@@ -16,6 +17,10 @@ import javax.swing.ImageIcon;
 public class AdventureFrame extends javax.swing.JFrame {
 
     private Users user = null;
+    private Timer timer = new Timer();
+    private TimerManager timerManager = new TimerManager(timer, this);
+    private Thread timerThread;
+    
     /**
      * Creates new form AdventureFrame
      */
@@ -36,7 +41,17 @@ public class AdventureFrame extends javax.swing.JFrame {
         //metto il frame al centro dello schermo
         setLocationRelativeTo(null);
     }
-
+    
+    /**
+     * 
+     * @param message 
+     */
+    public void updateOutTextArea(String message) {
+        System.out.println("Ciamato il metodo updateOutTextArea" + message);
+        //(outTextArea.setText(message + "\n");
+        this.dispose();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,11 +154,10 @@ public class AdventureFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AdventureFrame(user).setVisible(true);
-                new AdventureFrame(user).setTitle("La mia ragazza è pazza!! - " + user.getUsername());
-                System.out.println(saves.getAscia().getDescription());
-                System.out.println(saves.getAscia().getAlias().toString());
-                System.out.println(saves.getComodino().getList().get(0).getName());
-                System.out.println("AdventureFrame " + user.getUsername());
+                
+                //Faccio partire il timer.
+                timerThread = new Thread(timerManager);
+                timerThread.start();
             }
         });
     }

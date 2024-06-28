@@ -21,6 +21,7 @@ public class PhoneFrame extends javax.swing.JFrame {
     public PhoneFrame(Users user_info) {
         this.user = user_info;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
