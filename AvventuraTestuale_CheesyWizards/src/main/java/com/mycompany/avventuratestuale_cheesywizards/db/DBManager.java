@@ -283,4 +283,19 @@ public class DBManager {
         
         return answer;
     }
+    
+    public void destroy_savings(String email){
+        
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
+            
+            PreparedStatement pstm = conn.prepareStatement("UPDATE adventure_user SET savings=null WHERE email=?");
+            pstm.setString(1, email);
+            int rowsAffected = pstm.executeUpdate();
+            pstm.close();
+            conn.close();
+        }catch(SQLException ex){
+            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
+        }
+    }
 }

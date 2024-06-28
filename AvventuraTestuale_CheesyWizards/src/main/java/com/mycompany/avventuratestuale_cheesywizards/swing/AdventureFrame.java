@@ -5,6 +5,7 @@
 package com.mycompany.avventuratestuale_cheesywizards.swing;
 
 import com.mycompany.avventuratestuale_cheesywizards.chat.PhoneFrame;
+import com.mycompany.avventuratestuale_cheesywizards.db.DBManager;
 import com.mycompany.avventuratestuale_cheesywizards.files.FileManager;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
 import com.mycompany.avventuratestuale_cheesywizards.type.Users;
@@ -80,7 +81,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         outTextArea = new javax.swing.JTextArea();
         phone_button = new javax.swing.JButton();
         timer_label = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        exit_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("La mia ragazza è una pazza!!!");
@@ -116,13 +117,13 @@ public class AdventureFrame extends javax.swing.JFrame {
         timer_label.setForeground(new java.awt.Color(255, 255, 255));
         timer_label.setText("17:38");
 
-        jButton1.setBackground(new java.awt.Color(204, 0, 0));
-        jButton1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("ESCI");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        exit_button.setBackground(new java.awt.Color(204, 0, 0));
+        exit_button.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        exit_button.setForeground(new java.awt.Color(255, 255, 255));
+        exit_button.setText("ESCI");
+        exit_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                exit_buttonActionPerformed(evt);
             }
         });
 
@@ -144,7 +145,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                         .addGap(601, 601, 601)
                         .addComponent(timer_label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(exit_button)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -153,7 +154,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(timer_label, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(jButton1))
+                    .addComponent(exit_button))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(image_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -194,16 +195,28 @@ public class AdventureFrame extends javax.swing.JFrame {
      * Metodo che permette di uscire dall'avventura e salvare la partita
      * @param evt 
      */
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void exit_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_buttonActionPerformed
         new LoginFrame().setVisible(true);
         
-        //Inserire qui la logica di chiusura
+        //Viene effettuato un salvataggio e aperta la pagina di login
         FileManager fm = new FileManager();
         fm.update_savings_on_file_and_db(user.getUsername(), user.getPassword(), game_status);
         System.out.println("Salvataggio effettuato.");
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }//GEN-LAST:event_exit_buttonActionPerformed
+    
+    private void destroySavings(){
+        //Viene effettuato un salvataggio e aperta la pagina di login
+        FileManager fm = new FileManager();
+        fm.update_savings_on_file_and_db(user.getUsername(), user.getPassword(), game_status);
+        System.out.println("Salvataggio effettuato.");
+        
+        DBManager db = new DBManager();
+        db.destroy_savings(user.getEmail());
+        System.out.println("Salvataggio per "+user.getEmail()+" eliminato.");
+        dispose();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -220,9 +233,9 @@ public class AdventureFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton exit_button;
     private javax.swing.JLabel image_lbl;
     private javax.swing.JTextArea inTextArea;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
