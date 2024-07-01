@@ -1,5 +1,7 @@
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$1.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ClientFrame$5.class
+com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$4.class
+com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$7.class
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame.class
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$4.class
 com\mycompany\avventuratestuale_cheesywizards\db\DBManager.class
@@ -8,6 +10,7 @@ com\mycompany\avventuratestuale_cheesywizards\timer\TimerManager.class
 com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$1.class
 com\mycompany\avventuratestuale_cheesywizards\chat\PhoneFrame$2.class
 com\mycompany\avventuratestuale_cheesywizards\timer\Timer.class
+com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$8.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ServerFrame$3.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ClientFrame.class
 com\mycompany\avventuratestuale_cheesywizards\type\CommandType.class
@@ -15,11 +18,15 @@ com\mycompany\avventuratestuale_cheesywizards\chat\PhoneFrame$3.class
 com\mycompany\avventuratestuale_cheesywizards\files\FileManager.class
 com\mycompany\avventuratestuale_cheesywizards\chat\PhoneFrame.class
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$2.class
+com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$5.class
+com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$9.class
 com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$2.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ServerFrame$1.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ClientFrame$3.class
 com\mycompany\avventuratestuale_cheesywizards\type\Users.class
 com\mycompany\avventuratestuale_cheesywizards\type\AdventureObjectContainer.class
+com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$10.class
+com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$6.class
 com\mycompany\avventuratestuale_cheesywizards\type\Inventory.class
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$3.class
 com\mycompany\avventuratestuale_cheesywizards\AvventuraTestuale_CheesyWizards.class

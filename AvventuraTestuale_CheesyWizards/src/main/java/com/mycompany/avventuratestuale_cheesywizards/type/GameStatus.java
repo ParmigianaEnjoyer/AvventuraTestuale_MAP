@@ -18,7 +18,7 @@ import java.util.Set;
 public class GameStatus implements Serializable{
     
     private Timer timer_partita;
-    
+    private Room current_room;
     private AdventureObject pezzoChiave1;
     private AdventureObject pezzoChiave2;
     private AdventureObject osso;
@@ -60,7 +60,6 @@ public class GameStatus implements Serializable{
     public void initialize_game_status(){
         inventario = new Inventory();
         timer_partita = new Timer();
-        
         /**
          * Pezzo di chiave blu #1
          */
@@ -309,7 +308,7 @@ public class GameStatus implements Serializable{
         contenitoriNelSoggiorno.add(comodino);
         contenitoriNelSoggiorno.add(scrivania);
         contenitoriNelSoggiorno.add(como);
-        stanzaSoggiorno = new Room(0, "Soggiorno", "", "", null, stanzaBancoDaLavoro, null, null, oggettiNelSoggiorno, contenitoriNelSoggiorno);
+        stanzaSoggiorno = new Room(0, "Soggiorno", "", "", null, stanzaBancoDaLavoro, null, null, oggettiNelSoggiorno, contenitoriNelSoggiorno, "/immagini/stanza1.png");
         
         /**
          * Stanza banco da lavoro #01
@@ -318,16 +317,16 @@ public class GameStatus implements Serializable{
         oggettiSalaBancoDaLavoro.add(tappetoScacchiera);
         oggettiSalaBancoDaLavoro.add(bancoDaLavoro);
         List<AdventureObjectContainer> contenitoriSalaBancoDaLavoro = new ArrayList<>();
-        stanzaBancoDaLavoro = new Room(1, "Stanza lavoro", "", "", stanzaSoggiorno, null, stanzaCucina, null, oggettiSalaBancoDaLavoro, contenitoriSalaBancoDaLavoro);
-        
+        stanzaBancoDaLavoro = new Room(1, "Stanza lavoro", "", "", stanzaSoggiorno, null, stanzaCucina, null, oggettiSalaBancoDaLavoro, contenitoriSalaBancoDaLavoro, "/immagini/stanza2.png");
+        stanzaSoggiorno.setNorth(stanzaBancoDaLavoro);
         /**
          * Stanza cucina #02
          */
         List<AdventureObject> oggettiCucina = new ArrayList<>();
         List<AdventureObjectContainer> contenitoriCucina = new ArrayList<>();
         contenitoriCucina.add(dispensa);
-        stanzaCucina = new Room(2, "Cucina", "", "", stanzaGiardino, null, null, stanzaBancoDaLavoro, oggettiCucina, contenitoriCucina);
-        
+        stanzaCucina = new Room(2, "Cucina", "", "", stanzaGiardino, null, null, stanzaBancoDaLavoro, oggettiCucina, contenitoriCucina, "/immagini/stanza3.png");
+        stanzaBancoDaLavoro.setEast(stanzaCucina);
         /**
          * Stanza giardino #03
          */
@@ -335,9 +334,85 @@ public class GameStatus implements Serializable{
         List<AdventureObjectContainer> contenitoriGiardino = new ArrayList<>();
         contenitoriGiardino.add(cucciaConCane);
         contenitoriGiardino.add(dispensa);
-        stanzaGiardino = new Room(3, "Giardino", "", "", null, stanzaCucina, null, null, oggettiGiardino, contenitoriGiardino);
+        stanzaGiardino = new Room(3, "Giardino", "", "", null, stanzaCucina, null, null, oggettiGiardino, contenitoriGiardino, "/immagini/stanza4.png");
+        stanzaCucina.setNorth(stanzaGiardino);
+        current_room = stanzaSoggiorno;
     }
 
+    public Room getCurrent_room() {
+        return current_room;
+    }
+
+    public void setCurrent_room(Room current_room) {
+        this.current_room = current_room;
+    }
+
+    public AdventureObject getTappetoRosso() {
+        return tappetoRosso;
+    }
+
+    public void setTappetoRosso(AdventureObject tappetoRosso) {
+        this.tappetoRosso = tappetoRosso;
+    }
+
+    public AdventureObject getLampadario() {
+        return lampadario;
+    }
+
+    public void setLampadario(AdventureObject lampadario) {
+        this.lampadario = lampadario;
+    }
+
+    public AdventureObject getDivanetto() {
+        return divanetto;
+    }
+
+    public void setDivanetto(AdventureObject divanetto) {
+        this.divanetto = divanetto;
+    }
+
+    public AdventureObject getOrologio() {
+        return orologio;
+    }
+
+    public void setOrologio(AdventureObject orologio) {
+        this.orologio = orologio;
+    }
+
+    public AdventureObject getDivano() {
+        return divano;
+    }
+
+    public void setDivano(AdventureObject divano) {
+        this.divano = divano;
+    }
+
+    public AdventureObject getSpecchio() {
+        return specchio;
+    }
+
+    public void setSpecchio(AdventureObject specchio) {
+        this.specchio = specchio;
+    }
+
+    public AdventureObjectContainer getComo() {
+        return como;
+    }
+
+    public void setComo(AdventureObjectContainer como) {
+        this.como = como;
+    }
+
+    public AdventureObjectContainer getScrivania() {
+        return scrivania;
+    }
+
+    public void setScrivania(AdventureObjectContainer scrivania) {
+        this.scrivania = scrivania;
+    }
+
+
+    
     /**
      * 
      * @return 

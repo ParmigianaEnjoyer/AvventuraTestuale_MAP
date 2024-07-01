@@ -98,7 +98,7 @@ public class LoginFrame extends javax.swing.JFrame {
         comunication_label.setForeground(new java.awt.Color(255, 255, 255));
         comunication_label.setText("Inserisci username e password per accedere o registrarti.");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Default_A_vibrant_cinematic_digital_portrait_of_a_frenzied_gir_2.jpg"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/girl_image.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
