@@ -28,6 +28,8 @@ public class AdventureObject implements Serializable{
     private boolean movable;        //indica se l'oggetto può essere spostato
     
     private boolean observable;     //indica se l'oggetto può essere osservato
+    
+    private String path_image;      //path dell'immagine dell'oggetto
 
     /**
      * 
@@ -40,9 +42,10 @@ public class AdventureObject implements Serializable{
      * @param usable
      * @param locked
      * @param movable
-     * @param observable 
+     * @param observable
+     * @param path_image 
      */
-    public AdventureObject(int id, String name, String description, Set<String> alias, boolean openable, boolean pickupable, boolean usable, boolean locked, boolean movable, boolean observable) {
+    public AdventureObject(int id, String name, String description, Set<String> alias, boolean openable, boolean pickupable, boolean usable, boolean locked, boolean movable, boolean observable, String path_image) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -53,6 +56,23 @@ public class AdventureObject implements Serializable{
         this.locked = locked;
         this.movable = movable;
         this.observable = observable;
+        this.path_image = path_image;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public String getPath_image() {
+        return path_image;
+    }
+
+    /**
+     * 
+     * @param path_image 
+     */
+    public void setPath_image(String path_image) {
+        this.path_image = path_image;
     }
 
     /**
