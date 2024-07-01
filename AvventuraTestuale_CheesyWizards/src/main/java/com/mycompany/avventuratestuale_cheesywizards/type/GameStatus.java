@@ -150,7 +150,7 @@ public class GameStatus implements Serializable{
         tappetoScacchiera = new AdventureObject(5, "Tappeto a scacchiera", "È un tappeto di dubbio gusto estetico.\n"
                 + "È molto grande e sembra super mrbido, però si nota un rialzamento al centro, come se ci "
                 + "fosse qualcosa di nascosto al di sotto."
-                + "", AliasTappetoScacchiera, false, false, true, false, false, true, "");
+                + "", AliasTappetoScacchiera, false, false, true, false, false, true, "/immagini/ItemBancoDalavoro/tappetoScacchiera.jpg");
         
         /**
          * Orologio
@@ -196,6 +196,13 @@ public class GameStatus implements Serializable{
                 + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemSoggiorno/scrivania_specchio.png");
         
         /**
+         * TavoloTronco
+         */
+        specchio = new AdventureObject(17, "Tavolo tronco", "È un tavolo ricavato da un tronco.\n"
+                + "L'arredamento di questa casa è davvero strano!"
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemBancoDalavoro/tavolo.jpg");
+        
+        /**
          * Scrivania
          * La scrivania è vuota
          */
@@ -235,7 +242,7 @@ public class GameStatus implements Serializable{
         AliasBancoDaLavoro.add("tavolo");
         AliasBancoDaLavoro.add("piano");
         bancoDaLavoro = new AdventureObject(7, "Banco da lavoro", "È un banco da lavoro, utile per costruire e riparare qualsiasi cosa."
-                + "", AliasBancoDaLavoro, false, false, true, false, false, true, "");
+                + "", AliasBancoDaLavoro, false, false, true, false, false, true, "/immagini/ItemBancoDalavoro/banco_da_lavoro.jpg");
         
         /**
          * Dispensa in cucina
