@@ -39,6 +39,7 @@ public class GameStatus implements Serializable{
     private AdventureObject lavandino;
     private AdventureObject tavoloDaPranzo;
     private AdventureObject camino;
+    private AdventureObject porta;
     
     private AdventureObjectContainer como;
     private AdventureObjectContainer scrivania;
@@ -302,6 +303,13 @@ public class GameStatus implements Serializable{
                 + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemCucina/camino_poltrona.png");
         
         /**
+         * Porta giardino
+         */
+        porta = new AdventureObject(29, "Porta", "È la porta del giardino, magari lì fuori trovo qualcosa per scappare.\n"
+                + "La porta, però, sembra chiusa a chiave...CHE TU SIA MALEDETTA!"
+                + "", AliasVuoto, true, false, false, true, false, true, "/immagini/ItemCucina/porta.png");
+        
+        /**
          * Mobile a tre ante cucina
          * Il mobile in cucina è vuoto.
          */
@@ -367,7 +375,7 @@ public class GameStatus implements Serializable{
         oggettiNellArmadio.add(ascia);
         armadioAttrezzi = new AdventureObjectContainer(9, "Armadio degli attrezzi", "È un armadio molto vecchio e consumato, non è chiuso a chiave."
                 + "\nSicuramente viene utilizzato come ripostiglio per gli attrezzi."
-                + "", AliasArmadio, true, false, false, true, false, true, "", oggettiNellArmadio);
+                + "", AliasArmadio, true, false, false, true, false, true, "/immagini/ItemGiardino/armadioAttrezzi.png", oggettiNellArmadio);
         
         /**
          * Cuccia con cane
@@ -387,7 +395,7 @@ public class GameStatus implements Serializable{
                 + "il cane di quella svitata. Non lo sopporto, è una bestia di satana."
                 + "\nOvviamente... accanto a lui c'è una chiave d'oro che sembra proprio essere la chiave della porta di casa, "
                 + "come posso prenderla senza che questa bestia mi sbrani."
-                + "", AliasCuccia, false, false, false, true, false, true, "", oggettiNellaCuccia);
+                + "", AliasCuccia, false, false, false, true, false, true, "/immagini/ItemGiardino/cucciaCane.png", oggettiNellaCuccia);
         
         /**
          * Stanza soggiorno #00
@@ -431,6 +439,7 @@ public class GameStatus implements Serializable{
         oggettiCucina.add(tavoloDaPranzo);
         oggettiCucina.add(mobileCucina);
         oggettiCucina.add(lavandino);
+        oggettiCucina.add(porta);
         List<AdventureObjectContainer> contenitoriCucina = new ArrayList<>();
         contenitoriCucina.add(dispensa);
         contenitoriCucina.add(frigorifero);
@@ -443,6 +452,7 @@ public class GameStatus implements Serializable{
         List<AdventureObject> oggettiGiardino = new ArrayList<>();
         List<AdventureObjectContainer> contenitoriGiardino = new ArrayList<>();
         contenitoriGiardino.add(cucciaConCane);
+        contenitoriGiardino.add(armadioAttrezzi);
         stanzaGiardino = new Room(3, "Giardino", "", "", null, stanzaCucina, null, null, oggettiGiardino, contenitoriGiardino, "/immagini/stanza4.png");
         stanzaCucina.setNorth(stanzaGiardino);
         current_room = stanzaSoggiorno;
