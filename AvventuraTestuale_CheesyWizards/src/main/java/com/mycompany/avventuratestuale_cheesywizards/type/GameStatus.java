@@ -25,8 +25,16 @@ public class GameStatus implements Serializable{
     private AdventureObject ascia;
     private AdventureObject chiaveOro;
     private AdventureObject tappetoScacchiera;
+    private AdventureObject tappetoRosso;
+    private AdventureObject lampadario;
+    private AdventureObject divanetto;
     private AdventureObject bancoDaLavoro;
+    private AdventureObject orologio;
+    private AdventureObject divano;
+    private AdventureObject specchio;
     
+    private AdventureObjectContainer como;
+    private AdventureObjectContainer scrivania;
     private AdventureObjectContainer comodino;
     private AdventureObjectContainer dispensa;
     private AdventureObjectContainer cucciaConCane;
@@ -71,7 +79,7 @@ public class GameStatus implements Serializable{
         pezzoChiave1 = new AdventureObject(0, "Pezzo di chiave blu #1", "E' uno strano oggetto, sembra "
             + "esattamente la prima metà di una chiave spezzata. /nChe quella pazza l'abbia rotta "
             + "di proposito e nascosto l'altra metà non so dove? Mi servirebbe un banco da lavoro per unirle..."
-            + "", AliasPezzoChiave1, false, true, true, false, false, false);
+            + "", AliasPezzoChiave1, false, true, true, false, false, false, "");
         
         
         /**
@@ -92,7 +100,7 @@ public class GameStatus implements Serializable{
         pezzoChiave2 = new AdventureObject(1, "Pezzo di chiave blu #2", "E' uno strano oggetto, sembra "
                 + "esattamente la seconda metà di una chiave spezzata. /nChe quella pazza l'abbia rotta "
                 + "di proposito e nascosto l'altra metà non so dove? Mi servirebbe un banco da lavoro per unirle..."
-                + "", AliasPezzoChiave2, false, true, true, false, false, false);
+                + "", AliasPezzoChiave2, false, true, true, false, false, false, "");
         
         /**
          * Osso
@@ -103,7 +111,7 @@ public class GameStatus implements Serializable{
         AliasOsso.add("scheletro");
         AliasOsso.add("costola");
         osso = new AdventureObject(2, "Osso", "Sembra un osso di prosciutto, i cani ne vanno ghiotti, farebbero di tutto pur di "
-                + "averlo.", AliasOsso, false, true, true, false, false, false);
+                + "averlo.", AliasOsso, false, true, true, false, false, false, "");
         
         /**
          * Ascia
@@ -119,7 +127,7 @@ public class GameStatus implements Serializable{
                 + "quella pazza userebbe per farmi fuori... "
                 + "\nCredo sia lo strumento che suo padre usa a lavoro. Con quest'ascia tra le mie mani nessuna "
                 + "serratura in legno potrà fermarmi!"
-                + "", AliasAscia, false, true, true, false, false, false);
+                + "", AliasAscia, false, true, true, false, false, false, "");
         
         /**
          * Chiave d'oro
@@ -130,7 +138,7 @@ public class GameStatus implements Serializable{
         AliasChiaveOro.add("chiave");
         chiaveOro = new AdventureObject(4, "Chiave d'oro", "È una chiave d'oro, sembra una chiave molto importante.\n"
                 + "Che sia finalmente la chiave per poter scappare dalla casa di questa pazza?"
-                + "", AliasChiaveOro, false, true, true, false, false, false);
+                + "", AliasChiaveOro, false, true, true, false, false, false, "");
         
         /**
          * Tappeto a scacchiera
@@ -143,7 +151,68 @@ public class GameStatus implements Serializable{
         tappetoScacchiera = new AdventureObject(5, "Tappeto a scacchiera", "È un tappeto di dubbio gusto estetico.\n"
                 + "È molto grande e sembra super mrbido, però si nota un rialzamento al centro, come se ci "
                 + "fosse qualcosa di nascosto al di sotto."
-                + "", AliasTappetoScacchiera, false, false, true, false, false, true);
+                + "", AliasTappetoScacchiera, false, false, true, false, false, true, "");
+        
+        /**
+         * Orologio
+         */
+        Set<String> AliasVuoto = new HashSet<>();
+        orologio = new AdventureObject(11, "Orologio", "È un orologio a pendolo, sembra molto antico.\n"
+                + "Non pensavo li producessero ancora, il suo ticchettio fa quasi paura..."
+                + "", AliasVuoto, false, false, false, false, false, true, "");
+        
+        /**
+         * Tappeto rosso
+         */
+        tappetoRosso = new AdventureObject(12, "Tappeto rosso", "È un tappeto rosso molto carino, sembra anche molto morbido.\n"
+                + "Sarà nuovo."
+                + "", AliasVuoto, false, false, false, false, false, true, "");
+        
+        /**
+         * Lampadario
+         */
+        lampadario = new AdventureObject(13, "Lampadario", "È un lampadario molto grande.\n"
+                + "È così ingombrante che devo fare attenzione a non sbatterci la testa."
+                + "", AliasVuoto, false, false, false, false, false, true, "");
+        
+        /**
+         * Divanetto
+         */
+        divanetto = new AdventureObject(14, "Divanetto rosso", "È un divanetto abbastanza piccolo in pelle sintentica.\n"
+                + "Sembra molto comodo ma fa troppo caldo, vorrei evitare di sedermi e appiccicarmi per il sudore."
+                + "", AliasVuoto, false, false, false, false, false, true, "");
+        
+        /**
+         * Divano
+         */
+        divano = new AdventureObject(15, "Divano rosso", "È un divano rosso abbastanza grande in pelle sintentica.\n"
+                + "Sembra molto comodo ma fa troppo caldo, vorrei evitare di sedermi e appiccicarmi per il sudore."
+                + "", AliasVuoto, false, false, false, false, false, true, "");
+        
+        /**
+         * Specchio
+         */
+        specchio = new AdventureObject(16, "Specchio", "È uno specchio a misura d'uomo.\n"
+                + "WOW! Non ricordavo di essere così bello!"
+                + "", AliasVuoto, false, false, false, false, false, true, "");
+        
+        /**
+         * Scrivania
+         * La scrivania è vuota
+         */
+        List<AdventureObject> oggettiNellaScrivania = new ArrayList<>();
+        scrivania = new AdventureObjectContainer(17, "Scrivania", "È una scrivania, forse usata per studiare.\n"
+                + "C'è un tiretto, chissà cosa c'è dentro."
+                + "", AliasVuoto, true, false, false, false, false, true, "",oggettiNellaScrivania);
+        
+        /**
+         * Comò
+         * Il comò è vuoto.
+         */
+        List<AdventureObject> OggettiNelComo = new ArrayList<>();
+        como = new AdventureObjectContainer(18, "Comò", "È un comò molto antico e di gran classe.\n"
+                + "Ci sono dei tiretti, chissà cosa c'è dentro."
+                + "", AliasVuoto, true, false, false, false, false, true, "", OggettiNelComo);
         
         /**
          * Comodino
@@ -156,7 +225,7 @@ public class GameStatus implements Serializable{
         oggettiNelComodino.add(pezzoChiave1);
         comodino = new AdventureObjectContainer(6, "Comodino stanza orologio", "È un grazioso comodino di un legno molto antico."
                 + "\nSembra che uno dei tiretti non sia stato chiuso correttamente, forse per la fretta di dover nascondere qualcosa?"
-                + "", AliasComodino, true, false, false, false, false, true, oggettiNelComodino);
+                + "", AliasComodino, true, false, false, false, false, true, "", oggettiNelComodino);
         
         /**
          * Banco da lavoro
@@ -167,7 +236,7 @@ public class GameStatus implements Serializable{
         AliasBancoDaLavoro.add("tavolo");
         AliasBancoDaLavoro.add("piano");
         bancoDaLavoro = new AdventureObject(7, "Banco da lavoro", "È un banco da lavoro, utile per costruire e riparare qualsiasi cosa."
-                + "", AliasBancoDaLavoro, false, false, true, false, false, true);
+                + "", AliasBancoDaLavoro, false, false, true, false, false, true, "");
         
         /**
          * Dispensa in cucina
@@ -184,7 +253,7 @@ public class GameStatus implements Serializable{
         oggettiNelComodino.add(osso);
         dispensa = new AdventureObjectContainer(8, "Dispensa della cucina", "È una graziosa dispensa fatta di un legno molto antico."
                 + "\nSembra chiusa dall'interno da una serrattuura in legno, che possa usare qualche oggetto per forzarla?"
-                + "", AliasDispensa, true, false, false, true, false, true, oggettiNellaDispensa);
+                + "", AliasDispensa, true, false, false, true, false, true, "", oggettiNellaDispensa);
         
         /**
          * Armadio degli attrezzi
@@ -202,7 +271,7 @@ public class GameStatus implements Serializable{
         oggettiNellArmadio.add(ascia);
         armadioAttrezzi = new AdventureObjectContainer(9, "Armadio degli attrezzi", "È un armadio molto vecchio e consumato, non è chiuso a chiave."
                 + "\nSicuramente viene utilizzato come ripostiglio per gli attrezzi."
-                + "", AliasArmadio, true, false, false, true, false, true, oggettiNellArmadio);
+                + "", AliasArmadio, true, false, false, true, false, true, "", oggettiNellArmadio);
         
         /**
          * Cuccia con cane
@@ -222,14 +291,24 @@ public class GameStatus implements Serializable{
                 + "il cane di quella svitata. Non lo sopporto, è una bestia di satana."
                 + "\nOvviamente... accanto a lui c'è una chiave d'oro che sembra proprio essere la chiave della porta di casa, "
                 + "come posso prenderla senza che questa bestia mi sbrani."
-                + "", AliasCuccia, false, false, false, true, false, true, oggettiNellaCuccia);
+                + "", AliasCuccia, false, false, false, true, false, true, "", oggettiNellaCuccia);
         
         /**
          * Stanza soggiorno #00
          */
         List<AdventureObject> oggettiNelSoggiorno = new ArrayList<>();
         List<AdventureObjectContainer> contenitoriNelSoggiorno = new ArrayList<>();
+        
+        oggettiNelSoggiorno.add(orologio);
+        oggettiNelSoggiorno.add(tappetoRosso);
+        oggettiNelSoggiorno.add(lampadario);
+        oggettiNelSoggiorno.add(specchio);
+        oggettiNelSoggiorno.add(divanetto);
+        oggettiNelSoggiorno.add(divano);
+                
         contenitoriNelSoggiorno.add(comodino);
+        contenitoriNelSoggiorno.add(scrivania);
+        contenitoriNelSoggiorno.add(como);
         stanzaSoggiorno = new Room(0, "Soggiorno", "", "", null, stanzaBancoDaLavoro, null, null, oggettiNelSoggiorno, contenitoriNelSoggiorno);
         
         /**
