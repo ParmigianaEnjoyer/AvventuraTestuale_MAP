@@ -30,6 +30,8 @@ public class Room implements Serializable{
     
     private List<AdventureObjectContainer> containers;        //lista di tutti gli oggetti contenitori presenti all'interno della stanza
 
+    private String image_path;
+    
     /**
      * 
      * @param id
@@ -43,7 +45,7 @@ public class Room implements Serializable{
      * @param objects
      * @param containers 
      */
-    public Room(int id, String name, String description, String look, Room south, Room north, Room east, Room west, List<AdventureObject> objects, List<AdventureObjectContainer> containers) {
+    public Room(int id, String name, String description, String look, Room south, Room north, Room east, Room west, List<AdventureObject> objects, List<AdventureObjectContainer> containers, String image_path) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -54,8 +56,18 @@ public class Room implements Serializable{
         this.west = west;
         this.objects = objects;
         this.containers = containers;
+        this.image_path = image_path;
     }
 
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+
+    
 
     /**
      * 
