@@ -159,42 +159,42 @@ public class GameStatus implements Serializable{
         Set<String> AliasVuoto = new HashSet<>();
         orologio = new AdventureObject(11, "Orologio", "È un orologio a pendolo, sembra molto antico.\n"
                 + "Non pensavo li producessero ancora, il suo ticchettio fa quasi paura..."
-                + "", AliasVuoto, false, false, false, false, false, true, "");
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemSoggiorno/orologio_comodino.png");
         
         /**
          * Tappeto rosso
          */
         tappetoRosso = new AdventureObject(12, "Tappeto rosso", "È un tappeto rosso molto carino, sembra anche molto morbido.\n"
                 + "Sarà nuovo."
-                + "", AliasVuoto, false, false, false, false, false, true, "");
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemSoggiorno/lampadario_tappetoRosso.png");
         
         /**
          * Lampadario
          */
         lampadario = new AdventureObject(13, "Lampadario", "È un lampadario molto grande.\n"
                 + "È così ingombrante che devo fare attenzione a non sbatterci la testa."
-                + "", AliasVuoto, false, false, false, false, false, true, "");
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemSoggiorno/lampadario_tappetoRosso.png");
         
         /**
          * Divanetto
          */
         divanetto = new AdventureObject(14, "Divanetto rosso", "È un divanetto abbastanza piccolo in pelle sintentica.\n"
                 + "Sembra molto comodo ma fa troppo caldo, vorrei evitare di sedermi e appiccicarmi per il sudore."
-                + "", AliasVuoto, false, false, false, false, false, true, "");
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemSoggiorno/divanetto.png");
         
         /**
          * Divano
          */
         divano = new AdventureObject(15, "Divano rosso", "È un divano rosso abbastanza grande in pelle sintentica.\n"
                 + "Sembra molto comodo ma fa troppo caldo, vorrei evitare di sedermi e appiccicarmi per il sudore."
-                + "", AliasVuoto, false, false, false, false, false, true, "");
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemSoggiorno/divano_como.png");
         
         /**
          * Specchio
          */
         specchio = new AdventureObject(16, "Specchio", "È uno specchio a misura d'uomo.\n"
                 + "WOW! Non ricordavo di essere così bello!"
-                + "", AliasVuoto, false, false, false, false, false, true, "");
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemSoggiorno/scrivania_specchio.png");
         
         /**
          * Scrivania
@@ -203,7 +203,7 @@ public class GameStatus implements Serializable{
         List<AdventureObject> oggettiNellaScrivania = new ArrayList<>();
         scrivania = new AdventureObjectContainer(17, "Scrivania", "È una scrivania, forse usata per studiare.\n"
                 + "C'è un tiretto, chissà cosa c'è dentro."
-                + "", AliasVuoto, true, false, false, false, false, true, "",oggettiNellaScrivania);
+                + "", AliasVuoto, true, false, false, false, false, true, "/immagini/ItemSoggiorno/scrivania_specchio.png",oggettiNellaScrivania);
         
         /**
          * Comò
@@ -212,7 +212,7 @@ public class GameStatus implements Serializable{
         List<AdventureObject> OggettiNelComo = new ArrayList<>();
         como = new AdventureObjectContainer(18, "Comò", "È un comò molto antico e di gran classe.\n"
                 + "Ci sono dei tiretti, chissà cosa c'è dentro."
-                + "", AliasVuoto, true, false, false, false, false, true, "", OggettiNelComo);
+                + "", AliasVuoto, true, false, false, false, false, true, "/immagini/ItemSoggiorno/divano_como.png", OggettiNelComo);
         
         /**
          * Comodino
@@ -225,7 +225,7 @@ public class GameStatus implements Serializable{
         oggettiNelComodino.add(pezzoChiave1);
         comodino = new AdventureObjectContainer(6, "Comodino stanza orologio", "È un grazioso comodino di un legno molto antico."
                 + "\nSembra che uno dei tiretti non sia stato chiuso correttamente, forse per la fretta di dover nascondere qualcosa?"
-                + "", AliasComodino, true, false, false, false, false, true, "", oggettiNelComodino);
+                + "", AliasComodino, true, false, false, false, false, true, "/immagini/ItemSoggiorno/orologio_comodino.png", oggettiNelComodino);
         
         /**
          * Banco da lavoro
