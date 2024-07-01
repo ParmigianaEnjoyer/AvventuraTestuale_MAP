@@ -214,6 +214,12 @@ public class AdventureFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Osservabile.png"))); // NOI18N
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Sposta.png"))); // NOI18N
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Apribile.png"))); // NOI18N
+
         javax.swing.GroupLayout CommandPanelLayout = new javax.swing.GroupLayout(CommandPanel);
         CommandPanel.setLayout(CommandPanelLayout);
         CommandPanelLayout.setHorizontalGroup(
