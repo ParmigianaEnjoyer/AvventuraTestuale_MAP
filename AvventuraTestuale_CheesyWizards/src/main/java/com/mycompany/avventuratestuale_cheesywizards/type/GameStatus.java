@@ -32,6 +32,9 @@ public class GameStatus implements Serializable{
     private AdventureObject orologio;
     private AdventureObject divano;
     private AdventureObject specchio;
+    private AdventureObject tavoloTronco;
+    private AdventureObject telescopio;
+    private AdventureObject orologioDaParete;
     
     private AdventureObjectContainer como;
     private AdventureObjectContainer scrivania;
@@ -39,6 +42,8 @@ public class GameStatus implements Serializable{
     private AdventureObjectContainer dispensa;
     private AdventureObjectContainer cucciaConCane;
     private AdventureObjectContainer armadioAttrezzi;
+    private AdventureObjectContainer mobile;
+    private AdventureObjectContainer mobiletto;
     
     private Room stanzaSoggiorno;
     private Room stanzaBancoDaLavoro;
@@ -198,9 +203,42 @@ public class GameStatus implements Serializable{
         /**
          * TavoloTronco
          */
-        specchio = new AdventureObject(17, "Tavolo tronco", "È un tavolo ricavato da un tronco.\n"
+        tavoloTronco = new AdventureObject(20, "Tavolo tronco", "È un tavolo ricavato da un tronco.\n"
                 + "L'arredamento di questa casa è davvero strano!"
                 + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemBancoDalavoro/tavolo.jpg");
+        
+        /**
+         * Telescopio
+         */
+        telescopio = new AdventureObject(19, "Telescopio", "È un telescopio usato per gli osservare gli astri.\n"
+                + "Sembra costare tantissimo, se lo rompo mi ammazzano a doppio!"
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemBancoDalavoro/mobile_telescopio.jpg");
+        
+        /**
+         * Mobile
+         * Il mobile è vuoto.
+         */
+        List<AdventureObject> OggettiNelMobile = new ArrayList<>();
+        mobile = new AdventureObjectContainer(21, "Mobile a tre ante", "È un mobile a tre ante molto antico.\n"
+                + "Non sembra chiuso a chiave, chissà cosa c'è dentro."
+                + "", AliasVuoto, true, false, false, false, false, true, "/immagini/ItemBancoDalavoro/mobile_telescopio.jpg", OggettiNelMobile);
+        
+        /**
+         * Mobile
+         * Il mobiletto è vuoto.
+         */
+        List<AdventureObject> OggettiNelMobiletto = new ArrayList<>();
+        mobiletto = new AdventureObjectContainer(22, "Mobiletto", "È un mobiletto con sopra una lampada.\n"
+                + "Ci sono dei tiretti, chissà cosa c'è dentro."
+                + "", AliasVuoto, true, false, false, false, false, true, "/immagini/ItemBancoDalavoro/mobiletto_orologio.jpg", OggettiNelMobiletto);
+        
+        /**
+         * Orologio
+         */
+        orologioDaParete = new AdventureObject(23, "Orologio da parete", "È un orologio da parete.\n"
+                + "È veramente brutto, ha una forma tutta quadrata, sembra uscito da Minecraft!"
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemBancoDalavoro/mobiletto_orologio.jpg");
+
         
         /**
          * Scrivania
@@ -323,7 +361,12 @@ public class GameStatus implements Serializable{
         List<AdventureObject> oggettiSalaBancoDaLavoro = new ArrayList<>();
         oggettiSalaBancoDaLavoro.add(tappetoScacchiera);
         oggettiSalaBancoDaLavoro.add(bancoDaLavoro);
+        oggettiSalaBancoDaLavoro.add(orologioDaParete);
+        oggettiSalaBancoDaLavoro.add(telescopio);
+        oggettiSalaBancoDaLavoro.add(tavoloTronco);
         List<AdventureObjectContainer> contenitoriSalaBancoDaLavoro = new ArrayList<>();
+        contenitoriSalaBancoDaLavoro.add(mobile);
+        contenitoriSalaBancoDaLavoro.add(mobiletto);
         stanzaBancoDaLavoro = new Room(1, "Stanza lavoro", "", "", stanzaSoggiorno, null, stanzaCucina, null, oggettiSalaBancoDaLavoro, contenitoriSalaBancoDaLavoro, "/immagini/stanza2.png");
         stanzaSoggiorno.setNorth(stanzaBancoDaLavoro);
         /**
