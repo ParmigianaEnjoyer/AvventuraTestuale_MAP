@@ -35,6 +35,10 @@ public class GameStatus implements Serializable{
     private AdventureObject tavoloTronco;
     private AdventureObject telescopio;
     private AdventureObject orologioDaParete;
+    private AdventureObject poltrona;
+    private AdventureObject lavandino;
+    private AdventureObject tavoloDaPranzo;
+    private AdventureObject camino;
     
     private AdventureObjectContainer como;
     private AdventureObjectContainer scrivania;
@@ -44,6 +48,8 @@ public class GameStatus implements Serializable{
     private AdventureObjectContainer armadioAttrezzi;
     private AdventureObjectContainer mobile;
     private AdventureObjectContainer mobiletto;
+    private AdventureObjectContainer mobileCucina;
+    private AdventureObjectContainer frigorifero;
     
     private Room stanzaSoggiorno;
     private Room stanzaBancoDaLavoro;
@@ -259,6 +265,52 @@ public class GameStatus implements Serializable{
                 + "", AliasVuoto, true, false, false, false, false, true, "/immagini/ItemSoggiorno/divano_como.jpg", OggettiNelComo);
         
         /**
+         * Frigorifero
+         * Il frigorifero è vuoto.
+         */
+        List<AdventureObject> OggettiNelFrigo = new ArrayList<>();
+        frigorifero = new AdventureObjectContainer(24, "Frigorifero", "È un frigorifer divecchissima generazione.\n"
+                + "Fa un rumore madornale e sembra anche chiusa a chiave, che famiglia di spilorci!."
+                + "", AliasVuoto, true, false, false, false, false, true, "/immagini/ItemCucina/frigo_lavandino_dispensa.png", OggettiNelFrigo);
+        
+        /**
+         * Lavandino
+         */
+        lavandino = new AdventureObject(25, "Lavandino", "È un tipico lavandino da cucina.\n"
+                + "A meno che io non volgia lavare i piatti, è inutile."
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemCucina/frigo_lavandino_dispensa.png");
+        
+        /**
+         * Tavolo da pranzo
+         */
+        tavoloDaPranzo = new AdventureObject(26, "Tavolo da pranzo", "È il tavolo dove quella pazza e la sua famiglia pranzano.\n"
+                + "... non riesco a pensare a niente di divertente per un semplice tavolo da pranzo."
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemCucina/tavoloDaPranzo.png");
+        
+        /**
+         * Camino
+         */
+        camino = new AdventureObject(27, "Camino", "È un camino ed è acceso.\n"
+                + "Si, è letteralmente un camino accesso e siamo a Luglio. Fa caldissimo!"
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemCucina/camino_poltrona.png");
+        
+        /**
+         * Poltrona
+         */
+        poltrona = new AdventureObject(28, "Poltrona", "È una poltrona rossa in pelle sintetica.\n"
+                + "Chi ha avuto la brillante idea di metterla di fronte ad un camino acceso? È bollente!!"
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemCucina/camino_poltrona.png");
+        
+        /**
+         * Mobile a tre ante cucina
+         * Il mobile in cucina è vuoto.
+         */
+        List<AdventureObject> OggettiNelMobileCucina = new ArrayList<>();
+        mobileCucina = new AdventureObjectContainer(29, "Mobile a tre ante", "È un mobile a tre ante.\n"
+                + "Chissà cosa ci sarà dentro?!."
+                + "", AliasVuoto, true, false, false, false, false, true, "/immagini/ItemCucina/mobile_cucina.png", OggettiNelMobileCucina);
+        
+        /**
          * Comodino
          */
         Set<String> AliasComodino = new HashSet<>();
@@ -297,7 +349,7 @@ public class GameStatus implements Serializable{
         oggettiNelComodino.add(osso);
         dispensa = new AdventureObjectContainer(8, "Dispensa della cucina", "È una graziosa dispensa fatta di un legno molto antico."
                 + "\nSembra chiusa dall'interno da una serrattuura in legno, che possa usare qualche oggetto per forzarla?"
-                + "", AliasDispensa, true, false, false, true, false, true, "", oggettiNellaDispensa);
+                + "", AliasDispensa, true, false, false, true, false, true, "/immagini/ItemCucina/frigo_lavandino_dispensa.png", oggettiNellaDispensa);
         
         /**
          * Armadio degli attrezzi
@@ -369,21 +421,28 @@ public class GameStatus implements Serializable{
         contenitoriSalaBancoDaLavoro.add(mobiletto);
         stanzaBancoDaLavoro = new Room(1, "Stanza lavoro", "", "", stanzaSoggiorno, null, stanzaCucina, null, oggettiSalaBancoDaLavoro, contenitoriSalaBancoDaLavoro, "/immagini/stanza2.png");
         stanzaSoggiorno.setNorth(stanzaBancoDaLavoro);
+        
         /**
          * Stanza cucina #02
          */
         List<AdventureObject> oggettiCucina = new ArrayList<>();
+        oggettiCucina.add(camino);
+        oggettiCucina.add(poltrona);
+        oggettiCucina.add(tavoloDaPranzo);
+        oggettiCucina.add(mobileCucina);
+        oggettiCucina.add(lavandino);
         List<AdventureObjectContainer> contenitoriCucina = new ArrayList<>();
         contenitoriCucina.add(dispensa);
+        contenitoriCucina.add(frigorifero);
         stanzaCucina = new Room(2, "Cucina", "", "", stanzaGiardino, null, null, stanzaBancoDaLavoro, oggettiCucina, contenitoriCucina, "/immagini/stanza3.png");
         stanzaBancoDaLavoro.setEast(stanzaCucina);
+        
         /**
          * Stanza giardino #03
          */
         List<AdventureObject> oggettiGiardino = new ArrayList<>();
         List<AdventureObjectContainer> contenitoriGiardino = new ArrayList<>();
         contenitoriGiardino.add(cucciaConCane);
-        contenitoriGiardino.add(dispensa);
         stanzaGiardino = new Room(3, "Giardino", "", "", null, stanzaCucina, null, null, oggettiGiardino, contenitoriGiardino, "/immagini/stanza4.png");
         stanzaCucina.setNorth(stanzaGiardino);
         current_room = stanzaSoggiorno;
