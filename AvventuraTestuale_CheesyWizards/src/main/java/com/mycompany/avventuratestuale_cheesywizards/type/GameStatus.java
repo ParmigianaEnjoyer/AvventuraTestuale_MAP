@@ -170,7 +170,7 @@ public class GameStatus implements Serializable{
         Set<String> AliasVuoto = new HashSet<>();
         orologio = new AdventureObject(11, "Orologio", "È un orologio a pendolo, sembra molto antico.\n"
                 + "Non pensavo li producessero ancora, il suo ticchettio fa quasi paura..."
-                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemSoggiorno/orologio_comodino.png");
+                + "", AliasVuoto, false, false, false, false, false, true, "/immagini/ItemSoggiorno/orologio_comodino.jpg");
         
         /**
          * Tappeto rosso
@@ -327,7 +327,7 @@ public class GameStatus implements Serializable{
         AliasComodino.add("cassettiera");
         List<AdventureObject> oggettiNelComodino = new ArrayList<>();
         oggettiNelComodino.add(pezzoChiave1);
-        comodino = new AdventureObjectContainer(6, "Comodino stanza orologio", "È un grazioso comodino di un legno molto antico."
+        comodino = new AdventureObjectContainer(6, "Comodino", "È un grazioso comodino di un legno molto antico."
                 + "\nSembra che uno dei tiretti non sia stato chiuso correttamente, forse per la fretta di dover nascondere qualcosa?"
                 + "", AliasComodino, true, false, false, false, false, true, "/immagini/ItemSoggiorno/orologio_comodino.jpg", oggettiNelComodino);
         
