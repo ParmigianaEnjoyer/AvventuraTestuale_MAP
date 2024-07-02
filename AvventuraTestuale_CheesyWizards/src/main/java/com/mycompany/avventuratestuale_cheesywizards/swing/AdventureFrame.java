@@ -596,7 +596,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     
     public void game_lost(){
         timer_label.setForeground(Color.red);
-        ImageIcon icon = new ImageIcon(getClass().getResource("/immagini/game_lost_image.png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/immagini/game_lost_image.jpg"));
         image_lbl.setIcon(icon);
         
         String lost_sentence = "HAI PERSO!\nSono passati 20 minuti e non sei riuscito a fuggire in tempo.\n"
