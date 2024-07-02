@@ -30,6 +30,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     private TimerManager timerManager = null;
     private Thread timerThread;
     private boolean is_game_lost = false;
+    private String item_scelto = "";
     
     /**
      * Creates new form AdventureFrame
@@ -42,9 +43,11 @@ public class AdventureFrame extends javax.swing.JFrame {
         initComponents();
         timer_label.setText("--:--");
         
+        
+        //carico l'immagine dell'ultima stanza in cui mi trovavo
         try {
 
-            ImageIcon icon = new ImageIcon(getClass().getResource("/immagini/stanza1.png"));
+            ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
             image_lbl.setIcon(icon);
             
         } catch (NullPointerException e){
@@ -54,16 +57,28 @@ public class AdventureFrame extends javax.swing.JFrame {
         
         //metto il frame al centro dello schermo
         setLocationRelativeTo(null);
+        
+        //disabilito inizialmente i bottoni di interazione
+        pickUp_button.setEnabled(false);
+        move_button.setEnabled(false);
+        observe_button.setEnabled(false);
+        open_button.setEnabled(false);
+        use_button.setEnabled(false);
+        backToRoom_button.setEnabled(false);
+        
+        //lancio l'aggiornamento della lista di oggetti nella stanza corrente
         aggiornaOggettiStanza();
     }
     
+    //metodo aggionamento della comboBox degli item nella stanza
     public void aggiornaOggettiStanza(){
-        itemDisplayer_comboBox.removeAllItems();
-        for (AdventureObject obj : game_status.getCurrent_room().getObjects()){
-            itemDisplayer_comboBox.addItem(obj.getName());
+        itemDisplayer_comboBox.removeAllItems();  //cancello item precedenti
+        itemDisplayer_comboBox.addItem("Seleziona Oggetto..."); //aggiungo item "fantoccio"
+        for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){  //scorro sia le liste di item che containers nella stanza
+            itemDisplayer_comboBox.addItem(itemStanza.getName());                       //e ne inserisco il nome della comboBox
         }
-        for (AdventureObjectContainer obj : game_status.getCurrent_room().getContainers()){
-            itemDisplayer_comboBox.addItem(obj.getName());
+        for (AdventureObjectContainer containerStanza : game_status.getCurrent_room().getContainers()){
+            itemDisplayer_comboBox.addItem(containerStanza.getName());
         }
     }
     
@@ -107,9 +122,11 @@ public class AdventureFrame extends javax.swing.JFrame {
         itemDisplayer_comboBox = new javax.swing.JComboBox<>();
         inventory_button = new javax.swing.JButton();
         phone_button = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        observe_button = new javax.swing.JButton();
+        move_button = new javax.swing.JButton();
+        open_button = new javax.swing.JButton();
+        use_button = new javax.swing.JButton();
+        backToRoom_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("La mia ragazza è una pazza!!!");
@@ -214,11 +231,20 @@ public class AdventureFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Osservabile.png"))); // NOI18N
+        observe_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Osservabile.png"))); // NOI18N
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Sposta.png"))); // NOI18N
+        move_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Sposta.png"))); // NOI18N
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Apribile.png"))); // NOI18N
+        open_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Apribile.png"))); // NOI18N
+
+        use_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/useObject.png"))); // NOI18N
+
+        backToRoom_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/goBackToRoom.png"))); // NOI18N
+        backToRoom_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backToRoom_buttonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout CommandPanelLayout = new javax.swing.GroupLayout(CommandPanel);
         CommandPanel.setLayout(CommandPanelLayout);
@@ -241,16 +267,19 @@ public class AdventureFrame extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(phone_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(inventory_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(inventory_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(backToRoom_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(CommandPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(open_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(observe_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(CommandPanelLayout.createSequentialGroup()
                         .addComponent(pickUp_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
                         .addComponent(itemDisplayer_comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(move_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(use_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
         CommandPanelLayout.setVerticalGroup(
@@ -265,19 +294,27 @@ public class AdventureFrame extends javax.swing.JFrame {
                             .addComponent(itemDisplayer_comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(7, 7, 7)
                         .addGroup(CommandPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(observe_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(left_button, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(right_button, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(down_button, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(move_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(open_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(CommandPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(phone_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inventory_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(CommandPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(use_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CommandPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(CommandPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(backToRoom_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(CommandPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(phone_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(inventory_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
@@ -362,9 +399,12 @@ public class AdventureFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_exit_buttonActionPerformed
 
     private void inventory_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventory_buttonActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_inventory_buttonActionPerformed
 
+    
+    /** metodo per controllare se vi è una stanza ad Ovest della corrente, se si imposta la nuova stanza come
+        stanza corrente, prende e carica la sua immagine correlata (codice uguale per le altre 3 direzioni)**/
     private void left_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_left_buttonActionPerformed
         if (game_status.getCurrent_room().getWest() != null){
             game_status.setCurrent_room(game_status.getCurrent_room().getWest());
@@ -380,7 +420,114 @@ public class AdventureFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_left_buttonActionPerformed
 
     private void itemDisplayer_comboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDisplayer_comboBoxActionPerformed
-        
+        item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
+        if (item_scelto == "Seleziona Oggetto..."){
+            //carico l'immagine dell'ultima stanza in cui mi trovavo
+            try {
+
+                ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
+                image_lbl.setIcon(icon);
+            
+            } catch (NullPointerException e){
+                System.err.println("Immagine non trovata: " + e.getMessage());
+            }
+            pickUp_button.setEnabled(false); //disabilito i bottoni
+            move_button.setEnabled(false);
+            observe_button.setEnabled(false);
+            open_button.setEnabled(false);
+            use_button.setEnabled(false);
+            backToRoom_button.setEnabled(false);
+            return;
+        }
+        for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){  
+            if(itemStanza.getName() == item_scelto){
+                try {
+
+                ImageIcon icon = new ImageIcon(getClass().getResource(itemStanza.getPath_image()));
+                image_lbl.setIcon(icon);
+            
+                } catch (NullPointerException e){
+                    System.err.println("Immagine non trovata: " + e.getMessage());
+                }
+                if(itemStanza.isOpenable() || itemStanza.isLocked()){
+                    open_button.setEnabled(true);
+                    pickUp_button.setEnabled(false);
+                    move_button.setEnabled(false);
+                    observe_button.setEnabled(false);
+                    use_button.setEnabled(false);
+                    backToRoom_button.setEnabled(true);
+                }
+                else if (itemStanza.isObservable()){
+                    observe_button.setEnabled(true);
+                    pickUp_button.setEnabled(false);
+                    move_button.setEnabled(false);
+                    open_button.setEnabled(false);
+                    use_button.setEnabled(false);
+                    backToRoom_button.setEnabled(true);
+                }
+                else if (itemStanza.isMovable()){
+                    move_button.setEnabled(true);
+                    pickUp_button.setEnabled(false);
+                    observe_button.setEnabled(false);
+                    open_button.setEnabled(false);
+                    use_button.setEnabled(false);
+                    backToRoom_button.setEnabled(true);
+                }
+                else if (itemStanza.isPickupable()){
+                    pickUp_button.setEnabled(true);
+                    move_button.setEnabled(false);
+                    observe_button.setEnabled(false);
+                    open_button.setEnabled(false);
+                    use_button.setEnabled(false);
+                    backToRoom_button.setEnabled(true);
+                }
+                return;
+            }                       
+        }
+        for (AdventureObjectContainer containerStanza : game_status.getCurrent_room().getContainers()){
+            if(containerStanza.getName() == item_scelto){
+                try {
+
+                ImageIcon icon = new ImageIcon(getClass().getResource(containerStanza.getPath_image()));
+                image_lbl.setIcon(icon);
+            
+                } catch (NullPointerException e){
+                    System.err.println("Immagine non trovata: " + e.getMessage());
+                }
+                if(containerStanza.isOpenable() || containerStanza.isLocked()){
+                    open_button.setEnabled(true);
+                    pickUp_button.setEnabled(false);
+                    move_button.setEnabled(false);
+                    observe_button.setEnabled(false);
+                    use_button.setEnabled(false);
+                    backToRoom_button.setEnabled(true);
+                }
+                else if (containerStanza.isObservable()){
+                    observe_button.setEnabled(true);
+                    pickUp_button.setEnabled(false);
+                    move_button.setEnabled(false);
+                    open_button.setEnabled(false);
+                    use_button.setEnabled(false);
+                    backToRoom_button.setEnabled(true);
+                }
+                else if (containerStanza.isMovable()){
+                    move_button.setEnabled(true);
+                    pickUp_button.setEnabled(false);
+                    observe_button.setEnabled(false);
+                    open_button.setEnabled(false);
+                    use_button.setEnabled(false);
+                    backToRoom_button.setEnabled(true);
+                }
+                else if (containerStanza.isPickupable()){
+                    pickUp_button.setEnabled(true);
+                    move_button.setEnabled(false);
+                    observe_button.setEnabled(false);
+                    open_button.setEnabled(false);
+                    use_button.setEnabled(false);
+                    backToRoom_button.setEnabled(true);
+                }
+            }
+        }
     }//GEN-LAST:event_itemDisplayer_comboBoxActionPerformed
 
     private void down_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_down_buttonActionPerformed
@@ -428,6 +575,10 @@ public class AdventureFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_up_buttonActionPerformed
+
+    private void backToRoom_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToRoom_buttonActionPerformed
+        
+    }//GEN-LAST:event_backToRoom_buttonActionPerformed
     
     /**
      * Metodo che riporta alla schermata di login e distrugge i salvataggi per l'utente connesso.
@@ -452,6 +603,12 @@ public class AdventureFrame extends javax.swing.JFrame {
                 + "La tua ragazza è tornata in casa con un'ascia in mano e ti ha ammazzato.\n\nSei morto.";
         is_game_lost = true;
         phone_button.setEnabled(false);
+        pickUp_button.setEnabled(false);
+        move_button.setEnabled(false);
+        observe_button.setEnabled(false);
+        open_button.setEnabled(false);
+        use_button.setEnabled(false);
+        backToRoom_button.setEnabled(false);
     }
     
     /**
@@ -473,20 +630,22 @@ public class AdventureFrame extends javax.swing.JFrame {
     private javax.swing.JPanel CommandPanel;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel TextPanel;
+    private javax.swing.JButton backToRoom_button;
     private javax.swing.JButton down_button;
     private javax.swing.JButton exit_button;
     private javax.swing.JLabel image_lbl;
     private javax.swing.JButton inventory_button;
     private javax.swing.JComboBox<String> itemDisplayer_comboBox;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton left_button;
+    private javax.swing.JButton move_button;
+    private javax.swing.JButton observe_button;
+    private javax.swing.JButton open_button;
     private javax.swing.JTextArea outTextArea;
     private javax.swing.JButton phone_button;
     private javax.swing.JButton pickUp_button;
     private javax.swing.JButton right_button;
     private javax.swing.JLabel timer_label;
     private javax.swing.JButton up_button;
+    private javax.swing.JButton use_button;
     // End of variables declaration//GEN-END:variables
 }
