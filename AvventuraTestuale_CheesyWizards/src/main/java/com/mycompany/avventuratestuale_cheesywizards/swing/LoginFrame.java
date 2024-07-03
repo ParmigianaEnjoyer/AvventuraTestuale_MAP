@@ -211,6 +211,7 @@ public class LoginFrame extends javax.swing.JFrame {
                             //Prende il salvataggio già presente per l'utente.
                             saves = file.get_saves_from_file(username, password);
                             System.out.println("Salvataggio caricato");
+                            System.out.println(saves.getTimer_partita().getCurrent_value());
                             
                             user = new Users(email, username, password);
                             new AdventureFrame(user, saves).run_adventure_frame();
@@ -286,7 +287,7 @@ public class LoginFrame extends javax.swing.JFrame {
     
     
     /**
-     * @param args the command line arguments
+     * 
      */
     public void run_login_frame() {
         /* Set the Nimbus look and feel */

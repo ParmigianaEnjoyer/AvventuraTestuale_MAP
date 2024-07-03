@@ -17,6 +17,7 @@ import com.mycompany.avventuratestuale_cheesywizards.timer.*;
 import com.mycompany.avventuratestuale_cheesywizards.type.AdventureObject;
 import com.mycompany.avventuratestuale_cheesywizards.type.AdventureObjectContainer;
 import java.awt.Color;
+import java.nio.file.Files;
 import javax.swing.ImageIcon;
 
 /**
@@ -395,7 +396,7 @@ public class AdventureFrame extends javax.swing.JFrame {
      * @param evt 
      */
     private void exit_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_buttonActionPerformed
-        
+    
         if (!is_game_lost){
             //Viene effettuato un salvataggio e aperta la pagina di login
             FileManager fm = new FileManager();

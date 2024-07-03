@@ -5,10 +5,13 @@
 package com.mycompany.avventuratestuale_cheesywizards.db;
 
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -44,7 +47,6 @@ public class DBManager {
     /**
      * Restituisce true se l'utente esiste, false altrimenti
      * @param username
-     * @param password
      * @return 
      */
     public boolean is_user_existent(String username){
@@ -109,7 +111,7 @@ public class DBManager {
      * Funzione che aggiorna il campo 'savings' del database
      * @param username
      * @param password
-     * @param saves 
+     * @param file_to_save 
      */
     public void update_savings_on_db(String username, String password, FileInputStream file_to_save) {
         
@@ -137,10 +139,9 @@ public class DBManager {
      * @param password
      * @return 
      */
-    public InputStream get_saves_from_db(String username, String password){
+    public void get_saves_from_db(String username, String password){
         
         InputStream input = null;
-        GameStatus saves = new GameStatus();
         
         try{
             Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db");
@@ -153,21 +154,31 @@ public class DBManager {
             if (rs.next()){
                 //saves = (GameStatus) rs.getObject("savings");
                 input = rs.getBinaryStream("savings");
+                
+                try (OutputStream outputStream = new FileOutputStream("src/main/resources/files/saves.dat")) {
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = input.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+                }
             }
+            
+            System.out.println("File salvato con successo");
             
             pstm.close();
             conn.close();
-        } catch(SQLException ex){
-            System.err.println(ex.getSQLState() + ": " + ex.getMessage());
+        } catch(IOException | SQLException ex){
+            System.err.println(ex.getMessage());
         }
-        
-        return input;
+        System.out.print("\nretun inpu stream\n");
     }
     
     /**
      * Funzione che aggiunge nel db un nuovo utente.
+     * @param email
      * @param username
-     * @param Password 
+     * @param password 
      */
     public void add_new_user(String email, String username, String password){
         try {
@@ -286,7 +297,7 @@ public class DBManager {
     
     /**
      * Metodo che elimina i salvataggi di un utente il cui username è passata per parametro.
-     * @param email 
+     * @param username 
      */
     public void destroy_savings(String username){
         

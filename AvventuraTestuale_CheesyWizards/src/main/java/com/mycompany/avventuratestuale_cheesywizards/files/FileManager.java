@@ -6,15 +6,15 @@ package com.mycompany.avventuratestuale_cheesywizards.files;
 
 import com.mycompany.avventuratestuale_cheesywizards.db.DBManager;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,12 +32,16 @@ public class FileManager {
         DBManager db = new DBManager();
         try {
             System.out.println("Creo il file");
-            FileOutputStream outFile = new FileOutputStream("src/main/resources/files/saves.dat");
-            ObjectOutputStream outStream = new ObjectOutputStream(outFile);
+            FileOutputStream fileOut = new FileOutputStream("src/main/resources/files/saves.dat");
+            ObjectOutputStream outStream = new ObjectOutputStream(fileOut);
             outStream.writeObject(saves);
 
-            FileInputStream inFile = new FileInputStream("src/main/resources/files/saves.dat");   
-            db.update_savings_on_db(username, password, inFile);
+            FileInputStream fileIn = new FileInputStream("src/main/resources/files/saves.dat");   
+            db.update_savings_on_db(username, password, fileIn);
+            
+            fileOut.close();
+            outStream.close();
+            fileIn.close();
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
         }
@@ -52,32 +56,34 @@ public class FileManager {
     public GameStatus get_saves_from_file(String username, String password){
         DBManager db = new DBManager();
         GameStatus saves = null;
-        try {
-            InputStream input = db.get_saves_from_db(username, password);
-            File file = new File("src/main/resources/files/saves.dat");
-            FileOutputStream fos = new FileOutputStream(file);
-
-            byte[] buffer = new byte[1024];
-            while (input.read(buffer) > 0) {
-                fos.write(buffer);
+        if(Files.notExists(Paths.get("src/main/resources/files/saves.dat"))){
+            try {
+                Files.createFile(Paths.get("src/main/resources/files/saves.dat"));
+                System.out.println("File creato con successo");
+            } catch (IOException ex) {
+                Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch(IOException e) {
-            e.printStackTrace();
         }
         
-        //deserializzazione
+        //prendo il file dal db
+        db.get_saves_from_db(username, password);
+        
+        //deserializzo il file
         try (FileInputStream fileIn = new FileInputStream("src/main/resources/files/saves.dat");
              ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
 
             // Deserializzazione dell'oggetto GameStatus
             saves = (GameStatus) objectIn.readObject();
-
+            System.out.println("\n\naaaaaaaaaaaaaaaa\n\n");
             // Stampa dell'oggetto deserializzato
             System.out.println("Oggetto GameStatus deserializzato: " + saves);
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        
+        // Stampa dell'oggetto deserializzato
+        System.out.println("Oggetto GameStatus deserializzato: " + saves);
         
         try{
             FileOutputStream outFile = new FileOutputStream("src/main/resources/files/saves.dat");
