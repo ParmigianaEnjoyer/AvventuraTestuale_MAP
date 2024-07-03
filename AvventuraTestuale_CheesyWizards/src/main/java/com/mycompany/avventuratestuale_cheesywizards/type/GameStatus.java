@@ -427,7 +427,7 @@ public class GameStatus implements Serializable{
         List<AdventureObjectContainer> contenitoriSalaBancoDaLavoro = new ArrayList<>();
         contenitoriSalaBancoDaLavoro.add(mobile);
         contenitoriSalaBancoDaLavoro.add(mobiletto);
-        stanzaBancoDaLavoro = new Room(1, "Stanza lavoro", "", "", stanzaSoggiorno, null, stanzaCucina, null, oggettiSalaBancoDaLavoro, contenitoriSalaBancoDaLavoro, "/immagini/stanza2.png");
+        stanzaBancoDaLavoro = new Room(1, "Stanza lavoro", "", "", stanzaSoggiorno, null, null, stanzaCucina, oggettiSalaBancoDaLavoro, contenitoriSalaBancoDaLavoro, "/immagini/stanza2.png");
         stanzaSoggiorno.setNorth(stanzaBancoDaLavoro);
         
         /**
@@ -443,8 +443,8 @@ public class GameStatus implements Serializable{
         List<AdventureObjectContainer> contenitoriCucina = new ArrayList<>();
         contenitoriCucina.add(dispensa);
         contenitoriCucina.add(frigorifero);
-        stanzaCucina = new Room(2, "Cucina", "", "", stanzaGiardino, null, null, stanzaBancoDaLavoro, oggettiCucina, contenitoriCucina, "/immagini/stanza3.png");
-        stanzaBancoDaLavoro.setEast(stanzaCucina);
+        stanzaCucina = new Room(2, "Cucina", "", "", stanzaGiardino, null, stanzaBancoDaLavoro, null, oggettiCucina, contenitoriCucina, "/immagini/stanza3.png");
+        stanzaBancoDaLavoro.setWest(stanzaCucina);
         
         /**
          * Stanza giardino #03
@@ -454,7 +454,7 @@ public class GameStatus implements Serializable{
         contenitoriGiardino.add(cucciaConCane);
         contenitoriGiardino.add(armadioAttrezzi);
         stanzaGiardino = new Room(3, "Giardino", "", "", null, stanzaCucina, null, null, oggettiGiardino, contenitoriGiardino, "/immagini/stanza4.png");
-        stanzaCucina.setNorth(stanzaGiardino);
+        stanzaCucina.setSouth(stanzaGiardino);
         current_room = stanzaSoggiorno;
     }
 

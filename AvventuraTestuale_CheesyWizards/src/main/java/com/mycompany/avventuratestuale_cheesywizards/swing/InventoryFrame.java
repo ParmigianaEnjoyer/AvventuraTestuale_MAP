@@ -8,12 +8,12 @@ package com.mycompany.avventuratestuale_cheesywizards.swing;
  *
  * @author store
  */
-public class Inventory extends javax.swing.JPanel {
+public class InventoryFrame extends javax.swing.JPanel {
 
     /**
      * Creates new form Inventory
      */
-    public Inventory() {
+    public InventoryFrame() {
         initComponents();
     }
 
