@@ -31,6 +31,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     private Thread timerThread;
     private boolean is_game_lost = false;
     private String item_scelto = "";
+    private InventoryFrame inventoryFrame = new InventoryFrame();
     
     /**
      * Creates new form AdventureFrame
@@ -58,13 +59,6 @@ public class AdventureFrame extends javax.swing.JFrame {
         //metto il frame al centro dello schermo
         setLocationRelativeTo(null);
         
-        //disabilito inizialmente i bottoni di interazione
-        pickUp_button.setEnabled(false);
-        move_button.setEnabled(false);
-        observe_button.setEnabled(false);
-        open_button.setEnabled(false);
-        use_button.setEnabled(false);
-        backToRoom_button.setEnabled(false);
         
         //lancio l'aggiornamento della lista di oggetti nella stanza corrente
         aggiornaOggettiStanza();
@@ -80,6 +74,17 @@ public class AdventureFrame extends javax.swing.JFrame {
         for (AdventureObjectContainer containerStanza : game_status.getCurrent_room().getContainers()){
             itemDisplayer_comboBox.addItem(containerStanza.getName());
         }
+        //disabilito inizialmente i bottoni di interazione
+        pickUp_button.setEnabled(false);
+        move_button.setEnabled(false);
+        observe_button.setEnabled(false);
+        open_button.setEnabled(false);
+        use_button.setEnabled(false);
+        backToRoom_button.setEnabled(false);
+        up_button.setEnabled(true);
+        down_button.setEnabled(true);
+        right_button.setEnabled(true);
+        left_button.setEnabled(true);
     }
     
     /**
@@ -238,6 +243,11 @@ public class AdventureFrame extends javax.swing.JFrame {
         open_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Apribile.png"))); // NOI18N
 
         use_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/useObject.png"))); // NOI18N
+        use_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                use_buttonActionPerformed(evt);
+            }
+        });
 
         backToRoom_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/goBackToRoom.png"))); // NOI18N
         backToRoom_button.addActionListener(new java.awt.event.ActionListener() {
@@ -399,7 +409,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_exit_buttonActionPerformed
 
     private void inventory_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventory_buttonActionPerformed
-        
+        inventoryFrame.setVisible(true);
     }//GEN-LAST:event_inventory_buttonActionPerformed
 
     
@@ -421,24 +431,6 @@ public class AdventureFrame extends javax.swing.JFrame {
 
     private void itemDisplayer_comboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDisplayer_comboBoxActionPerformed
         item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
-        if (item_scelto == "Seleziona Oggetto..."){
-            //carico l'immagine dell'ultima stanza in cui mi trovavo
-            try {
-
-                ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
-                image_lbl.setIcon(icon);
-            
-            } catch (NullPointerException e){
-                System.err.println("Immagine non trovata: " + e.getMessage());
-            }
-            pickUp_button.setEnabled(false); //disabilito i bottoni
-            move_button.setEnabled(false);
-            observe_button.setEnabled(false);
-            open_button.setEnabled(false);
-            use_button.setEnabled(false);
-            backToRoom_button.setEnabled(false);
-            return;
-        }
         for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){  
             if(itemStanza.getName() == item_scelto){
                 try {
@@ -481,6 +473,10 @@ public class AdventureFrame extends javax.swing.JFrame {
                     use_button.setEnabled(false);
                     backToRoom_button.setEnabled(true);
                 }
+                up_button.setEnabled(false);
+                down_button.setEnabled(false);
+                right_button.setEnabled(false);
+                left_button.setEnabled(false);
                 return;
             }                       
         }
@@ -526,6 +522,10 @@ public class AdventureFrame extends javax.swing.JFrame {
                     use_button.setEnabled(false);
                     backToRoom_button.setEnabled(true);
                 }
+                up_button.setEnabled(false);
+                down_button.setEnabled(false);
+                right_button.setEnabled(false);
+                left_button.setEnabled(false);
             }
         }
     }//GEN-LAST:event_itemDisplayer_comboBoxActionPerformed
@@ -577,8 +577,20 @@ public class AdventureFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_up_buttonActionPerformed
 
     private void backToRoom_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToRoom_buttonActionPerformed
-        
+        //carico l'immagine dell'ultima stanza in cui mi trovavo
+        try {
+            ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
+            image_lbl.setIcon(icon);
+            
+        } catch (NullPointerException e){
+                System.err.println("Immagine non trovata: " + e.getMessage());
+        }
+        aggiornaOggettiStanza();
     }//GEN-LAST:event_backToRoom_buttonActionPerformed
+
+    private void use_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_use_buttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_use_buttonActionPerformed
     
     /**
      * Metodo che riporta alla schermata di login e distrugge i salvataggi per l'utente connesso.
