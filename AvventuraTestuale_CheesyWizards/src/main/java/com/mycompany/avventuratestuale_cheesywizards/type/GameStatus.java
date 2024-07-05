@@ -90,7 +90,7 @@ public class GameStatus implements Serializable{
         pezzoChiave1 = new AdventureObject(0, "Pezzo di chiave blu #1", "E' uno strano oggetto, sembra "
             + "esattamente la prima metà di una chiave spezzata. /nChe quella pazza l'abbia rotta "
             + "di proposito e nascosto l'altra metà non so dove? Mi servirebbe un banco da lavoro per unirle..."
-            + "", AliasPezzoChiave1, false, true, true, false, false, false, "");
+            + "", AliasPezzoChiave1, false, true, true, false, false, false, "/immagini/chiaveparte1.png");
         
         
         /**
@@ -111,7 +111,7 @@ public class GameStatus implements Serializable{
         pezzoChiave2 = new AdventureObject(1, "Pezzo di chiave blu #2", "E' uno strano oggetto, sembra "
                 + "esattamente la seconda metà di una chiave spezzata. /nChe quella pazza l'abbia rotta "
                 + "di proposito e nascosto l'altra metà non so dove? Mi servirebbe un banco da lavoro per unirle..."
-                + "", AliasPezzoChiave2, false, true, true, false, false, false, "");
+                + "", AliasPezzoChiave2, false, true, true, false, false, false, "/immagini/chiaveparte2.png");
         
         /**
          * Osso
@@ -122,7 +122,7 @@ public class GameStatus implements Serializable{
         AliasOsso.add("scheletro");
         AliasOsso.add("costola");
         osso = new AdventureObject(2, "Osso", "Sembra un osso di prosciutto, i cani ne vanno ghiotti, farebbero di tutto pur di "
-                + "averlo.", AliasOsso, false, true, true, false, false, false, "");
+                + "averlo.", AliasOsso, false, true, true, false, false, false, "/immagini/bone.png");
         
         /**
          * Ascia
@@ -138,7 +138,7 @@ public class GameStatus implements Serializable{
                 + "quella pazza userebbe per farmi fuori... "
                 + "\nCredo sia lo strumento che suo padre usa a lavoro. Con quest'ascia tra le mie mani nessuna "
                 + "serratura in legno potrà fermarmi!"
-                + "", AliasAscia, false, true, true, false, false, false, "");
+                + "", AliasAscia, false, true, true, false, false, false, "/immagini/ascia.png");
         
         /**
          * Chiave d'oro
@@ -149,7 +149,7 @@ public class GameStatus implements Serializable{
         AliasChiaveOro.add("chiave");
         chiaveOro = new AdventureObject(4, "Chiave d'oro", "È una chiave d'oro, sembra una chiave molto importante.\n"
                 + "Che sia finalmente la chiave per poter scappare dalla casa di questa pazza?"
-                + "", AliasChiaveOro, false, true, true, false, false, false, "");
+                + "", AliasChiaveOro, false, true, true, false, false, false, "/immagini/chiaveOro.png");
         
         /**
          * Tappeto a scacchiera
