@@ -16,6 +16,7 @@ com\mycompany\avventuratestuale_cheesywizards\AvventuraTestuale_CheesyWizards.cl
 com\mycompany\avventuratestuale_cheesywizards\chat\ServerFrame.class
 com\mycompany\avventuratestuale_cheesywizards\email\EmailSender.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ClientFrame$4.class
+com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$13.class
 com\mycompany\avventuratestuale_cheesywizards\chat\PhoneFrame$1.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ServerFrame$2.class
 com\mycompany\avventuratestuale_cheesywizards\type\AdventureObject.class
@@ -35,6 +36,7 @@ com\mycompany\avventuratestuale_cheesywizards\chat\ServerFrame$3.class
 com\mycompany\avventuratestuale_cheesywizards\files\FileManager.class
 com\mycompany\avventuratestuale_cheesywizards\chat\PhoneFrame.class
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$2.class
+com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$12.class
 com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$10.class
 com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$6.class
 com\mycompany\avventuratestuale_cheesywizards\type\Inventory.class

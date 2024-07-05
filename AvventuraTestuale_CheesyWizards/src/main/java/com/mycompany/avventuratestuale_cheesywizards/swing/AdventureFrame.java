@@ -33,6 +33,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     private boolean is_game_lost = false;
     private String item_scelto = "";
     private String containerScelto = "";
+    private AdventureObjectContainer containerSceltoLista;
     
     /**
      * Creates new form AdventureFrame
@@ -155,9 +156,9 @@ public class AdventureFrame extends javax.swing.JFrame {
         InventoryPanel = new javax.swing.JPanel();
         itemComboBox = new javax.swing.JComboBox<>();
         ItemPanel = new javax.swing.JPanel();
-        ImagineLabel = new javax.swing.JLabel();
         jTextArea2 = new javax.swing.JTextArea();
         useItem_button = new javax.swing.JButton();
+        inventoryImg_lbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("La mia ragazza è una pazza!!!");
@@ -260,6 +261,11 @@ public class AdventureFrame extends javax.swing.JFrame {
         move_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Sposta.png"))); // NOI18N
 
         open_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Apribile.png"))); // NOI18N
+        open_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                open_buttonActionPerformed(evt);
+            }
+        });
 
         use_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/useObject.png"))); // NOI18N
         use_button.addActionListener(new java.awt.event.ActionListener() {
@@ -373,6 +379,11 @@ public class AdventureFrame extends javax.swing.JFrame {
         tabGameInventory.addTab("tab1", adventurePanel);
 
         itemComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        itemComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemComboBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout InventoryPanelLayout = new javax.swing.GroupLayout(InventoryPanel);
         InventoryPanel.setLayout(InventoryPanelLayout);
@@ -406,22 +417,23 @@ public class AdventureFrame extends javax.swing.JFrame {
                 .addGroup(ItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(ItemPanelLayout.createSequentialGroup()
-                        .addComponent(ImagineLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(inventoryImg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8)
                         .addComponent(useItem_button, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(99, Short.MAX_VALUE))
         );
         ItemPanelLayout.setVerticalGroup(
-            ItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            ItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(ItemPanelLayout.createSequentialGroup()
                 .addGroup(ItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ItemPanelLayout.createSequentialGroup()
-                        .addComponent(ImagineLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ItemPanelLayout.createSequentialGroup()
+                        .addGap(246, 246, 246)
                         .addComponent(useItem_button, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(jTextArea2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextArea2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
+                    .addGroup(ItemPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(inventoryImg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -596,7 +608,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                 }
                 if(containerStanza.isOpenable() || containerStanza.isLocked()){
                     open_button.setEnabled(true);
-                    aggiornaOggettiContainer(containerStanza);
+                    containerSceltoLista = containerStanza;
                 }
                 if (containerStanza.isObservable()){
                     observe_button.setEnabled(true);
@@ -668,7 +680,9 @@ public class AdventureFrame extends javax.swing.JFrame {
         for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){ 
             if(itemStanza.getName() == item_scelto){
                 game_status.getInventario().addObject(itemStanza);
+                game_status.getCurrent_room().getObjects().remove(itemStanza);
                 aggiornaOggettiInventario();
+                aggiornaOggettiStanza();
                 return;
             }
         }
@@ -676,7 +690,9 @@ public class AdventureFrame extends javax.swing.JFrame {
             for (AdventureObject itemContainer : containerStanza.getList()){ 
                 if(itemContainer.getName() == item_scelto){
                     game_status.getInventario().addObject(itemContainer);
+                    containerStanza.removeObject(itemContainer);
                     aggiornaOggettiInventario();
+                    aggiornaOggettiContainer(containerStanza);
                     return;
                 }
             }
@@ -712,6 +728,34 @@ public class AdventureFrame extends javax.swing.JFrame {
     private void use_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_use_buttonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_use_buttonActionPerformed
+
+    private void open_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_open_buttonActionPerformed
+        aggiornaOggettiContainer(containerSceltoLista);
+    }//GEN-LAST:event_open_buttonActionPerformed
+
+    private void itemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComboBoxActionPerformed
+        item_scelto = String.valueOf(itemComboBox.getSelectedItem());
+        if(item_scelto == "Seleziona Oggetto..."){
+            useItem_button.setEnabled(false);
+            inventoryImg_lbl.setIcon(null);
+        }
+        for (AdventureObject itemInventario : game_status.getInventario().getList()){  
+            if(itemInventario.getName() == item_scelto){
+                try {
+
+                ImageIcon iconInventory = new ImageIcon(getClass().getResource(itemInventario.getPath_image()));
+                inventoryImg_lbl.setIcon(iconInventory);
+            
+                } catch (NullPointerException e){
+                    System.err.println("Immagine non trovata: " + e.getMessage());
+                }
+                if (itemInventario.isUsable() == true){
+                    useItem_button.setEnabled(true);
+                }
+                return;
+            }                       
+        }
+    }//GEN-LAST:event_itemComboBoxActionPerformed
     
     /**
      * Metodo che riporta alla schermata di login e distrugge i salvataggi per l'utente connesso.
@@ -742,6 +786,9 @@ public class AdventureFrame extends javax.swing.JFrame {
         open_button.setEnabled(false);
         use_button.setEnabled(false);
         backToRoom_button.setEnabled(false);
+        useItem_button.setEnabled(false);
+        itemComboBox.setEnabled(false);
+        itemDisplayer_comboBox.setEnabled(false);
     }
     
     /**
@@ -761,7 +808,6 @@ public class AdventureFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CommandPanel;
-    private javax.swing.JLabel ImagineLabel;
     private javax.swing.JPanel InventoryPanel;
     private javax.swing.JPanel ItemPanel;
     private javax.swing.JPanel MainPanel;
@@ -771,6 +817,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     private javax.swing.JButton down_button;
     private javax.swing.JButton exit_button;
     private javax.swing.JLabel image_lbl;
+    private javax.swing.JLabel inventoryImg_lbl;
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JComboBox<String> itemComboBox;
     private javax.swing.JComboBox<String> itemDisplayer_comboBox;
