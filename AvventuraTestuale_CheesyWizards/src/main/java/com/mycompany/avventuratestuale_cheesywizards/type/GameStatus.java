@@ -401,7 +401,7 @@ public class GameStatus implements Serializable{
                 + "il cane di quella svitata. Non lo sopporto, è una bestia di satana."
                 + "\nOvviamente... accanto a lui c'è una chiave d'oro che sembra proprio essere la chiave della porta di casa, "
                 + "come posso prenderla senza che questa bestia mi sbrani."
-                + "", AliasCuccia, true, false, false, true, false, true, "/immagini/ItemGiardino/cucciaCane.png", oggettiNellaCuccia);
+                + "", AliasCuccia, true, false, true, true, false, true, "/immagini/ItemGiardino/cucciaCane.png", oggettiNellaCuccia);
         
         /**
          * Stanza soggiorno #00
@@ -430,6 +430,7 @@ public class GameStatus implements Serializable{
         oggettiSalaBancoDaLavoro.add(orologioDaParete);
         oggettiSalaBancoDaLavoro.add(telescopio);
         oggettiSalaBancoDaLavoro.add(tavoloTronco);
+        oggettiSalaBancoDaLavoro.add(pezzoChiave2);
         List<AdventureObjectContainer> contenitoriSalaBancoDaLavoro = new ArrayList<>();
         contenitoriSalaBancoDaLavoro.add(mobile);
         contenitoriSalaBancoDaLavoro.add(mobiletto);
