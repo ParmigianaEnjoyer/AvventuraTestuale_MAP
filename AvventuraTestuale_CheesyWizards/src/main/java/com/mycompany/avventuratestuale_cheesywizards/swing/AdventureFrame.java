@@ -33,7 +33,13 @@ public class AdventureFrame extends javax.swing.JFrame {
     private boolean is_game_lost = false;
     private String item_scelto = "";
     private String containerScelto = "";
-    private AdventureObjectContainer containerSceltoLista;
+    private AdventureObjectContainer containerSceltoAprire;
+    private AdventureObject oggettoApribile;
+    private AdventureObject oggettoUsabile;
+    private AdventureObject oggettoSpostabile;
+    private Boolean haiChiave1 = false;
+    private Boolean haiChiave2 = false;
+    private Boolean haiChiaveGiardino = false;
     
     /**
      * Creates new form AdventureFrame
@@ -82,7 +88,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         move_button.setEnabled(false);
         observe_button.setEnabled(false);
         open_button.setEnabled(false);
-        use_button.setEnabled(false);
+        interaction_button.setEnabled(false);
         backToRoom_button.setEnabled(false);
         up_button.setEnabled(true);
         down_button.setEnabled(true);
@@ -150,7 +156,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         observe_button = new javax.swing.JButton();
         move_button = new javax.swing.JButton();
         open_button = new javax.swing.JButton();
-        use_button = new javax.swing.JButton();
+        interaction_button = new javax.swing.JButton();
         backToRoom_button = new javax.swing.JButton();
         inventoryPanel = new javax.swing.JPanel();
         InventoryPanel = new javax.swing.JPanel();
@@ -259,6 +265,11 @@ public class AdventureFrame extends javax.swing.JFrame {
         observe_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Osservabile.png"))); // NOI18N
 
         move_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Sposta.png"))); // NOI18N
+        move_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                move_buttonActionPerformed(evt);
+            }
+        });
 
         open_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Apribile.png"))); // NOI18N
         open_button.addActionListener(new java.awt.event.ActionListener() {
@@ -267,10 +278,10 @@ public class AdventureFrame extends javax.swing.JFrame {
             }
         });
 
-        use_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/useObject.png"))); // NOI18N
-        use_button.addActionListener(new java.awt.event.ActionListener() {
+        interaction_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/useObject.png"))); // NOI18N
+        interaction_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                use_buttonActionPerformed(evt);
+                interaction_buttonActionPerformed(evt);
             }
         });
 
@@ -312,7 +323,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                         .addGap(45, 45, 45)
                         .addComponent(itemDisplayer_comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(move_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(use_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(interaction_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
         CommandPanelLayout.setVerticalGroup(
@@ -338,7 +349,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                 .addGroup(CommandPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CommandPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(use_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(interaction_button, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(23, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CommandPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -532,6 +543,23 @@ public class AdventureFrame extends javax.swing.JFrame {
         new LoginFrame().setVisible(true);
     }//GEN-LAST:event_exit_buttonActionPerformed
 
+    private void portaChiusaSud(){
+        if(game_status.getCurrent_room().getName() == "Cucina"){
+            for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){
+                if(itemStanza.getName() == "Porta"){
+                    if(itemStanza.isLocked()){
+                        left_button.setEnabled(false);
+                    }
+                    else{
+                        left_button.setEnabled(true);
+                    }
+                }
+            }
+        }
+        else{
+            left_button.setEnabled(true);
+        }
+    }
     
     /** metodo per controllare se vi è una stanza ad Ovest della corrente, se si imposta la nuova stanza come
         stanza corrente, prende e carica la sua immagine correlata (codice uguale per le altre 3 direzioni)**/
@@ -546,6 +574,7 @@ public class AdventureFrame extends javax.swing.JFrame {
             } catch (NullPointerException e){
             System.err.println("Immagine non trovata: " + e.getMessage());
             }
+            portaChiusaSud();
         }
     }//GEN-LAST:event_left_buttonActionPerformed
 
@@ -561,7 +590,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                 pickUp_button.setEnabled(false);
                 move_button.setEnabled(false);
                 open_button.setEnabled(false);
-                use_button.setEnabled(false);
+                interaction_button.setEnabled(false);
                 backToRoom_button.setEnabled(true);
                 try {
 
@@ -571,17 +600,23 @@ public class AdventureFrame extends javax.swing.JFrame {
                 } catch (NullPointerException e){
                     System.err.println("Immagine non trovata: " + e.getMessage());
                 }
-                if(itemStanza.isOpenable() || itemStanza.isLocked()){
+                if(itemStanza.isOpenable()){
                     open_button.setEnabled(true);
+                    oggettoApribile = itemStanza;
                 }
                 if (itemStanza.isObservable()){
                     observe_button.setEnabled(true);
                 }
                 if (itemStanza.isMovable()){
                     move_button.setEnabled(true);
+                    oggettoSpostabile = itemStanza;
                 }
                 if (itemStanza.isPickupable()){
                     pickUp_button.setEnabled(true);
+                }
+                if (itemStanza.isUsable()){
+                    interaction_button.setEnabled(true);
+                    oggettoUsabile = itemStanza;
                 }
                 return;
             }                       
@@ -596,7 +631,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                 pickUp_button.setEnabled(false);
                 move_button.setEnabled(false);
                 open_button.setEnabled(false);
-                use_button.setEnabled(false);
+                interaction_button.setEnabled(false);
                 backToRoom_button.setEnabled(true);
                 try {
 
@@ -606,9 +641,9 @@ public class AdventureFrame extends javax.swing.JFrame {
                 } catch (NullPointerException e){
                     System.err.println("Immagine non trovata: " + e.getMessage());
                 }
-                if(containerStanza.isOpenable() || containerStanza.isLocked()){
+                if(containerStanza.isOpenable()){
                     open_button.setEnabled(true);
-                    containerSceltoLista = containerStanza;
+                    containerSceltoAprire = containerStanza;
                 }
                 if (containerStanza.isObservable()){
                     observe_button.setEnabled(true);
@@ -633,7 +668,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                     pickUp_button.setEnabled(false);
                     move_button.setEnabled(false);
                     open_button.setEnabled(false);
-                    use_button.setEnabled(false);
+                    interaction_button.setEnabled(false);
                     backToRoom_button.setEnabled(true);
                     if (itemContainer.isPickupable()){
                         pickUp_button.setEnabled(true);
@@ -658,6 +693,7 @@ public class AdventureFrame extends javax.swing.JFrame {
             } catch (NullPointerException e){
             System.err.println("Immagine non trovata: " + e.getMessage());
             }
+            portaChiusaSud();
         }
     }//GEN-LAST:event_down_buttonActionPerformed
 
@@ -672,6 +708,7 @@ public class AdventureFrame extends javax.swing.JFrame {
             } catch (NullPointerException e){
             System.err.println("Immagine non trovata: " + e.getMessage());
             }
+            portaChiusaSud();
         }
     }//GEN-LAST:event_right_buttonActionPerformed
 
@@ -710,6 +747,7 @@ public class AdventureFrame extends javax.swing.JFrame {
             } catch (NullPointerException e){
             System.err.println("Immagine non trovata: " + e.getMessage());
             }
+            portaChiusaSud();
         }
     }//GEN-LAST:event_up_buttonActionPerformed
 
@@ -725,12 +763,67 @@ public class AdventureFrame extends javax.swing.JFrame {
         aggiornaOggettiStanza();
     }//GEN-LAST:event_backToRoom_buttonActionPerformed
 
-    private void use_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_use_buttonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_use_buttonActionPerformed
+    private void interaction_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interaction_buttonActionPerformed
+        if(oggettoUsabile.getName() == "Banco da lavoro"){
+            bancoDaLavoro();
+        }
+    }//GEN-LAST:event_interaction_buttonActionPerformed
+
+    private void bancoDaLavoro(){
+        for (AdventureObject itemInventario : game_status.getInventario().getList()){  
+            if(itemInventario.getName() == "Pezzo di chiave #1"){
+                haiChiave1 = true;
+            }
+            if(itemInventario.getName() == "Pezzo di chiave #2"){
+                haiChiave2 = true;
+            }
+        }
+        if(haiChiave1 && haiChiave2){
+            game_status.getInventario().addObject(game_status.getChiaveIntera());
+            for (AdventureObject itemInventario : game_status.getInventario().getList()){  
+                if(itemInventario.getName() == "Pezzo di chiave #1" || itemInventario.getName() == "Pezzo di chiave #2"){
+                    game_status.getInventario().removeObject(itemInventario);
+                }
+            }
+        }
+        else {
+            return;
+        }
+    }
 
     private void open_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_open_buttonActionPerformed
-        aggiornaOggettiContainer(containerSceltoLista);
+        if(!containerSceltoAprire.isLocked()){
+            aggiornaOggettiContainer(containerSceltoAprire);
+            return;
+        }
+        else{
+            if(containerSceltoAprire.getName() == "Dispensa della cucina"){
+                return;
+            }
+            if(containerSceltoAprire.getName() == "Cuccia del cane"){
+                return;
+            }
+        }
+        if(oggettoApribile.isLocked()){
+            if(oggettoApribile.getName() == "Porta"){
+                for (AdventureObject itemInventario : game_status.getInventario().getList()){  
+                    if(itemInventario.getName() == "Chiave giardino"){
+                        haiChiaveGiardino = true;
+                        game_status.getInventario().removeObject(itemInventario);
+                    }
+                }
+                if(haiChiaveGiardino){
+                    for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){
+                        if(itemStanza.getName() == "Porta"){
+                            itemStanza.setLocked(false);
+                        }
+                    }
+                }
+                else{
+                    return;
+                }
+            }
+        }
     }//GEN-LAST:event_open_buttonActionPerformed
 
     private void itemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComboBoxActionPerformed
@@ -756,6 +849,21 @@ public class AdventureFrame extends javax.swing.JFrame {
             }                       
         }
     }//GEN-LAST:event_itemComboBoxActionPerformed
+
+    private void move_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_move_buttonActionPerformed
+        if(oggettoSpostabile.getName() == "Tappeto a scacchiera"){
+            tappetoScacchieraSpostato();
+        }
+    }//GEN-LAST:event_move_buttonActionPerformed
+    
+    private void tappetoScacchieraSpostato(){
+        game_status.getInventario().addObject(game_status.getPezzoChiave2());
+        for(AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){
+            if(itemStanza.getName() == "Tappeto a scacchiera"){
+                itemStanza.setMovable(false);
+            }
+        }
+    }
     
     /**
      * Metodo che riporta alla schermata di login e distrugge i salvataggi per l'utente connesso.
@@ -784,7 +892,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         move_button.setEnabled(false);
         observe_button.setEnabled(false);
         open_button.setEnabled(false);
-        use_button.setEnabled(false);
+        interaction_button.setEnabled(false);
         backToRoom_button.setEnabled(false);
         useItem_button.setEnabled(false);
         itemComboBox.setEnabled(false);
@@ -817,6 +925,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     private javax.swing.JButton down_button;
     private javax.swing.JButton exit_button;
     private javax.swing.JLabel image_lbl;
+    private javax.swing.JButton interaction_button;
     private javax.swing.JLabel inventoryImg_lbl;
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JComboBox<String> itemComboBox;
@@ -834,6 +943,5 @@ public class AdventureFrame extends javax.swing.JFrame {
     private javax.swing.JLabel timer_label;
     private javax.swing.JButton up_button;
     private javax.swing.JButton useItem_button;
-    private javax.swing.JButton use_button;
     // End of variables declaration//GEN-END:variables
 }

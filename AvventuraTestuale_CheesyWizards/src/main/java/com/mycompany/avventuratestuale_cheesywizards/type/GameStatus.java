@@ -24,6 +24,7 @@ public class GameStatus implements Serializable{
     private AdventureObject osso;
     private AdventureObject ascia;
     private AdventureObject chiaveOro;
+    private AdventureObject chiaveIntera;
     private AdventureObject tappetoScacchiera;
     private AdventureObject tappetoRosso;
     private AdventureObject lampadario;
@@ -87,7 +88,7 @@ public class GameStatus implements Serializable{
         AliasPezzoChiave1.add("parte chiave");
         AliasPezzoChiave1.add("parte chiave 1");
         AliasPezzoChiave1.add("chiave blu");
-        pezzoChiave1 = new AdventureObject(0, "Pezzo di chiave blu #1", "E' uno strano oggetto, sembra "
+        pezzoChiave1 = new AdventureObject(0, "Pezzo di chiave #1", "E' uno strano oggetto, sembra "
             + "esattamente la prima metà di una chiave spezzata. /nChe quella pazza l'abbia rotta "
             + "di proposito e nascosto l'altra metà non so dove? Mi servirebbe un banco da lavoro per unirle..."
             + "", AliasPezzoChiave1, false, true, true, false, false, false, "/immagini/chiaveparte1.png");
@@ -108,10 +109,15 @@ public class GameStatus implements Serializable{
         AliasPezzoChiave2.add("parte chiave");
         AliasPezzoChiave2.add("parte chiave 2");
         AliasPezzoChiave2.add("chiave blu");
-        pezzoChiave2 = new AdventureObject(1, "Pezzo di chiave blu #2", "E' uno strano oggetto, sembra "
+        pezzoChiave2 = new AdventureObject(1, "Pezzo di chiave #2", "E' uno strano oggetto, sembra "
                 + "esattamente la seconda metà di una chiave spezzata. /nChe quella pazza l'abbia rotta "
                 + "di proposito e nascosto l'altra metà non so dove? Mi servirebbe un banco da lavoro per unirle..."
                 + "", AliasPezzoChiave2, false, true, true, false, false, false, "/immagini/chiaveparte2.png");
+        
+        chiaveIntera = new AdventureObject(80, "Chiave giardino", "E' uno strano oggetto, sembra "
+                + "esattamente la seconda metà di una chiave spezzata. /nChe quella pazza l'abbia rotta "
+                + "di proposito e nascosto l'altra metà non so dove? Mi servirebbe un banco da lavoro per unirle..."
+                + "", AliasPezzoChiave2, false, true, true, false, false, false, "/immagini/chiave.png");
         
         /**
          * Osso
@@ -162,7 +168,7 @@ public class GameStatus implements Serializable{
         tappetoScacchiera = new AdventureObject(5, "Tappeto a scacchiera", "È un tappeto di dubbio gusto estetico.\n"
                 + "È molto grande e sembra super mrbido, però si nota un rialzamento al centro, come se ci "
                 + "fosse qualcosa di nascosto al di sotto."
-                + "", AliasTappetoScacchiera, false, false, true, false, false, true, "/immagini/ItemBancoDalavoro/tappetoScacchiera.jpg");
+                + "", AliasTappetoScacchiera, false, false, false, false, true, true, "/immagini/ItemBancoDalavoro/tappetoScacchiera.jpg");
         
         /**
          * Orologio
@@ -354,7 +360,7 @@ public class GameStatus implements Serializable{
         AliasDispensa.add("armadietto");
         AliasDispensa.add("stipetto");
         List<AdventureObject> oggettiNellaDispensa = new ArrayList<>();
-        oggettiNelComodino.add(osso);
+        oggettiNellaDispensa.add(osso);
         dispensa = new AdventureObjectContainer(8, "Dispensa della cucina", "È una graziosa dispensa fatta di un legno molto antico."
                 + "\nSembra chiusa dall'interno da una serrattuura in legno, che possa usare qualche oggetto per forzarla?"
                 + "", AliasDispensa, true, false, false, true, false, true, "/immagini/ItemCucina/frigo_lavandino_dispensa.png", oggettiNellaDispensa);
@@ -375,7 +381,7 @@ public class GameStatus implements Serializable{
         oggettiNellArmadio.add(ascia);
         armadioAttrezzi = new AdventureObjectContainer(9, "Armadio degli attrezzi", "È un armadio molto vecchio e consumato, non è chiuso a chiave."
                 + "\nSicuramente viene utilizzato come ripostiglio per gli attrezzi."
-                + "", AliasArmadio, true, false, false, true, false, true, "/immagini/ItemGiardino/armadioAttrezzi.png", oggettiNellArmadio);
+                + "", AliasArmadio, true, false, false, false, false, true, "/immagini/ItemGiardino/armadioAttrezzi.png", oggettiNellArmadio);
         
         /**
          * Cuccia con cane
@@ -390,12 +396,12 @@ public class GameStatus implements Serializable{
         AliasCuccia.add("cuccetta");
         AliasCuccia.add("tana");
         List<AdventureObject> oggettiNellaCuccia = new ArrayList<>();
-        oggettiNellArmadio.add(chiaveOro);
+        oggettiNellaCuccia.add(chiaveOro);
         cucciaConCane = new AdventureObjectContainer(10, "Cuccia del cane", "È una cuccia per cani con dentro Cupcake, "
                 + "il cane di quella svitata. Non lo sopporto, è una bestia di satana."
                 + "\nOvviamente... accanto a lui c'è una chiave d'oro che sembra proprio essere la chiave della porta di casa, "
                 + "come posso prenderla senza che questa bestia mi sbrani."
-                + "", AliasCuccia, false, false, false, true, false, true, "/immagini/ItemGiardino/cucciaCane.png", oggettiNellaCuccia);
+                + "", AliasCuccia, true, false, false, true, false, true, "/immagini/ItemGiardino/cucciaCane.png", oggettiNellaCuccia);
         
         /**
          * Stanza soggiorno #00
@@ -610,6 +616,22 @@ public class GameStatus implements Serializable{
      */
     public void setChiaveOro(AdventureObject chiaveOro) {
         this.chiaveOro = chiaveOro;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public AdventureObject getChiaveIntera() {
+        return chiaveIntera;
+    }
+
+    /**
+     * 
+     * @param chiaveIntera 
+     */
+    public void setChiaveIntera(AdventureObject chiaveIntera) {
+        this.chiaveIntera = chiaveIntera;
     }
 
     /**
