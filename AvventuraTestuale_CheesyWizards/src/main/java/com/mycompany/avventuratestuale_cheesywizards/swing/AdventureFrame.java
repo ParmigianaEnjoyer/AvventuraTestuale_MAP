@@ -36,7 +36,6 @@ public class AdventureFrame extends javax.swing.JFrame {
     private boolean is_game_lost = false;
     private Boolean is_game_won = false;
     private String item_scelto = "";
-    private String containerScelto = "";
     private Boolean haiChiave1 = false;
     private Boolean haiChiave2 = false;
     private Boolean haiChiaveGiardino = false;
@@ -46,6 +45,8 @@ public class AdventureFrame extends javax.swing.JFrame {
     
     /**
      * Creates new form AdventureFrame
+     * @param user_info
+     * @param saves
      */
     public AdventureFrame(Users user_info, GameStatus saves) {
         this.setVisible(true);
@@ -541,9 +542,9 @@ public class AdventureFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_exit_buttonActionPerformed
 
     private void portaChiusaSud(){
-        if(game_status.getCurrent_room().getName() == "Cucina"){
+        if(game_status.getCurrent_room().getName().equals("Cucina")){
             for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){
-                if(itemStanza.getName() == "Porta"){
+                if(itemStanza.getName().equals("Porta")){
                     if(itemStanza.isLocked()){
                         down_button.setEnabled(false);
                     }
@@ -579,7 +580,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     private void itemDisplayer_comboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDisplayer_comboBoxActionPerformed
         item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
         for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){  
-            if(itemStanza.getName() == item_scelto){
+            if(itemStanza.getName().equals(item_scelto)){
                 isContainer = false;
                 up_button.setEnabled(false);
                 down_button.setEnabled(false);
@@ -618,7 +619,7 @@ public class AdventureFrame extends javax.swing.JFrame {
             }                       
         }
         for (AdventureObjectContainer containerStanza : game_status.getCurrent_room().getContainers()){
-            if(containerStanza.getName() == item_scelto){
+            if(containerStanza.getName().equals(item_scelto)){
                 isContainer = true;
                 up_button.setEnabled(false);
                 down_button.setEnabled(false);
@@ -638,7 +639,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                 } catch (NullPointerException e){
                     System.err.println("Immagine non trovata: " + e.getMessage());
                 }
-                if(containerStanza.getName() == "Cuccia del cane"){
+                if(containerStanza.getName().equals("Cuccia del cane")){
                     if(containerStanza.isOpenable()){
                         open_button.setEnabled(true);
                     }
@@ -674,7 +675,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
         for (AdventureObjectContainer containerStanza : game_status.getCurrent_room().getContainers()){
             for (AdventureObject itemContainer : containerStanza.getList()){
-                if(itemContainer.getName() == item_scelto){
+                if(itemContainer.getName().equals(item_scelto)){
                     isContainer = false;
                     up_button.setEnabled(false);
                     down_button.setEnabled(false);
@@ -733,7 +734,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     private void pickUp_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pickUp_buttonActionPerformed
         item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
         for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){ 
-            if(itemStanza.getName() == item_scelto){
+            if(itemStanza.getName().equals(item_scelto)){
                 game_status.getInventario().addObject(itemStanza);
                 game_status.getCurrent_room().getObjects().remove(itemStanza);
                 aggiornaOggettiInventario();
@@ -743,7 +744,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
         for (AdventureObjectContainer containerStanza : game_status.getCurrent_room().getContainers()){
             for (AdventureObject itemContainer : containerStanza.getList()){ 
-                if(itemContainer.getName() == item_scelto){
+                if(itemContainer.getName().equals(item_scelto)){
                     game_status.getInventario().addObject(itemContainer);
                     containerStanza.removeObject(itemContainer);
                     aggiornaOggettiInventario();
@@ -785,13 +786,13 @@ public class AdventureFrame extends javax.swing.JFrame {
 
     private void interaction_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interaction_buttonActionPerformed
         for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){
-            if(itemStanza.getName() == "Banco da lavoro"){
+            if(itemStanza.getName().equals("Banco da lavoro")){
                 bancoDaLavoro();
                 return;
             }
         }
         for (AdventureObjectContainer containerStanza : game_status.getCurrent_room().getContainers()){
-            if(containerStanza.getName() == "Cuccia del cane"){
+            if(containerStanza.getName().equals("Cuccia del cane")){
                 distraiCane();
                 return;
             }
@@ -800,10 +801,10 @@ public class AdventureFrame extends javax.swing.JFrame {
 
     private void bancoDaLavoro(){
         for (AdventureObject itemInventario : game_status.getInventario().getList()){  
-            if(itemInventario.getName() == "Pezzo di chiave #1"){
+            if(itemInventario.getName().equals("Pezzo di chiave #1")){
                 haiChiave1 = true;
             }
-            if(itemInventario.getName() == "Pezzo di chiave #2"){
+            if(itemInventario.getName().equals("Pezzo di chiave #2")){
                 haiChiave2 = true;
             }
         }
@@ -821,11 +822,11 @@ public class AdventureFrame extends javax.swing.JFrame {
         Iterator<AdventureObject> iterator = game_status.getInventario().getList().iterator();
         while(iterator.hasNext()){  
             AdventureObject item = iterator.next();
-            if(item.getName() == "Pezzo di chiave #1"){
+            if(item.getName().equals("Pezzo di chiave #1")){
                 iterator.remove();
                 aggiornaOggettiInventario();
             }
-            if(item.getName() == "Pezzo di chiave #2"){
+            if(item.getName().equals("Pezzo di chiave #2")){
                 iterator.remove();
                 aggiornaOggettiInventario();
             }
@@ -836,7 +837,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         Iterator<AdventureObject> iterator = game_status.getInventario().getList().iterator();
         while(iterator.hasNext()){ 
             AdventureObject item = iterator.next();
-            if(item.getName() == "Chiave giardino"){
+            if(item.getName().equals("Chiave giardino")){
                 haiChiaveGiardino = true;
                 iterator.remove();
                 aggiornaOggettiInventario();
@@ -844,7 +845,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
         if(haiChiaveGiardino){
             for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){
-                if(itemStanza.getName() == "Porta"){
+                if(itemStanza.getName().equals("Porta")){
                     itemStanza.setLocked(false);
                     //dialogo porta aperta
                 }
@@ -860,7 +861,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         Iterator<AdventureObject> iterator = game_status.getInventario().getList().iterator();
         while(iterator.hasNext()){  
             AdventureObject item = iterator.next();
-            if(item.getName() == "Ascia da boscaiolo"){
+            if(item.getName().equals("Ascia da boscaiolo")){
                 haiAscia = true;
                 iterator.remove();
                 aggiornaOggettiInventario();
@@ -868,7 +869,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
         if(haiAscia){
             for (AdventureObjectContainer containerStanza : game_status.getCurrent_room().getContainers()){
-                if(containerStanza.getName() == "Dispensa della cucina"){
+                if(containerStanza.getName().equals("Dispensa della cucina")){
                     containerStanza.setLocked(false);
                     aggiornaOggettiContainer(containerStanza);
                     //dialogo dispensa aperta
@@ -885,7 +886,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         Iterator<AdventureObject> iterator = game_status.getInventario().getList().iterator();
         while(iterator.hasNext()){   
             AdventureObject item = iterator.next();
-            if(item.getName() == "Osso"){
+            if(item.getName().equals("Osso")){
                 haiOsso = true;
                 iterator.remove();
                 aggiornaOggettiInventario();
@@ -893,7 +894,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
         if(haiOsso){
             for (AdventureObjectContainer containerStanza : game_status.getCurrent_room().getContainers()){
-                if(containerStanza.getName() == "Cuccia del cane"){
+                if(containerStanza.getName().equals("Cuccia del cane")){
                     containerStanza.setLocked(false);
                     aggiornaOggettiContainer(containerStanza);
                     //dialogo cane addomesticato
@@ -910,16 +911,16 @@ public class AdventureFrame extends javax.swing.JFrame {
         if(isContainer){
             item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
             for (AdventureObjectContainer containerStanza : game_status.getCurrent_room().getContainers()){
-                if(!containerStanza.isLocked() && containerStanza.getName() == item_scelto){
+                if(!containerStanza.isLocked() && containerStanza.getName().equals(item_scelto)){
                     aggiornaOggettiContainer(containerStanza);
                     return;
                 }
             }
-            if(item_scelto == "Dispensa della cucina"){
+            if(item_scelto.equals("Dispensa della cucina")){
                 apriDispensa();
                 return;
             }
-            if(item_scelto == "Cuccia del cane"){
+            if(item_scelto.equals("Cuccia del cane")){
                 //dialogo cane arrabbiato
                 return;
             }
@@ -927,7 +928,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         else{
             for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){
                 if(itemStanza.isLocked()){
-                    if(itemStanza.getName() == "Porta"){
+                    if(itemStanza.getName().equals("Porta")){
                         apriPorta();
                         return;
                     }
@@ -938,11 +939,11 @@ public class AdventureFrame extends javax.swing.JFrame {
 
     private void itemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComboBoxActionPerformed
         item_scelto = String.valueOf(itemComboBox.getSelectedItem());
-        if(item_scelto == "Seleziona Oggetto..."){
+        if(item_scelto.equals("Seleziona Oggetto...")){
             inventoryImg_lbl.setIcon(null);
         }
         for (AdventureObject itemInventario : game_status.getInventario().getList()){  
-            if(itemInventario.getName() == item_scelto){
+            if(itemInventario.getName().equals(item_scelto)){
                 try {
 
                 ImageIcon iconInventory = new ImageIcon(getClass().getResource(itemInventario.getPath_image()));
@@ -993,7 +994,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     
     private void haiChiaveOro(){
         for (AdventureObject itemInventario : game_status.getInventario().getList()){
-            if(itemInventario.getName() == "Chiave d'oro" && game_status.getCurrent_room().getName() == "Soggiorno"){
+            if(itemInventario.getName().equals("Chiave d'oro") && game_status.getCurrent_room().getName().equals("Soggiorno")){
                 game_won();
             }
         }
@@ -1050,6 +1051,7 @@ public class AdventureFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 //Faccio partire il timer.
                 timerThread = new Thread(timerManager);

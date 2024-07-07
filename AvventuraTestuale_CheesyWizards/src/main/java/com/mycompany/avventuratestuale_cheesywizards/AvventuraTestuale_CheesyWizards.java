@@ -6,10 +6,8 @@ package com.mycompany.avventuratestuale_cheesywizards;
 
 import com.mycompany.avventuratestuale_cheesywizards.swing.LoginFrame;
 
-/**
- *
- * @author nico0
- */
+//Lancio iniziale del programma
+
 public class AvventuraTestuale_CheesyWizards {
 
     public static void main(String[] args) {

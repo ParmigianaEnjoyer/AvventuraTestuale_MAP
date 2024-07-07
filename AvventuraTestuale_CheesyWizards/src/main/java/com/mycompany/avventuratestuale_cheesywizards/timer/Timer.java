@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class Timer implements Serializable{
     
-    private final int TIMER_VALUE = 90;   // 1200s = 20min
+    private final int TIMER_VALUE = 1200;   // 1200s = 20min
     private int current_value;              // valore corrente del timer
 
     /**
