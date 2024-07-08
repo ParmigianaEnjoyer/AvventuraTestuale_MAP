@@ -49,7 +49,6 @@ public class TimerManager implements Runnable{
                 adventureFrame.setTimerLabel(timeString);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                System.out.println("Il thread del timer è stato interrotto.");
             }
         }
         if (timer.getCurrent_value() <= 0) {

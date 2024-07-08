@@ -45,5 +45,13 @@ public class Timer implements Serializable{
     public void setCurrent_value(int current_value) {
         this.current_value = current_value;
     }
+
+    /**
+     * 
+     * @return 
+     */
+    public int getTIMER_VALUE() {
+        return TIMER_VALUE;
+    }
     
 }

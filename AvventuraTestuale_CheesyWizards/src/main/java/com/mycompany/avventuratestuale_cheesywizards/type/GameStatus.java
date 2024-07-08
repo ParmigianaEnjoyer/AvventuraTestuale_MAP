@@ -89,7 +89,7 @@ public class GameStatus implements Serializable{
         AliasPezzoChiave1.add("parte chiave 1");
         AliasPezzoChiave1.add("chiave blu");
         pezzoChiave1 = new AdventureObject(0, "Pezzo di chiave #1", "E' uno strano oggetto, sembra "
-            + "esattamente la prima metà di una chiave spezzata. /nChe quella pazza l'abbia rotta "
+            + "esattamente la prima metà di una chiave spezzata. \nChe quella pazza l'abbia rotta "
             + "di proposito e nascosto l'altra metà non so dove? Mi servirebbe un banco da lavoro per unirle..."
             + "", AliasPezzoChiave1, false, true, true, false, false, false, "/immagini/chiaveparte1.png");
         
@@ -110,12 +110,12 @@ public class GameStatus implements Serializable{
         AliasPezzoChiave2.add("parte chiave 2");
         AliasPezzoChiave2.add("chiave blu");
         pezzoChiave2 = new AdventureObject(1, "Pezzo di chiave #2", "E' uno strano oggetto, sembra "
-                + "esattamente la seconda metà di una chiave spezzata. /nChe quella pazza l'abbia rotta "
+                + "esattamente la seconda metà di una chiave spezzata. \nChe quella pazza l'abbia rotta "
                 + "di proposito e nascosto l'altra metà non so dove? Mi servirebbe un banco da lavoro per unirle..."
                 + "", AliasPezzoChiave2, false, true, true, false, false, false, "/immagini/chiaveparte2.png");
         
         chiaveIntera = new AdventureObject(80, "Chiave giardino", "E' uno strano oggetto, sembra "
-                + "esattamente la seconda metà di una chiave spezzata. /nChe quella pazza l'abbia rotta "
+                + "esattamente la seconda metà di una chiave spezzata. \nChe quella pazza l'abbia rotta "
                 + "di proposito e nascosto l'altra metà non so dove? Mi servirebbe un banco da lavoro per unirle..."
                 + "", AliasPezzoChiave2, false, true, true, false, false, false, "/immagini/chiave.png");
         
@@ -154,7 +154,7 @@ public class GameStatus implements Serializable{
         AliasChiaveOro.add("clef");
         AliasChiaveOro.add("chiave");
         chiaveOro = new AdventureObject(4, "Chiave d'oro", "È una chiave d'oro, sembra una chiave molto importante.\n"
-                + "Che sia finalmente la chiave per poter scappare dalla casa di questa pazza?"
+                + "Che sia finalmente la chiave per poter scappare dalla casa di questa pazza? Devo correre nel soggiorno e aprire la porta dìuscita per scoprirlo!"
                 + "", AliasChiaveOro, false, true, true, false, false, false, "/immagini/chiaveOro.png");
         
         /**
