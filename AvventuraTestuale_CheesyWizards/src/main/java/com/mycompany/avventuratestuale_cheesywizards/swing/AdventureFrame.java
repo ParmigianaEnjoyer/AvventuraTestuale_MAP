@@ -4,10 +4,6 @@
  */
 package com.mycompany.avventuratestuale_cheesywizards.swing;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import com.mycompany.avventuratestuale_cheesywizards.chat.PhoneFrame;
 import com.mycompany.avventuratestuale_cheesywizards.db.DBManager;
 import com.mycompany.avventuratestuale_cheesywizards.files.FileManager;
@@ -17,10 +13,7 @@ import com.mycompany.avventuratestuale_cheesywizards.timer.*;
 import com.mycompany.avventuratestuale_cheesywizards.type.AdventureObject;
 import com.mycompany.avventuratestuale_cheesywizards.type.AdventureObjectContainer;
 import java.awt.Color;
-import java.nio.file.Files;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -57,6 +50,19 @@ public class AdventureFrame extends javax.swing.JFrame {
         initComponents();
         timer_label.setText("--:--");
         
+        if(game_status.getTimer_partita().getCurrent_value() == game_status.getTimer_partita().getTIMER_VALUE()){
+            outTextArea.setText("\n\nC..Cavolo, sono a casa della mia ragazza!\n\n"
+                    + "Quella pazza mi ha drogato e chiuso dentro casa sua dopo che le ho detto che volevo lasciarla...\n\n"
+                    + "Devo scappare prima che quella pazza torni e mi ammazzi!!");
+        } else {
+            outTextArea.setText("\n\nTi trovi in: " + game_status.getCurrent_room().getName());
+        }
+        
+        outTextArea.setLineWrap(true);
+        outTextArea.setWrapStyleWord(true);
+        
+        itemDescriptionArea.setLineWrap(true);
+        itemDescriptionArea.setWrapStyleWord(true);
         
         //carico l'immagine dell'ultima stanza in cui mi trovavo
         try {
@@ -177,7 +183,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         InventoryPanel = new javax.swing.JPanel();
         itemComboBox = new javax.swing.JComboBox<>();
         ItemPanel = new javax.swing.JPanel();
-        jTextArea2 = new javax.swing.JTextArea();
+        itemDescriptionArea = new javax.swing.JTextArea();
         inventoryImg_lbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -277,6 +283,11 @@ public class AdventureFrame extends javax.swing.JFrame {
         });
 
         observe_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Osservabile.png"))); // NOI18N
+        observe_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                observe_buttonActionPerformed(evt);
+            }
+        });
 
         move_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/immagini/Sposta.png"))); // NOI18N
         move_button.addActionListener(new java.awt.event.ActionListener() {
@@ -403,6 +414,7 @@ public class AdventureFrame extends javax.swing.JFrame {
 
         tabGameInventory.addTab("tab1", adventurePanel);
 
+        itemComboBox.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         itemComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         itemComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -416,8 +428,8 @@ public class AdventureFrame extends javax.swing.JFrame {
             InventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InventoryPanelLayout.createSequentialGroup()
                 .addGap(166, 166, 166)
-                .addComponent(itemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addComponent(itemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         InventoryPanelLayout.setVerticalGroup(
             InventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,9 +439,11 @@ public class AdventureFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTextArea2.setBackground(new java.awt.Color(0, 0, 0));
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
+        itemDescriptionArea.setBackground(new java.awt.Color(0, 0, 0));
+        itemDescriptionArea.setColumns(20);
+        itemDescriptionArea.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        itemDescriptionArea.setForeground(new java.awt.Color(255, 255, 255));
+        itemDescriptionArea.setRows(5);
 
         javax.swing.GroupLayout ItemPanelLayout = new javax.swing.GroupLayout(ItemPanel);
         ItemPanel.setLayout(ItemPanelLayout);
@@ -438,7 +452,7 @@ public class AdventureFrame extends javax.swing.JFrame {
             .addGroup(ItemPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemDescriptionArea, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(inventoryImg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(99, Short.MAX_VALUE))
         );
@@ -448,7 +462,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                 .addGroup(ItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ItemPanelLayout.createSequentialGroup()
                         .addGap(348, 348, 348)
-                        .addComponent(jTextArea2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
+                        .addComponent(itemDescriptionArea, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
                     .addGroup(ItemPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(inventoryImg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -577,13 +591,13 @@ public class AdventureFrame extends javax.swing.JFrame {
     private void left_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_left_buttonActionPerformed
         if (game_status.getCurrent_room().getWest() != null){
             game_status.setCurrent_room(game_status.getCurrent_room().getWest());
+            outTextArea.setText("\n\nTi trovi in: " + game_status.getCurrent_room().getName());
             try {
-
-            ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
-            image_lbl.setIcon(icon);
-            aggiornaOggettiStanza();
+                ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
+                image_lbl.setIcon(icon);
+                aggiornaOggettiStanza();
             } catch (NullPointerException e){
-            System.err.println("Immagine non trovata: " + e.getMessage());
+                System.err.println("Immagine non trovata: " + e.getMessage());
             }
             portaChiusaSud();
             haiChiaveOro();
@@ -599,6 +613,7 @@ public class AdventureFrame extends javax.swing.JFrame {
      * abbia aperto un contenitore)
      **/
     private void itemDisplayer_comboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDisplayer_comboBoxActionPerformed
+        //outTextArea.setText("");
         item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
         game_status.getCurrent_room().getObjects().forEach((itemStanza) -> {
             if(itemStanza.getName().equals(item_scelto)){
@@ -725,13 +740,13 @@ public class AdventureFrame extends javax.swing.JFrame {
     private void down_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_down_buttonActionPerformed
         if (game_status.getCurrent_room().getSouth() != null){
             game_status.setCurrent_room(game_status.getCurrent_room().getSouth());
+            outTextArea.setText("\n\nTi trovi in: " + game_status.getCurrent_room().getName());
             try {
-
-            ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
-            image_lbl.setIcon(icon);
-            aggiornaOggettiStanza();
+                ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
+                image_lbl.setIcon(icon);
+                aggiornaOggettiStanza();
             } catch (NullPointerException e){
-            System.err.println("Immagine non trovata: " + e.getMessage());
+                System.err.println("Immagine non trovata: " + e.getMessage());
             }
             portaChiusaSud();
             haiChiaveOro();
@@ -741,13 +756,13 @@ public class AdventureFrame extends javax.swing.JFrame {
     private void right_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_right_buttonActionPerformed
         if (game_status.getCurrent_room().getEast() != null){
             game_status.setCurrent_room(game_status.getCurrent_room().getEast());
+            outTextArea.setText("\n\nTi trovi in: " + game_status.getCurrent_room().getName());
             try {
-
-            ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
-            image_lbl.setIcon(icon);
-            aggiornaOggettiStanza();
+                ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
+                image_lbl.setIcon(icon);
+                aggiornaOggettiStanza();
             } catch (NullPointerException e){
-            System.err.println("Immagine non trovata: " + e.getMessage());
+                System.err.println("Immagine non trovata: " + e.getMessage());
             }
             portaChiusaSud();
             haiChiaveOro();
@@ -759,6 +774,10 @@ public class AdventureFrame extends javax.swing.JFrame {
     * stanza o in un contenitore specifico, una volta trovato viene messo nell'inventario**/
     private void pickUp_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pickUp_buttonActionPerformed
         item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
+        if(!item_scelto.equals("\n\n"+"Seleziona Oggetto...")){
+            outTextArea.setText("Ho raccolto: " + item_scelto + ".\n"
+                    + "Se fossi in un gioco e avessi un inventario controllerei li");
+        }
         game_status.getCurrent_room().getObjects().forEach((itemStanza) -> {
             if(itemStanza.getName().equals(item_scelto)){
                 game_status.getInventario().addObject(itemStanza);
@@ -768,6 +787,7 @@ public class AdventureFrame extends javax.swing.JFrame {
                 return;
             }
         });
+        
         game_status.getCurrent_room().getContainers().forEach((containerStanza) -> {
             for (AdventureObject itemContainer : containerStanza.getList()){ 
                 if(itemContainer.getName().equals(item_scelto)){
@@ -784,13 +804,13 @@ public class AdventureFrame extends javax.swing.JFrame {
     private void up_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_up_buttonActionPerformed
         if (game_status.getCurrent_room().getNorth() != null){
             game_status.setCurrent_room(game_status.getCurrent_room().getNorth());
+            outTextArea.setText("\n\nTi trovi in: " + game_status.getCurrent_room().getName());
             try {
-
-            ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
-            image_lbl.setIcon(icon);
-            aggiornaOggettiStanza();
+                ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
+                image_lbl.setIcon(icon);
+                aggiornaOggettiStanza();
             } catch (NullPointerException e){
-            System.err.println("Immagine non trovata: " + e.getMessage());
+                System.err.println("Immagine non trovata: " + e.getMessage());
             }
             portaChiusaSud();
             haiChiaveOro();
@@ -800,6 +820,8 @@ public class AdventureFrame extends javax.swing.JFrame {
     /**Metodo per ritornare alla visione dell'intera stanza per la scelta di un altro oggetto da esaminare, ricarica
      la lista della stanza e la sua immagine**/
     private void backToRoom_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToRoom_buttonActionPerformed
+        outTextArea.setText("\n\nTi trovi in: " + game_status.getCurrent_room().getName());
+            
         //carico l'immagine dell'ultima stanza in cui mi trovavo
         try {
             ImageIcon icon = new ImageIcon(getClass().getResource(game_status.getCurrent_room().getImage_path()));
@@ -817,6 +839,9 @@ public class AdventureFrame extends javax.swing.JFrame {
         game_status.getCurrent_room().getObjects().forEach((itemStanza) -> {
            if(itemStanza.getName().equals("Banco da lavoro")){
                 bancoDaLavoro();
+                outTextArea.setText("\n\n"+"Perfetto!! Ho riparato la chiave!!\n"
+                        + "Adesso ho una chiave intera,\n"
+                        + "anni e anni di lavoro sottopagato nell'officina di papà son serviti a qualcosa...");
                 return;
             } 
         });
@@ -878,6 +903,8 @@ public class AdventureFrame extends javax.swing.JFrame {
             }
         }
         if(haiChiaveGiardino){
+            outTextArea.setText("\n\n"+"Perfetto!.\n"
+                    + "Ho usato la chiave d'argento per aprire la porta!");
             game_status.getCurrent_room().getObjects().forEach((itemStanza) -> {
                 if(itemStanza.getName().equals("Porta")){
                     itemStanza.setLocked(false);
@@ -886,7 +913,8 @@ public class AdventureFrame extends javax.swing.JFrame {
             });
         }
         else{
-            //dialogo porta chiusa
+            outTextArea.setText("\n\n"+"Cavolo...la porta è chiusa a chiave.\n"
+                    + "Ho bisogno di una chiave per aprirla...");
             return;
         }
     }
@@ -908,12 +936,14 @@ public class AdventureFrame extends javax.swing.JFrame {
                 if(containerStanza.getName().equals("Dispensa della cucina")){
                     containerStanza.setLocked(false);
                     aggiornaOggettiContainer(containerStanza);
-                    //dialogo dispensa aperta
+                    outTextArea.setText("\n\n"+"Esattamente come pensavo!!.\n"
+                    + "Nessuna serratura in legno può resistere alla forza bruta di un'ascia. Ora la dispensa è aperta.");
                 }
             });
         }
         else{
-            //dialogo dispensa chiusa
+            outTextArea.setText("\n\n"+"Cavolo...la dispensa è chiusa a chiave.\n"
+                    + "Devo trovare un modo per aprirla...");
             return;
         }
     }
@@ -935,12 +965,15 @@ public class AdventureFrame extends javax.swing.JFrame {
                 if(containerStanza.getName().equals("Cuccia del cane")){
                     containerStanza.setLocked(false);
                     aggiornaOggettiContainer(containerStanza);
-                    //dialogo cane addomesticato
+                    outTextArea.setText("\n\n"+"Fantastico!!\n"
+                    + "Non ci avrei mai sperato, ma ora il cane è distratto dal succulento osso che gli ho dato. \n"
+                            + "Prendere la chiave sarà un gioco da ragazzi");
                 }
             });
         }
         else{
-            //dialogo cane arrabbiato
+            outTextArea.setText("\n\n"+"Argh!!\n"
+                    + "Se solo provassi ad avvicinarmi alla chiave questo cane rabbioso mi sbranerebbe l'intero braccio.");
             return;
         }
     }
@@ -953,6 +986,10 @@ public class AdventureFrame extends javax.swing.JFrame {
     private void open_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_open_buttonActionPerformed
         if(isContainer){
             item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
+            outTextArea.setText("\n\n"+"Ho aperto " + item_scelto + "\n"
+                    + "Chissà cosa c'è dentro...");
+            open_button.setEnabled(false);
+            observe_button.setEnabled(false);
             game_status.getCurrent_room().getContainers().forEach((containerStanza) -> {
                 if(!containerStanza.isLocked() && containerStanza.getName().equals(item_scelto)){
                     aggiornaOggettiContainer(containerStanza);
@@ -964,7 +1001,8 @@ public class AdventureFrame extends javax.swing.JFrame {
                 return;
             }
             if(item_scelto.equals("Cuccia del cane")){
-                //dialogo cane arrabbiato
+                outTextArea.setText("\n\n"+"Argh!!\n"
+                    + "Se solo provassi ad avvicinarmi alla chiave questo cane rabbioso mi sbranerebbe l'intero braccio.");
                 return;
             }
         }
@@ -986,9 +1024,13 @@ public class AdventureFrame extends javax.swing.JFrame {
         item_scelto = String.valueOf(itemComboBox.getSelectedItem());
         if(item_scelto.equals("Seleziona Oggetto...")){
             inventoryImg_lbl.setIcon(null);
+            itemDescriptionArea.setText("");
         }
         game_status.getInventario().getList().forEach((itemInventario) -> {
             if(itemInventario.getName().equals(item_scelto)){
+                
+                itemDescriptionArea.setText("\n\n" + itemInventario.getName() + "\n\n" + itemInventario.getDescription());
+                
                 try {
 
                 ImageIcon iconInventory = new ImageIcon(getClass().getResource(itemInventario.getPath_image()));
@@ -1010,9 +1052,35 @@ public class AdventureFrame extends javax.swing.JFrame {
         game_status.getCurrent_room().getObjects().forEach((itemStanza) -> {
             if(itemStanza.getName().equals("Tappeto a scacchiera")){
                 tappetoScacchieraSpostato();
+                observe_button.setEnabled(false);
+                outTextArea.setText("\n\n"+"Fantastico!!\nHo spostato il tappeto e sotto ci ho trovato la seconda metà di una chiave argentata.");
             }
         });
     }//GEN-LAST:event_move_buttonActionPerformed
+
+    /**
+     * Metodo che stampa la descrizione dell'oggetto osservato selezionato.
+     * @param evt 
+     */
+    private void observe_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_observe_buttonActionPerformed
+        //outTextArea.setText("");
+        if(isContainer){
+            //item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
+            game_status.getCurrent_room().getContainers().forEach((containerStanza) -> {
+                if(containerStanza.getName().equals(item_scelto)){
+                    outTextArea.setText("\n\n"+containerStanza.getName().toUpperCase() + "\n\n" + containerStanza.getDescription());
+                    return;
+                }
+            });
+        } else {
+            game_status.getCurrent_room().getObjects().forEach((itemStanza) -> {
+                if(itemStanza.getName().equals(item_scelto)){
+                    outTextArea.setText("\n\n"+itemStanza.getName().toUpperCase() + "\n\n" + itemStanza.getDescription());
+                    return;
+                }
+            });
+        }
+    }//GEN-LAST:event_observe_buttonActionPerformed
     
     /**Metodo che spostando il tappeto ti da l'oggetto presente sotto di esso, una volta
      preso l'oggetto il tappeto non è più spostabile**/
@@ -1057,6 +1125,11 @@ public class AdventureFrame extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource("/immagini/vittoria.png"));
         image_lbl.setIcon(icon);
         
+        String won_sentence = "\n\nHAI VINTO!"
+                + "\n\nPurtroppo per te, davanti alla porta di uscita della casa c'era un creeper che è esploso appena ti ha visto."
+                + "\n\nSei morto.";
+        outTextArea.setText(won_sentence);
+        
         is_game_won = true;
         up_button.setEnabled(false);
         down_button.setEnabled(false);
@@ -1078,8 +1151,9 @@ public class AdventureFrame extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource("/immagini/game_lost_image.jpg"));
         image_lbl.setIcon(icon);
         
-        String lost_sentence = "HAI PERSO!\nSono passati 20 minuti e non sei riuscito a fuggire in tempo.\n"
+        String lost_sentence = "\n\nHAI PERSO!\n\nSono passati 20 minuti e non sei riuscito a fuggire in tempo. "
                 + "La tua ragazza è tornata in casa con un'ascia in mano e ti ha ammazzato.\n\nSei morto.";
+        outTextArea.setText(lost_sentence);
         is_game_lost = true;
         up_button.setEnabled(false);
         down_button.setEnabled(false);
@@ -1127,8 +1201,8 @@ public class AdventureFrame extends javax.swing.JFrame {
     private javax.swing.JLabel inventoryImg_lbl;
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JComboBox<String> itemComboBox;
+    private javax.swing.JTextArea itemDescriptionArea;
     private javax.swing.JComboBox<String> itemDisplayer_comboBox;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JButton left_button;
     private javax.swing.JButton move_button;
     private javax.swing.JButton observe_button;

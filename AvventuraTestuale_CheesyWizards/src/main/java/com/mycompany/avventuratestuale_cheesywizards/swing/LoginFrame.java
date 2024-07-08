@@ -4,7 +4,6 @@
  */
 package com.mycompany.avventuratestuale_cheesywizards.swing;
 
-import com.mycompany.avventuratestuale_cheesywizards.email.EmailSender;
 import com.mycompany.avventuratestuale_cheesywizards.db.DBManager;
 import com.mycompany.avventuratestuale_cheesywizards.files.FileManager;
 import com.mycompany.avventuratestuale_cheesywizards.type.GameStatus;
@@ -191,7 +190,6 @@ public class LoginFrame extends javax.swing.JFrame {
         username = jTextField1.getText();
         password = jPasswordField1.getText();
         
-        System.out.println(db.user_has_savings(username, password));
         if (jTextField1.getText().compareTo("")!=0 && jPasswordField1.getText().compareTo("")!=0){
             if (isValidUsername(username) && isValidPassword(password)){
                 if (db.is_user_existent(username)) {
@@ -247,8 +245,6 @@ public class LoginFrame extends javax.swing.JFrame {
                                        db.add_new_user(email, username, password);
                                        comunication_label.setForeground(Color.green);
                                        comunication_label.setText("Nuovo utente registrato, ora effettua il login.");
-                                       EmailSender es = new EmailSender();
-                                       es.sendEmail(email);
                                        jTextField1.setText("");
                                        jPasswordField1.setText("");    
                                     } else {
