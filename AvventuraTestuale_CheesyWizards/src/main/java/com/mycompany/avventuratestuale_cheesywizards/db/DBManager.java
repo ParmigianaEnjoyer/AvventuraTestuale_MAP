@@ -171,7 +171,7 @@ public class DBManager {
         } catch(IOException | SQLException ex){
             System.err.println(ex.getMessage());
         }
-        System.out.print("\nretun inpu stream\n");
+        System.out.print("\nreturn input stream\n");
     }
     
     /**

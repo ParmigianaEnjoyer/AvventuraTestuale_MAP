@@ -74,7 +74,6 @@ public class FileManager {
 
             // Deserializzazione dell'oggetto GameStatus
             saves = (GameStatus) objectIn.readObject();
-            System.out.println("\n\naaaaaaaaaaaaaaaa\n\n");
             // Stampa dell'oggetto deserializzato
             System.out.println("Oggetto GameStatus deserializzato: " + saves);
 
