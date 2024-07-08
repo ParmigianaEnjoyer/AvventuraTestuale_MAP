@@ -47,6 +47,7 @@ public class AdventureFrame extends javax.swing.JFrame {
      * Creates new form AdventureFrame
      * @param user_info
      * @param saves
+     * Carico i salvaltaggi (se esistenti) delle partite precedenti e istanzio il timer
      */
     public AdventureFrame(Users user_info, GameStatus saves) {
         this.setVisible(true);
@@ -77,7 +78,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         aggiornaOggettiInventario();
     }
     
-    //metodo aggionamento della comboBox degli item nella stanza
+    //Metodo aggionamento della comboBox degli item nella stanza
     public void aggiornaOggettiStanza(){
         itemDisplayer_comboBox.removeAllItems();  //cancello item precedenti
         itemDisplayer_comboBox.addItem("Seleziona Oggetto..."); //aggiungo item "fantoccio"
@@ -89,6 +90,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         for (AdventureObjectContainer containerStanza : game_status.getCurrent_room().getContainers()){
             itemDisplayer_comboBox.addItem(containerStanza.getName());
         }
+        
         //disabilito inizialmente i bottoni di interazione
         pickUp_button.setEnabled(false);
         move_button.setEnabled(false);
@@ -102,6 +104,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         left_button.setEnabled(true);
     }
     
+    //Metodo come il precedente, visualizza nella comboBox della stanza gli item di un contenitore selezionato
     public void aggiornaOggettiContainer(AdventureObjectContainer containerOggetti){
         itemDisplayer_comboBox.removeAllItems();  //cancello item precedenti
         itemDisplayer_comboBox.addItem("Seleziona Oggetto..."); //aggiungo item "fantoccio"
@@ -110,10 +113,11 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }
     
+    //Metodo come il precedente, visualizza nella comboBox dell'inventario gli item che possiede il giocatore
     public void aggiornaOggettiInventario(){
         itemComboBox.removeAllItems();  //cancello item precedenti
         itemComboBox.addItem("Seleziona Oggetto..."); //aggiungo item "fantoccio"
-        for (AdventureObject itemInventario : game_status.getInventario().getList()){  //scorro la lista degli item del container
+        for (AdventureObject itemInventario : game_status.getInventario().getList()){  //scorro la lista degli item del'iventario
             itemComboBox.addItem(itemInventario.getName());                       
         }
     }
@@ -121,6 +125,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     /**
      * 
      * @param message 
+     * Metodo per l'inserimento del testo nella console principale
      */
     public void updateOutTextArea(String message) {
         outTextArea.setText(message + "\n");
@@ -129,6 +134,7 @@ public class AdventureFrame extends javax.swing.JFrame {
     /**
      * 
      * @param timer_string 
+     * Metodo per la visualizzazione del timer
      */
     public void setTimerLabel(String timer_string){
        timer_label.setText(timer_string); 
@@ -541,6 +547,9 @@ public class AdventureFrame extends javax.swing.JFrame {
         new LoginFrame().setVisible(true);
     }//GEN-LAST:event_exit_buttonActionPerformed
 
+    /**Metodo che controlla se la porta a sud della stanza corrente è chiusa,
+      usato per verificare se non è stata aperta la porta a sud della cucina
+      per accedere al giardino**/
     private void portaChiusaSud(){
         if(game_status.getCurrent_room().getName().equals("Cucina")){
             for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){
@@ -559,8 +568,9 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }
     
-    /** metodo per controllare se vi è una stanza ad Ovest della corrente, se si imposta la nuova stanza come
-        stanza corrente, prende e carica la sua immagine correlata (codice uguale per le altre 3 direzioni)**/
+    /** Metodo per controllare se vi è una stanza ad Ovest della corrente, se si imposta la nuova stanza come
+     * stanza corrente, prende e carica la sua immagine correlata (codice uguale per le altre 3 direzioni)
+     * viene inoltre controllato se si possiedono i requisiti di vittoria del gioco**/
     private void left_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_left_buttonActionPerformed
         if (game_status.getCurrent_room().getWest() != null){
             game_status.setCurrent_room(game_status.getCurrent_room().getWest());
@@ -577,6 +587,14 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_left_buttonActionPerformed
 
+    
+    /**Metodo per la selezione di un oggetto o contenitore nella comboBox nell'avventura principale
+     * vengono scandite tutte le liste alla ricerca dell'oggetto o contenitore specifico, 
+     * una volta trovato verranno abilitati i pulsanti specifici di interazione per quell'oggetto 
+     * e caricata l'immagine relativa, le liste sono in ordine:
+     * oggetti nella stanza, contenitori nella stanza, oggetti nei contenitori (in caso il giocatore
+     * abbia aperto un contenitore)
+     **/
     private void itemDisplayer_comboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDisplayer_comboBoxActionPerformed
         item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
         for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){  
@@ -731,6 +749,9 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_right_buttonActionPerformed
 
+    
+    /**Metodo per acquisire un oggetto nell'inventario, che esso sia presente nella
+    * stanza o in un contenitore specifico, una volta trovato viene messo nell'inventario**/
     private void pickUp_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pickUp_buttonActionPerformed
         item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
         for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){ 
@@ -771,6 +792,8 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_up_buttonActionPerformed
 
+    /**Metodo per ritornare alla visione dell'intera stanza per la scelta di un altro oggetto da esaminare, ricarica
+     la lista della stanza e la sua immagine**/
     private void backToRoom_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToRoom_buttonActionPerformed
         //carico l'immagine dell'ultima stanza in cui mi trovavo
         try {
@@ -784,6 +807,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         portaChiusaSud();
     }//GEN-LAST:event_backToRoom_buttonActionPerformed
 
+    /**Metodo che chiama a seconda dell'oggetto il metodo di interazione specifico**/
     private void interaction_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interaction_buttonActionPerformed
         for (AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){
             if(itemStanza.getName().equals("Banco da lavoro")){
@@ -799,6 +823,8 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_interaction_buttonActionPerformed
 
+    /**Metodo di interazione del banco da lavoro, controlla se possiedi entrambi i pezzi di chiave
+      *nell'inventario e se le possiedi le rimuove e ti da la chiave intera**/
     private void bancoDaLavoro(){
         for (AdventureObject itemInventario : game_status.getInventario().getList()){  
             if(itemInventario.getName().equals("Pezzo di chiave #1")){
@@ -818,6 +844,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }
     
+    /**Metodo per la rimozione dei pezzi di chiave dall'inventario**/
     private void cancellaPezziChiave(){
         Iterator<AdventureObject> iterator = game_status.getInventario().getList().iterator();
         while(iterator.hasNext()){  
@@ -833,6 +860,8 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }
 
+    /**Metodo per l'apertura della porta chiusa, controlla se possiedi nell'inventario la chiave
+       completa, se si la rimuove dell'inventario e apre la porta**/
     private void apriPorta(){
         Iterator<AdventureObject> iterator = game_status.getInventario().getList().iterator();
         while(iterator.hasNext()){ 
@@ -857,6 +886,8 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }
     
+    /**Metodo per l'apertura della dispensa, controlla se possiedi nell'inventario l'ascia,
+       se si la rimuove dell'inventario permette la visualizzazione degli oggetti nella dispensa**/
     private void apriDispensa(){
         Iterator<AdventureObject> iterator = game_status.getInventario().getList().iterator();
         while(iterator.hasNext()){  
@@ -882,6 +913,8 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }
     
+    /**Metodo per l'interazione con il cane, controlla se possiedi nell'inventario l'osso,
+       se si lo rimuove dell'inventario e permette la visualizzazione del contenuto della cuccia**/
     private void distraiCane(){
         Iterator<AdventureObject> iterator = game_status.getInventario().getList().iterator();
         while(iterator.hasNext()){   
@@ -907,6 +940,11 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }
     
+    /**Metodo per l'apertura di un oggetto (es Porta) o contenitore, controlla se vuoi aprire o un
+     contenitore o un oggetto, in entrambi i casi controlla se esso è chiuso, se è aperto per il contenitore
+     visualizza gli oggetti al suo interno, nel caso siano chiusi chiama il metodo di apertura
+     (non per la cuccia poichè essa viene sbloccata per interazione, il tasto apri serve solo per
+     visualizzare i suoi oggetti quando è già sbloccata)**/
     private void open_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_open_buttonActionPerformed
         if(isContainer){
             item_scelto = String.valueOf(itemDisplayer_comboBox.getSelectedItem());
@@ -937,6 +975,8 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_open_buttonActionPerformed
 
+    /**Metodo per la selezione di un oggetto nell'inventaorio del giocatore, esso una volta scelto
+     caricherà testo e immagine relative all'oggetto**/
     private void itemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComboBoxActionPerformed
         item_scelto = String.valueOf(itemComboBox.getSelectedItem());
         if(item_scelto.equals("Seleziona Oggetto...")){
@@ -957,16 +997,20 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_itemComboBoxActionPerformed
 
+    /**Metodo spostare un oggetto, controlla quale oggetto si vuole spostare, dato che
+       l'unico item spostabile è tappeto controllo solo se è negli oggetti della stanza attuale
+       perchè il bottone sarà premibile solo se è stato selezionato. Superato il controllo lancia
+       il metodo corrispondente**/
     private void move_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_move_buttonActionPerformed
         for(AdventureObject itemStanza : game_status.getCurrent_room().getObjects()){
-            System.out.println(itemStanza.getName());
             if(itemStanza.getName().equals("Tappeto a scacchiera")){
-                System.out.println(itemStanza.getName());
                 tappetoScacchieraSpostato();
             }
         }
     }//GEN-LAST:event_move_buttonActionPerformed
     
+    /**Metodo che spostando il tappeto ti da l'oggetto presente sotto di esso, una volta
+     preso l'oggetto il tappeto non è più spostabile**/
     private void tappetoScacchieraSpostato(){
         game_status.getInventario().addObject(game_status.getPezzoChiave2());
         aggiornaOggettiInventario();
@@ -992,6 +1036,7 @@ public class AdventureFrame extends javax.swing.JFrame {
         dispose();
     }
     
+    /**Metodo che controlla le condizioni di vittoria del giocatore, se esso ha la chiave d'oro e si trova nel soggiorno**/
     private void haiChiaveOro(){
         for (AdventureObject itemInventario : game_status.getInventario().getList()){
             if(itemInventario.getName().equals("Chiave d'oro") && game_status.getCurrent_room().getName().equals("Soggiorno")){
@@ -1000,6 +1045,8 @@ public class AdventureFrame extends javax.swing.JFrame {
         }
     }
     
+    /**Sia questo metodo che il successivo pongono fine al gioco disabilitando il timer, caricando
+     l'immagine relativa (vittoria o sconfitta) e disabilitando tutti i bottoni e comboBox**/
     public void game_won(){
         timerThread.interrupt();
         ImageIcon icon = new ImageIcon(getClass().getResource("/immagini/vittoria.png"));
