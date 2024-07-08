@@ -190,7 +190,6 @@ public class LoginFrame extends javax.swing.JFrame {
         username = jTextField1.getText();
         password = jPasswordField1.getText();
         
-        System.out.println(db.user_has_savings(username, password));
         if (jTextField1.getText().compareTo("")!=0 && jPasswordField1.getText().compareTo("")!=0){
             if (isValidUsername(username) && isValidPassword(password)){
                 if (db.is_user_existent(username)) {
