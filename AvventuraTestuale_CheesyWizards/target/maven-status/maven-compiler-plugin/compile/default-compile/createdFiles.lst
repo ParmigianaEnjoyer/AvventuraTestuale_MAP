@@ -2,7 +2,6 @@ com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$1.class
 com\mycompany\avventuratestuale_cheesywizards\swing\LoginFrame$4.class
 com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$8.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ClientFrame.class
-com\mycompany\avventuratestuale_cheesywizards\type\CommandType.class
 com\mycompany\avventuratestuale_cheesywizards\chat\PhoneFrame$3.class
 com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$5.class
 com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$9.class
@@ -44,6 +43,5 @@ com\mycompany\avventuratestuale_cheesywizards\type\Inventory.class
 com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame$11.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ServerFrame$4.class
 com\mycompany\avventuratestuale_cheesywizards\type\GameStatus.class
-com\mycompany\avventuratestuale_cheesywizards\type\Command.class
 com\mycompany\avventuratestuale_cheesywizards\swing\AdventureFrame.class
 com\mycompany\avventuratestuale_cheesywizards\chat\ClientFrame$1.class
