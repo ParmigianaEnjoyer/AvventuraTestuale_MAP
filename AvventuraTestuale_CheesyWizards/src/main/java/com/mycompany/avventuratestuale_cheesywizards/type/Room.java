@@ -237,17 +237,6 @@ public class Room implements Serializable{
     
     /**
      *
-     * @return
-     */
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 83 * hash + this.id;
-        return hash;
-    }
-    
-    /**
-     *
      * @param obj
      * @return
      */
