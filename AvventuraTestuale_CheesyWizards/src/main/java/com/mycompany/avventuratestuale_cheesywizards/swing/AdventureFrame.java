@@ -861,19 +861,35 @@ public class AdventureFrame extends javax.swing.JFrame {
                 haiChiave2 = true;
             }
         });
-        if(haiChiave1 && haiChiave2){
-            cancellaPezziChiave();
-            game_status.getInventario().addObject(game_status.getChiaveIntera());
-            outTextArea.setText("\n\n"+"Perfetto!! Ho riparato la chiave!!\n"
-                    + "Adesso ho una chiave intera,\n"
-                    + "anni e anni di lavoro sottopagato nell'officina di papà son serviti a qualcosa...");
-            aggiornaOggettiInventario();
-        }
-        else {
-            outTextArea.setText("\n\n"+"Mannaggia!! Non ci riparo niente con un pezzo solo!\n"
+        if(haiChiave1){
+            if(haiChiave2){
+                cancellaPezziChiave();
+                haiChiave1 = false;
+                haiChiave2 = false;
+                game_status.getInventario().addObject(game_status.getChiaveIntera());
+                outTextArea.setText("\n\n"+"Perfetto!! Ho riparato la chiave!!\n"
+                        + "Adesso ho una chiave intera,\n"
+                        + "anni e anni di lavoro sottopagato nell'officina di papà son serviti a qualcosa...");
+                aggiornaOggettiInventario();
+                return;
+            }
+            else{
+                outTextArea.setText("\n\n"+"Mannaggia!! Non ci riparo niente con un pezzo solo!\n"
                     + "Devo trovare necessariamente l'altra metà,\n"
                     + "non sarà finita molto lontano.");
-            return;
+                return;
+            }
+        }
+        else {
+            if(haiChiave2){
+                outTextArea.setText("\n\n"+"Mannaggia!! Non ci riparo niente con un pezzo solo!\n"
+                    + "Devo trovare necessariamente l'altra metà,\n"
+                    + "non sarà finita molto lontano.");
+                return;
+            }
+            else{
+                outTextArea.setText("\n\n"+"Non ho niente con cui lavorare.");
+            }
         }
     }
     
@@ -911,7 +927,8 @@ public class AdventureFrame extends javax.swing.JFrame {
             game_status.getCurrent_room().getObjects().forEach((itemStanza) -> {
                 if(itemStanza.getName().equals("Porta")){
                     itemStanza.setLocked(false);
-                    //dialogo porta aperta
+                    itemStanza.setDescription("È la porta del giardino, magari lì fuori trovo qualcosa per scappare.\n" 
+                            + "Ora che la porta è aperta posso dare un'occhiata." + "");
                 }
             });
         }
@@ -941,6 +958,8 @@ public class AdventureFrame extends javax.swing.JFrame {
                     aggiornaOggettiContainer(containerStanza);
                     outTextArea.setText("\n\n"+"Esattamente come pensavo!!.\n"
                     + "Nessuna serratura in legno può resistere alla forza bruta di un'ascia. Ora la dispensa è aperta.");
+                    containerStanza.setDescription("È una graziosa dispensa fatta di un legno molto antico."
+                + "\nOra ha anche un bel buco come decorazione aggiuntiva!" + "");
                 }
             });
         }
@@ -967,10 +986,16 @@ public class AdventureFrame extends javax.swing.JFrame {
             game_status.getCurrent_room().getContainers().forEach((containerStanza) -> {
                 if(containerStanza.getName().equals("Cuccia del cane")){
                     containerStanza.setLocked(false);
+                    containerStanza.setUsable(false);
                     aggiornaOggettiContainer(containerStanza);
                     outTextArea.setText("\n\n"+"Fantastico!!\n"
                     + "Non ci avrei mai sperato, ma ora il cane è distratto dal succulento osso che gli ho dato. \n"
                             + "Prendere la chiave sarà un gioco da ragazzi");
+                    containerStanza.setDescription("È una cuccia per cani con dentro Cupcake, "
+                        + "il cane di quella svitata. Non lo sopporto, è una bestia di satana."
+                        + "\nOvviamente... accanto a lui c'è una chiave d'oro che sembra proprio essere la chiave della porta di casa, "
+                        + "ora che è distratto posso prenderla"
+                        + "");
                 }
             });
         }
@@ -1057,6 +1082,8 @@ public class AdventureFrame extends javax.swing.JFrame {
                 tappetoScacchieraSpostato();
                 observe_button.setEnabled(false);
                 outTextArea.setText("\n\n"+"Fantastico!!\nHo spostato il tappeto e sotto ci ho trovato la seconda metà di una chiave argentata.");
+                itemStanza.setDescription("È un tappeto di dubbio gusto estetico.\n"
+                    + "È molto grande e sembra super morbido!" + "");
             }
         });
     }//GEN-LAST:event_move_buttonActionPerformed
