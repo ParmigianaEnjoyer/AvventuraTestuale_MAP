@@ -839,9 +839,6 @@ public class AdventureFrame extends javax.swing.JFrame {
         game_status.getCurrent_room().getObjects().forEach((itemStanza) -> {
            if(itemStanza.getName().equals("Banco da lavoro")){
                 bancoDaLavoro();
-                outTextArea.setText("\n\n"+"Perfetto!! Ho riparato la chiave!!\n"
-                        + "Adesso ho una chiave intera,\n"
-                        + "anni e anni di lavoro sottopagato nell'officina di papà son serviti a qualcosa...");
                 return;
             } 
         });
@@ -867,9 +864,15 @@ public class AdventureFrame extends javax.swing.JFrame {
         if(haiChiave1 && haiChiave2){
             cancellaPezziChiave();
             game_status.getInventario().addObject(game_status.getChiaveIntera());
+            outTextArea.setText("\n\n"+"Perfetto!! Ho riparato la chiave!!\n"
+                    + "Adesso ho una chiave intera,\n"
+                    + "anni e anni di lavoro sottopagato nell'officina di papà son serviti a qualcosa...");
             aggiornaOggettiInventario();
         }
         else {
+            outTextArea.setText("\n\n"+"Mannaggia!! Non ci riparo niente con un pezzo solo!\n"
+                    + "Devo trovare necessariamente l'altra metà,\n"
+                    + "non sarà finita molto lontano.");
             return;
         }
     }
