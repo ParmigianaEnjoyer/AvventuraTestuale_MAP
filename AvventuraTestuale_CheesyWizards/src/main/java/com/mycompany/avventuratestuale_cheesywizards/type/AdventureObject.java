@@ -14,8 +14,6 @@ public class AdventureObject implements Serializable{
     private String name;                    //nome dell'oggetto
 
     private String description;             //descrizione dell'oggetto
-    
-    private Set<String> alias;              //insieme di tutti gli alias dell'oggetto
 
     private boolean openable;       //indica se l'oggetto può essere aperto
 
@@ -36,7 +34,6 @@ public class AdventureObject implements Serializable{
      * @param id
      * @param name
      * @param description
-     * @param alias
      * @param openable
      * @param pickupable
      * @param usable
@@ -45,11 +42,10 @@ public class AdventureObject implements Serializable{
      * @param observable
      * @param path_image 
      */
-    public AdventureObject(int id, String name, String description, Set<String> alias, boolean openable, boolean pickupable, boolean usable, boolean locked, boolean movable, boolean observable, String path_image) {
+    public AdventureObject(int id, String name, String description, boolean openable, boolean pickupable, boolean usable, boolean locked, boolean movable, boolean observable, String path_image) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.alias = alias;
         this.openable = openable;
         this.pickupable = pickupable;
         this.usable = usable;
@@ -105,22 +101,6 @@ public class AdventureObject implements Serializable{
      */
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    /**
-     * 
-     * @return 
-     */
-    public Set<String> getAlias() {
-        return alias;
-    }
-
-    /**
-     * 
-     * @param alias 
-     */
-    public void setAlias(Set<String> alias) {
-        this.alias = alias;
     }
 
     public boolean isOpenable() {

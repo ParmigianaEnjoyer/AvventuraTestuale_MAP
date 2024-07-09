@@ -13,8 +13,8 @@ public class AdventureObjectContainer extends AdventureObject implements Seriali
 
     private List<AdventureObject> list;       //lista degli oggetti contenuti all'interno dell'oggetto container
 
-    public AdventureObjectContainer(int id, String name, String description, Set<String> alias, boolean openable, boolean pickupable, boolean usable, boolean locked, boolean movable, boolean observable, String path_image, List<AdventureObject> list) {
-        super(id, name, description, alias, openable, pickupable, usable, locked, movable, observable, path_image);
+    public AdventureObjectContainer(int id, String name, String description, boolean openable, boolean pickupable, boolean usable, boolean locked, boolean movable, boolean observable, String path_image, List<AdventureObject> list) {
+        super(id, name, description, openable, pickupable, usable, locked, movable, observable, path_image);
         this.list = list;
     }
 
